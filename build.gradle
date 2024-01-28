@@ -7,14 +7,14 @@ loom {
 	splitEnvironmentSourceSets()
 }
 
+base {
+	archivesName = project.archives_base_name
+}
+
 allprojects {
 	apply plugin: "fabric-loom"
 	version = project.mod_version
 	group = project.maven_group
-
-	base {
-		archivesName = project.archives_base_name
-	}
 
 	repositories {
 		// Add repositories to retrieve artifacts from in here.
@@ -64,6 +64,20 @@ allprojects {
 	jar {
 		from("LICENSE") {
 			rename { "${it}_${project.base.archivesName.get()}"}
+		}
+	}
+}
+
+subprojects {
+	base {
+		archivesName = project.name
+	}
+}
+
+remapJar {
+	afterEvaluate {
+		subprojects.each {
+			nestedJars.from project("${it.path}").tasks.getByName("remapJar")
 		}
 	}
 }
