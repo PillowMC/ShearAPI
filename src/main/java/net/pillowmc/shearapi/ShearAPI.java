@@ -1,4 +1,4 @@
-package com.example;
+package net.pillowmc.shearapi;
 
 import net.fabricmc.api.ModInitializer;
 
