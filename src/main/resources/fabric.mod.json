@@ -35,5 +35,14 @@
 		"java": ">=17",
 		"fabric-api": "*"
 	},
-	"provides": ["neoforge"]
+	"provides": ["neoforge"],
+	"modmenu": {
+        "parent": {
+            "id": "pillowmc",
+            "name": "The PillowMC Project",
+            "description": "Put almost all mods you like together.",
+            "icon": "assets/pillow/icon_pillowmc.png",
+            "update_checker": false
+        }
+    }
 }
