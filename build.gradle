@@ -7,6 +7,10 @@ loom {
 	splitEnvironmentSourceSets()
 }
 
+loom.runs.configureEach {
+	ideConfigGenerated project.rootProject == project
+}
+
 base {
 	archivesName = project.archives_base_name
 }
@@ -64,6 +68,14 @@ allprojects {
 	jar {
 		from("LICENSE") {
 			rename { "${it}_${project.base.archivesName.get()}"}
+		}
+	}
+}
+
+dependencies {
+	afterEvaluate {
+		subprojects.each {
+			api project(path: "${it.path}", configuration: "namedElements")
 		}
 	}
 }
