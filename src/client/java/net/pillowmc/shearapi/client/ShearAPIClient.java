@@ -1,4 +1,4 @@
-package com.example;
+package net.pillowmc.shearapi.client;
 
 import net.fabricmc.api.ClientModInitializer;
 
