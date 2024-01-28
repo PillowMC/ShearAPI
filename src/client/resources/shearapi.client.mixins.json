@@ -1,10 +1,8 @@
 {
 	"required": true,
-	"package": "com.example.mixin.client",
+	"package": "net.pillowmc.shearapi.mixin.client",
 	"compatibilityLevel": "JAVA_17",
-	"client": [
-		"ExampleClientMixin"
-	],
+	"client": [],
 	"injectors": {
 		"defaultRequire": 1
 	}
