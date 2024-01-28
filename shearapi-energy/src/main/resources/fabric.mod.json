@@ -1,0 +1,23 @@
+{
+	"schemaVersion": 1,
+	"id": "shearapi-energy",
+	"version": "${version}",
+	"name": "Shear API (Energy)",
+	"description": "Port NeoForge \"API\" of energy to Fabric",
+	"authors": [
+		"PillowMC"
+	],
+	"contact": {
+		"homepage": "https://github.com/PillowMC/ShearAPI",
+		"sources": "https://github.com/PillowMC/ShearAPI"
+	},
+	"license": "LGPL-2.1",
+	"icon": "assets/shearapi-energy/icon.png",
+	"environment": "*",
+	"depends": {
+		"fabricloader": ">=0.15.0",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
