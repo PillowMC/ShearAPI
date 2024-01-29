@@ -10,3 +10,5 @@ pluginManagement {
 }
 
 include("shearapi-energy")
+include("shearapi-attachment")
+include("shearapi-utils")
