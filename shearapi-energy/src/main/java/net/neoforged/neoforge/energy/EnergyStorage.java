@@ -83,8 +83,8 @@ public class EnergyStorage implements IEnergyStorage, INBTSerializable<NbtElemen
     }
 
     @Override
-    public Tag serializeNBT() {
-        return NbtInt.valueOf(this.getEnergyStored());
+    public NbtElement serializeNBT() {
+        return NbtInt.of(this.getEnergyStored());
     }
 
     @Override
