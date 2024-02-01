@@ -34,7 +34,7 @@ jobs:
       - name: cache
         uses: actions/cache@v4
         with:
-          path: [~/.gradle/caches/fabric-loom, ./.gradle/loom-cache, ./build/loom-cache, ./**/build/loom-cache]
+          path: ['~/.gradle/caches/fabric-loom', './.gradle/loom-cache', './build/loom-cache', './**/build/loom-cache']
           key: ${{ runner.os }}-gradle
       - name: build
         run: ./gradlew build
