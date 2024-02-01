@@ -1,0 +1,4 @@
+dependencies {
+    api project(":shearapi-energy")
+    api project(":shearapi-capabilities")
+}

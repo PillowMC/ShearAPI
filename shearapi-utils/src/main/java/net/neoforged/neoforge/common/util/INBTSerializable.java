@@ -5,13 +5,13 @@
 
 package net.neoforged.neoforge.common.util;
 
-import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.Tag;
 
 /**
  * An interface designed to unify various things in the Minecraft
 * code base that can be serialized to and from a NBT tag.
 */
-public interface INBTSerializable<T extends NbtElement> {
+public interface INBTSerializable<T extends Tag> {
     T serializeNBT();
 
     void deserializeNBT(T nbt);

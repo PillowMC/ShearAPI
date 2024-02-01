@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
-	"id": "shearapi-attachment",
+	"id": "shearapi-xxx",
 	"version": "${version}",
-	"name": "Shear API (Data Attachment)",
-	"description": "Port NeoForge \"API\" of data attachment to Fabric",
+	"name": "Shear API (XXX)",
+	"description": "Port NeoForge \"API\" of xxx to Fabric",
 	"authors": [
 		"PillowMC"
 	],
@@ -12,7 +12,7 @@
 		"sources": "https://github.com/PillowMC/ShearAPI"
 	},
 	"license": "LGPL-2.1",
-	"icon": "assets/shearapi-attachment/icon.png",
+	"icon": "assets/shearapi-utils/icon.png",
 	"environment": "*",
 	"depends": {
 		"fabricloader": ">=0.15.0",

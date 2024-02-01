@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
-	"id": "shearapi-utils",
+	"id": "shearapi-summary",
 	"version": "${version}",
-	"name": "Shear API (Utils)",
-	"description": "Port NeoForge \"API\" of utils to Fabric, and our utils",
+	"name": "Shear API (Summary)",
+	"description": "To solve dependency loops, classes in certain modules (such as capabilities) that require other modules but are not closely related to the module itself are placed separately here",
 	"authors": [
 		"PillowMC"
 	],
@@ -18,6 +18,8 @@
 		"fabricloader": ">=0.15.0",
 		"minecraft": "~1.20.4",
 		"java": ">=17",
-		"fabric-api": "*"
+		"fabric-api": "*",
+		"shearapi-energy": "~${version}",
+		"shearapi-capabilities": "~${version}"
 	}
 }

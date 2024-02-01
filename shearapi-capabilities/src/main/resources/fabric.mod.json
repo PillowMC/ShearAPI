@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "shearapi-capabilities",
+	"version": "${version}",
+	"name": "Shear API (Capabilities)",
+	"description": "Port NeoForge \"API\" of capabilities to Fabric",
+	"authors": [
+		"PillowMC"
+	],
+	"contact": {
+		"homepage": "https://github.com/PillowMC/ShearAPI",
+		"sources": "https://github.com/PillowMC/ShearAPI"
+	},
+	"license": "LGPL-2.1",
+	"icon": "assets/shearapi-capabilities/icon.png",
+	"environment": "*",
+	"depends": {
+		"fabricloader": ">=0.15.0",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*",
+		"shearapi-extensions": "~${version}",
+		"shearapi-energy": "~${version}"
+	},
+	"mixins": [
+		"shearapi-capabilities.mixins.json"
+	],
+	"custom": {
+		"loom:injected_interfaces": {
+			"net/minecraft/class_3218": ["net/pillowmc/shearapi/capabilities/injection/ServerLevelInjection"],
+			"net/minecraft/class_1937": ["net/pillowmc/shearapi/capabilities/injection/LevelInjection"]
+		}
+	}
+}

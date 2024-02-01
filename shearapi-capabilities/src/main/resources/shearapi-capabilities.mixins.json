@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "net.pillowmc.shearapi.capabilities.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+        "BlockEntityTypeMixin",
+        "LevelMixin",
+        "ServerLevelMixin"
+    ],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

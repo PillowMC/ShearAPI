@@ -3,10 +3,6 @@ plugins {
 	id 'maven-publish'
 }
 
-loom {
-	splitEnvironmentSourceSets()
-}
-
 loom.runs.configureEach {
 	ideConfigGenerated project.rootProject == project
 }
@@ -31,16 +27,22 @@ allprojects {
 	dependencies {
 		// To change the versions see the gradle.properties file
 		minecraft "com.mojang:minecraft:${project.minecraft_version}"
-		mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+		// mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+		mappings loom.officialMojangMappings()
 		modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 		// Fabric API. This is technically optional, but you probably want it anyway.
 		modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+		compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 		
 		// Uncomment the following line to enable the deprecated Fabric API modules. 
 		// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
 		// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
+	}
+
+	loom {
+		splitEnvironmentSourceSets()
 	}
 
 	processResources {
@@ -72,10 +74,18 @@ allprojects {
 	}
 }
 
+allprojects.each { p ->
+	loom.mods.register(p.name) {
+		sourceSet p.sourceSets.main
+		sourceSet p.sourceSets.client
+	}
+}
+
 dependencies {
 	afterEvaluate {
 		subprojects.each {
 			api project(path: "${it.path}", configuration: "namedElements")
+			clientImplementation project("${it.path}:").sourceSets.client.output
 		}
 	}
 }

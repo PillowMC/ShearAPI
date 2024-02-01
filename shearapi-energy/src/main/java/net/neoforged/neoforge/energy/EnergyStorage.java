@@ -5,8 +5,8 @@
 
 package net.neoforged.neoforge.energy;
 
-import net.minecraft.nbt.NbtInt;
-import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.IntTag;
+import net.minecraft.nbt.Tag;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 
 /**
@@ -15,7 +15,7 @@ import net.neoforged.neoforge.common.util.INBTSerializable;
 * Derived from the Redstone Flux power system designed by King Lemming and originally utilized in Thermal Expansion and related mods.
 * Created with consent and permission of King Lemming and Team CoFH. Released with permission under LGPL 2.1 when bundled with Forge.
 */
-public class EnergyStorage implements IEnergyStorage, INBTSerializable<NbtElement> {
+public class EnergyStorage implements IEnergyStorage, INBTSerializable<Tag> {
     protected int energy;
     protected int capacity;
     protected int maxReceive;
@@ -83,14 +83,14 @@ public class EnergyStorage implements IEnergyStorage, INBTSerializable<NbtElemen
     }
 
     @Override
-    public NbtElement serializeNBT() {
-        return NbtInt.of(this.getEnergyStored());
+    public Tag serializeNBT() {
+        return IntTag.valueOf(this.getEnergyStored());
     }
 
     @Override
-    public void deserializeNBT(NbtElement nbt) {
-        if (!(nbt instanceof NbtInt intNbt))
+    public void deserializeNBT(Tag nbt) {
+        if (!(nbt instanceof IntTag intNbt))
             throw new IllegalArgumentException("Can not deserialize to an instance that isn't the default implementation");
-        this.energy = intNbt.intValue();
+        this.energy = intNbt.getAsInt();
     }
 }
