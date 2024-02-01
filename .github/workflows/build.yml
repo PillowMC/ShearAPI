@@ -39,7 +39,7 @@ jobs:
             ./.gradle/loom-cache
             ./build/loom-cache
             ./**/build/loom-cache
-          key: ${{ runner.os }}-gradle
+          key: ${{ matrix.os }}-java${{ matrix.java }}-gradle
       - name: build
         run: ./gradlew build
       - name: capture build artifacts
