@@ -42,7 +42,7 @@
 				"id": "pillowmc",
 				"name": "The PillowMC Project",
 				"description": "Put almost all mods you like together.",
-				"icon": "assets/pillow/icon_pillowmc.png",
+				"icon": "assets/shearapi/icon_pillowmc.png",
 				"update_checker": false
 			}
 		}
