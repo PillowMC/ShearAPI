@@ -15,13 +15,13 @@
 	"icon": "assets/shearapi-capabilities/icon.png",
 	"environment": "*",
 	"depends": {
-		"fabricloader": ">=0.15.0",
+		"fabricloader": ">=0.15.6",
 		"minecraft": "~1.20.4",
 		"java": ">=17",
 		"fabric-api": "*",
 		"shearapi-extensions": "~${version}",
 		"shearapi-energy": "~${version}",
-		"shearapi-runtime-impl": "*"
+		"shearapi-runtime": "*"
 	},
 	"entrypoints": {
 		"main": [

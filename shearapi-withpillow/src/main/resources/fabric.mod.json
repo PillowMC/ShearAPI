@@ -15,12 +15,11 @@
 	"icon": "assets/shearapi-withpillow/icon.png",
 	"environment": "*",
 	"depends": {
-		"fabricloader": ">=0.15.0",
+		"fabricloader": ">=0.15.6",
 		"minecraft": "~1.20.4",
 		"java": ">=17",
 		"fabric-api": "*",
 		"shearapi-runtime": "~${version}"
 	},
-	"provides": ["shearapi-runtime-impl"],
 	"mixins": ["shearapi-withpillow.mixins.json"]
 }
