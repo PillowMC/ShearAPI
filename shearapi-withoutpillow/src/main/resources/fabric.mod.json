@@ -20,5 +20,10 @@
 		"java": ">=17",
 		"fabric-api": "*",
 		"shearapi-runtime": "~${version}"
+	},
+	"custom": {
+		"modmenu": {
+			"parent": "shearapi"
+		}
 	}
 }

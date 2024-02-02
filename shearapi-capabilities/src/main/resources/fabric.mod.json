@@ -35,6 +35,9 @@
 		"loom:injected_interfaces": {
 			"net/minecraft/class_3218": ["net/pillowmc/shearapi/capabilities/injection/ServerLevelInjection"],
 			"net/minecraft/class_1937": ["net/pillowmc/shearapi/capabilities/injection/LevelInjection"]
+		},
+		"modmenu": {
+			"parent": "shearapi"
 		}
 	}
 }

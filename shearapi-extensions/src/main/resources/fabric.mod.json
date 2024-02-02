@@ -24,6 +24,9 @@
 	"custom": {
 		"loom:injected_interfaces": {
 			"net/minecraft/class_1937": ["net/neoforged/neoforge/common/extensions/ILevelExtension"]
+		},
+		"modmenu": {
+			"parent": "shearapi"
 		}
 	},
 	"mixins": [

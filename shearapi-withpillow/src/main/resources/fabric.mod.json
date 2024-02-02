@@ -21,5 +21,10 @@
 		"fabric-api": "*",
 		"shearapi-runtime": "~${version}"
 	},
-	"mixins": ["shearapi-withpillow.mixins.json"]
+	"mixins": ["shearapi-withpillow.mixins.json"],
+	"custom": {
+		"modmenu": {
+			"parent": "shearapi"
+		}
+	}
 }

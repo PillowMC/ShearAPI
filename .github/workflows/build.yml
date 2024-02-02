@@ -41,6 +41,9 @@ jobs:
       #     key: ${{ matrix.os }}-java${{ matrix.java }}-gradle
       - name: build
         run: ./gradlew build
+      - name: Generate and submit dependency graph
+        if: ${{ runner.os == 'Linux' && matrix.java == '21' }}
+        uses: gradle/actions/dependency-submission@v3
       - name: capture build artifacts
         if: ${{ runner.os == 'Linux' && matrix.java == '21' }} # Only upload artifacts built from latest java on one OS
         uses: actions/upload-artifact@v3
