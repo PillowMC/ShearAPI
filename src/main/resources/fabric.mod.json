@@ -19,7 +19,7 @@
 			"net.pillowmc.shearapi.ShearAPI"
 		],
 		"client": [
-			"net.pillowmc.shearapi.ShearAPIClient"
+			"net.pillowmc.shearapi.client.ShearAPIClient"
 		]
 	},
 	"mixins": [
