@@ -12,7 +12,7 @@
 		"sources": "https://github.com/PillowMC/ShearAPI"
 	},
 	"license": "LGPL-2.1",
-	"icon": "assets/shearapi-utils/icon.png",
+	"icon": "assets/shearapi-summary/icon.png",
 	"environment": "*",
 	"depends": {
 		"fabricloader": ">=0.15.6",
