@@ -26,7 +26,8 @@
 			"net/minecraft/class_1937": ["net/neoforged/neoforge/common/extensions/ILevelExtension"]
 		},
 		"modmenu": {
-			"parent": "shearapi"
+			"parent": "shearapi",
+            "badges": ["library"]
 		}
 	},
 	"mixins": [

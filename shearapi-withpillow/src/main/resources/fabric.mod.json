@@ -24,7 +24,8 @@
 	"mixins": ["shearapi-withpillow.mixins.json"],
 	"custom": {
 		"modmenu": {
-			"parent": "shearapi"
+			"parent": "shearapi",
+            "badges": ["library"]
 		}
 	}
 }

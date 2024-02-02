@@ -22,7 +22,8 @@
 	},
 	"custom": {
 		"modmenu": {
-			"parent": "shearapi"
+			"parent": "shearapi",
+            "badges": ["library"]
 		}
 	}
 }

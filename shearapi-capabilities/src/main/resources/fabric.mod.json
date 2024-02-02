@@ -37,7 +37,8 @@
 			"net/minecraft/class_1937": ["net/pillowmc/shearapi/capabilities/injection/LevelInjection"]
 		},
 		"modmenu": {
-			"parent": "shearapi"
+			"parent": "shearapi",
+            "badges": ["library"]
 		}
 	}
 }
