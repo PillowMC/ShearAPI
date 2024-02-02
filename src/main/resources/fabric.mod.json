@@ -36,13 +36,15 @@
 		"fabric-api": "*"
 	},
 	"provides": ["neoforge"],
-	"modmenu": {
-        "parent": {
-            "id": "pillowmc",
-            "name": "The PillowMC Project",
-            "description": "Put almost all mods you like together.",
-            "icon": "assets/pillow/icon_pillowmc.png",
-            "update_checker": false
-        }
-    }
+	"custom": {
+		"modmenu": {
+			"parent": {
+				"id": "pillowmc",
+				"name": "The PillowMC Project",
+				"description": "Put almost all mods you like together.",
+				"icon": "assets/pillow/icon_pillowmc.png",
+				"update_checker": false
+			}
+		}
+	}
 }

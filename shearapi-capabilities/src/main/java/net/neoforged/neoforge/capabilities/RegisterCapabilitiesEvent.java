@@ -18,8 +18,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.Event;
-import net.neoforged.fml.event.IModBusEvent;
 import net.pillowmc.shearapi.capabilities.mixin.BlockEntityTypeMixin;
+import net.pillowmc.shearapi.runtime.IModBusEvent;
 
 /**
  * Fired to register capability providers at an appropriate time.

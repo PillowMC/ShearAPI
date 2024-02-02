@@ -1,0 +1,26 @@
+{
+	"schemaVersion": 1,
+	"id": "shearapi-withpillow",
+	"version": "${version}",
+	"name": "Shear API (With Pillow)",
+	"description": "Interact with FML when on Pillow Loader",
+	"authors": [
+		"PillowMC"
+	],
+	"contact": {
+		"homepage": "https://github.com/PillowMC/ShearAPI",
+		"sources": "https://github.com/PillowMC/ShearAPI"
+	},
+	"license": "LGPL-2.1",
+	"icon": "assets/shearapi-withpillow/icon.png",
+	"environment": "*",
+	"depends": {
+		"fabricloader": ">=0.15.0",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*",
+		"shearapi-runtime": "~${version}"
+	},
+	"provides": ["shearapi-runtime-impl"],
+	"mixins": ["shearapi-withpillow.mixins.json"]
+}

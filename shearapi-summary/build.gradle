@@ -1,4 +1,4 @@
 dependencies {
-    api project(":shearapi-energy")
-    api project(":shearapi-capabilities")
+    api project(path: ":shearapi-energy", configuration: "namedElements")
+    api project(path: ":shearapi-capabilities", configuration: "namedElements")
 }

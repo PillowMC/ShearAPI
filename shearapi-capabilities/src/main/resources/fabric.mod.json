@@ -20,7 +20,13 @@
 		"java": ">=17",
 		"fabric-api": "*",
 		"shearapi-extensions": "~${version}",
-		"shearapi-energy": "~${version}"
+		"shearapi-energy": "~${version}",
+		"shearapi-runtime-impl": "*"
+	},
+	"entrypoints": {
+		"main": [
+			"net.pillowmc.shearapi.capabilities.ShearAPICapabilitiesInit"
+		]
 	},
 	"mixins": [
 		"shearapi-capabilities.mixins.json"

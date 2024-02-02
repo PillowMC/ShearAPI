@@ -18,7 +18,8 @@ package net.neoforged.neoforge.capabilities;
 // import net.minecraft.world.level.block.Blocks;
 // import net.minecraft.world.level.block.ChestBlock;
 // import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.neoforged.fml.ModLoader;
+import net.pillowmc.shearapi.runtime.ShearAPIRuntime;
+
 // import net.neoforged.neoforge.common.NeoForgeMod;
 // import net.neoforged.neoforge.event.TickEvent;
 // import net.neoforged.neoforge.event.level.ChunkEvent;
@@ -45,7 +46,7 @@ public class CapabilityHooks {
         initialized = true;
 
         var event = new RegisterCapabilitiesEvent();
-        ModLoader.get().postEventWrapContainerInModOrder(event);
+        ShearAPIRuntime.getRuntime().postModBusEventWrapContainerInModOrder(event);
 
         initFinished = true;
     }
