@@ -26,7 +26,7 @@ public enum ShearAPIRuntime {
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                     | InvocationTargetException | NoSuchMethodException | SecurityException
                     | ClassNotFoundException e) {
-                throw new RuntimeException("Pillow Loader not detected, but ShearAPI (Without Pillow) is missing!");
+                throw new RuntimeException("Pillow Loader not detected, but ShearAPI (Without Pillow) is missing!", e);
             }
         }
     }

@@ -1,6 +1,6 @@
 {
 	"schemaVersion": 1,
-	"id": "shearapi-withpillow",
+	"id": "shearapi-withoutpillow",
 	"version": "${version}",
 	"name": "Shear API (Without Pillow)",
 	"description": "We use this when using ShearAPI without Pillow Loader.",
@@ -12,7 +12,7 @@
 		"sources": "https://github.com/PillowMC/ShearAPI"
 	},
 	"license": "LGPL-2.1",
-	"icon": "assets/shearapi-withpillow/icon.png",
+	"icon": "assets/shearapi-withoutpillow/icon.png",
 	"environment": "*",
 	"depends": {
 		"fabricloader": ">=0.15.0",
