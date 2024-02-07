@@ -90,6 +90,7 @@ dependencies {
 		}
 	}
 	include "net.neoforged:bus:${project.neoforge_bus_version}"
+	include "org.apache.maven:maven-artifact:${project.apache_maven_artifact_version}"
 }
 
 subprojects {
@@ -101,7 +102,9 @@ subprojects {
 remapJar {
 	afterEvaluate {
 		subprojects.each {
-			nestedJars.from project("${it.path}").tasks.getByName("remapJar")
+			if (it.name != "shearapi-compile-fml") {
+				nestedJars.from project("${it.path}").tasks.getByName("remapJar")
+			}
 		}
 	}
 }

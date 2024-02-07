@@ -1,3 +1,8 @@
 dependencies {
     api project(path: ":shearapi-utils", configuration: "namedElements")
+    api project(path: ":shearapi-capabilities", configuration: "namedElements")
+    api project(path: ":shearapi-runtime", configuration: "namedElements")
+    include modApi('teamreborn:energy:3.0.0') {
+        transitive = false
+    }
 }

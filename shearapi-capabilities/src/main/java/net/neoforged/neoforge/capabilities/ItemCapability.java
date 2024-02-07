@@ -5,6 +5,7 @@
 
 package net.neoforged.neoforge.capabilities;
 
+import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +85,7 @@ public final class ItemCapability<T, C> extends BaseCapability<T, C> {
     }
 
     final Map<Item, List<ICapabilityProvider<ItemStack, C, T>>> providers = new IdentityHashMap<>();
+    final List<ICapabilityProvider<ItemStack, C, T>> genericProviders = new ArrayList<>();
 
     @ApiStatus.Internal
     @Nullable
@@ -97,6 +99,12 @@ public final class ItemCapability<T, C> extends BaseCapability<T, C> {
         }
 
         for (var provider : providers.getOrDefault(stack.getItem(), List.of())) {
+            var ret = provider.getCapability(stack, context);
+            if (ret != null)
+                return ret;
+        }
+    
+        for (var provider : genericProviders) {
             var ret = provider.getCapability(stack, context);
             if (ret != null)
                 return ret;

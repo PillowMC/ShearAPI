@@ -25,14 +25,13 @@ public class ServerLevelMixin implements ServerLevelInjection {
 
     @Override
     public void registerCapabilityListener(BlockPos pos, ICapabilityInvalidationListener listener) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'registerCapabilityListener'");
+        capListenerHolder.addListener(pos, listener);
     }
 
     @Override
     public void cleanCapabilityListenerReferences() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'cleanCapabilityListenerReferences'");
+        capListenerHolder.clean();
     }
     
 }

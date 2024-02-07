@@ -72,9 +72,22 @@ public class RegisterCapabilitiesEvent extends Event implements IModBusEvent {
     }
 
     /**
+     * Register a generic capability provider for blocks. (ShearAPI)
+     *
+     * <p><b>If a previously returned capability is not valid anymore, or if a new capability is available,
+     * {@link Level#invalidateCapabilities(BlockPos)} MUST be called to notify the caches.</b>
+     * See {@link IBlockCapabilityProvider} for details.
+     */
+    public <T, C> void registerGenericBlock(BlockCapability<T, C> capability, IBlockCapabilityProvider<T, C> provider) {
+        Objects.requireNonNull(provider);
+        capability.genericProviders.add(provider);
+    }
+
+    /**
      * Return {@code true} if a provider is registered for the given block and capability.
      */
     public boolean isBlockRegistered(BlockCapability<?, ?> capability, Block block) {
+        if (!capability.genericProviders.isEmpty()) return true;
         Objects.requireNonNull(block);
         return capability.providers.containsKey(block);
     }
@@ -115,9 +128,18 @@ public class RegisterCapabilitiesEvent extends Event implements IModBusEvent {
     }
 
     /**
+     * Register a generic capability provider for items. (ShearAPI)
+     */
+    public <T, C> void registerGenericItem(ItemCapability<T, C> capability, ICapabilityProvider<ItemStack, C, T> provider) {
+        Objects.requireNonNull(provider);
+        capability.genericProviders.add(provider);
+    }
+
+    /**
      * Return {@code true} if a provider is registered for the given item and capability.
      */
     public boolean isItemRegistered(ItemCapability<?, ?> capability, Item item) {
+        if (!capability.genericProviders.isEmpty()) return true;
         Objects.requireNonNull(item);
         return capability.providers.containsKey(item);
     }

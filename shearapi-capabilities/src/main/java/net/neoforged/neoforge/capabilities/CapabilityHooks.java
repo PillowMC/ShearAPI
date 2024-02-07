@@ -5,6 +5,9 @@
 
 package net.neoforged.neoforge.capabilities;
 
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
 // import java.util.List;
 // import net.minecraft.core.registries.BuiltInRegistries;
 // import net.minecraft.server.level.ServerLevel;
@@ -51,6 +54,7 @@ public class CapabilityHooks {
         initFinished = true;
     }
 
+    // ShearAPI: Fabric API already handled this.
     // public static void registerVanillaProviders(RegisterCapabilitiesEvent event) {
     //     // Blocks
     //     var composterBlock = (WorldlyContainerHolder) Blocks.COMPOSTER;
@@ -151,21 +155,16 @@ public class CapabilityHooks {
     //             Items.YELLOW_SHULKER_BOX);
     // }
 
-    // public static void invalidateCapsOnChunkLoad(ChunkEvent.Load event) {
-    //     if (!event.getLevel().isClientSide()) {
-    //         ((ServerLevel) event.getLevel()).invalidateCapabilities(event.getChunk().getPos());
-    //     }
-    // }
+    static {
+        ServerChunkEvents.CHUNK_LOAD.register((level, chunk) -> {
+            level.invalidateCapabilities(chunk.getPos());
+        });
 
-    // public static void invalidateCapsOnChunkUnload(ChunkEvent.Unload event) {
-    //     if (!event.getLevel().isClientSide()) {
-    //         ((ServerLevel) event.getLevel()).invalidateCapabilities(event.getChunk().getPos());
-    //     }
-    // }
-
-    // public static void cleanCapabilityListenerReferencesOnTick(TickEvent.LevelTickEvent event) {
-    //     if (event.phase == TickEvent.Phase.END && event.side.isServer()) {
-    //         ((ServerLevel) event.level).cleanCapabilityListenerReferences();
-    //     }
-    // }
+        ServerChunkEvents.CHUNK_UNLOAD.register((level, chunk) -> {
+            level.invalidateCapabilities(chunk.getPos());
+        });
+        ServerTickEvents.END_WORLD_TICK.register((level) -> {
+            level.cleanCapabilityListenerReferences();
+        });
+    }
 }

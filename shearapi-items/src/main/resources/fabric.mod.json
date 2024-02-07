@@ -1,0 +1,35 @@
+{
+	"schemaVersion": 1,
+	"id": "shearapi-items",
+	"version": "${version}",
+	"name": "Shear API (Items)",
+	"description": "Port NeoForge \"API\" of items to Fabric",
+	"authors": [
+		"PillowMC"
+	],
+	"contact": {
+		"homepage": "https://github.com/PillowMC/ShearAPI",
+		"sources": "https://github.com/PillowMC/ShearAPI"
+	},
+	"license": "LGPL-2.1",
+	"icon": "assets/shearapi-items/icon.png",
+	"environment": "*",
+	"depends": {
+		"fabricloader": ">=0.15.6",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*",
+		"shearapi-utils": "~${version}",
+		"shearapi-capabilities": "~${version}"
+	},
+	"custom": {
+		"modmenu": {
+			"parent": "shearapi",
+            "badges": ["library"]
+		},
+		"loom:injected_interfaces": {
+			"net/minecraft/class_1799": ["net/pillowmc/shearapi/injections/IItemStackExtension"],
+			"net/minecraft/class_1792": ["net/pillowmc/shearapi/injections/IItemExtension"]
+		}
+	}
+}

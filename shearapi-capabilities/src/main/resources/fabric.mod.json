@@ -19,9 +19,7 @@
 		"minecraft": "~1.20.4",
 		"java": ">=17",
 		"fabric-api": "*",
-		"shearapi-extensions": "~${version}",
-		"shearapi-energy": "~${version}",
-		"shearapi-runtime": "*"
+		"shearapi-runtime": "~${version}"
 	},
 	"entrypoints": {
 		"main": [

@@ -7,7 +7,7 @@ import net.pillowmc.shearapi.withoutpillow.ShearAPIWithoutPillow;
 
 public class ShearAPIWithPillow extends ShearAPIWithoutPillow {
 
-    private <T extends Event & IModBusEvent, NEOT extends Event & net.neoforged.fml.event.IModBusEvent> NEOT castEvent(T event) {
+    private <T extends Event & IModBusEvent, NEOT extends Event & net.pillowmc.shearapi.runtime.IModBusEvent> NEOT castEvent(T event) {
         return (NEOT) event;
     }
 
@@ -21,13 +21,6 @@ public class ShearAPIWithPillow extends ShearAPIWithoutPillow {
     public <T extends Event & IModBusEvent> void postModBusEvent(T event) {
         super.postModBusEvent(event);
         ModLoader.get().postEvent(castEvent(event));
-    }
-
-    @Override
-    public void postForgeBusEvent(Event event) {
-        // TODO Auto-generated method stub
-        super.postForgeBusEvent(event);
-        throw new UnsupportedOperationException("Unimplemented method 'postForgeBusEvent'");
     }
     
 }

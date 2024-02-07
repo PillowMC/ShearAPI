@@ -20,6 +20,7 @@
 		"java": ">=17",
 		"fabric-api": "*"
 	},
+	"accessWidener": "shearapi-utils.accesswidener",
 	"custom": {
 		"modmenu": {
 			"parent": "shearapi",

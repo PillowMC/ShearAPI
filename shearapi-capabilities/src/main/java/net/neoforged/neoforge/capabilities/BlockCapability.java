@@ -5,6 +5,7 @@
 
 package net.neoforged.neoforge.capabilities;
 
+import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,6 +136,7 @@ public final class BlockCapability<T, C> extends BaseCapability<T, C> {
     }
 
     final Map<Block, List<IBlockCapabilityProvider<T, C>>> providers = new IdentityHashMap<>();
+    final List<IBlockCapabilityProvider<T, C>> genericProviders = new ArrayList<>();
 
     @ApiStatus.Internal
     @Nullable
@@ -155,6 +157,12 @@ public final class BlockCapability<T, C> extends BaseCapability<T, C> {
         }
 
         for (var provider : providers.getOrDefault(state.getBlock(), List.of())) {
+            var ret = provider.getCapability(level, pos, state, blockEntity, context);
+            if (ret != null)
+                return ret;
+        }
+
+        for (var provider : this.genericProviders) {
             var ret = provider.getCapability(level, pos, state, blockEntity, context);
             if (ret != null)
                 return ret;

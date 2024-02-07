@@ -1,0 +1,4 @@
+dependencies {
+    api project(path: ":shearapi-a", configuration: "namedElements")
+    api project(path: ":shearapi-b", configuration: "namedElements")
+}

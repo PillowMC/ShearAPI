@@ -10,6 +10,11 @@ public class ShearAPIWithoutPillow implements IRuntime {
     private final IEventBus MODBUS = BusBuilder.builder().markerType(IModBusEvent.class).build();
 
     @Override
+    public IEventBus getModBus() {
+        return MODBUS;
+    }
+
+    @Override
     public <T extends Event & IModBusEvent> void postModBusEventWrapContainerInModOrder(T event) {
         MODBUS.post(event);
     }
@@ -17,12 +22,6 @@ public class ShearAPIWithoutPillow implements IRuntime {
     @Override
     public <T extends Event & IModBusEvent> void postModBusEvent(T event) {
         MODBUS.post(event);
-    }
-
-    @Override
-    public void postForgeBusEvent(Event event) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'postForgeBusEvent'");
     }
     
 }

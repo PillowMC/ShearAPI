@@ -19,7 +19,10 @@
 		"minecraft": "~1.20.4",
 		"java": ">=17",
 		"fabric-api": "*",
-		"shearapi-utils": "~${version}"
+		"shearapi-utils": "~${version}",
+		"shearapi-capabilities": "~${version}",
+		"shearapi-summary": "~${version}",
+		"shearapi-runtime": "~${version}"
 	},
 	"custom": {
 		"modmenu": {
