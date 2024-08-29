@@ -1,0 +1,5 @@
+dependencies {
+    compileOnly project(path: ":shearapi-compile-fml", configuration: "namedElements")
+    api project(path: ":shearapi-entity", configuration: "namedElements")
+    api project(path: ":shearapi-event", configuration: "namedElements")
+}

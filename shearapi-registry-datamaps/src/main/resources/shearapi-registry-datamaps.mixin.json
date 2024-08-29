@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "package": "net.pillowmc.shearapi.registries.datamaps.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "BaseMappedRegistryMixin",
+    "ComposterBlockMixin",
+    "ComposterBlockMixin$InputContainerMixin",
+    "CompostingChanceRegistryMixin",
+    "FuelRegistryMixin",
+    "GiveGiftToHeroMixin",
+    "HolderMixin",
+    "IRegistryExtensionMixin",
+    "MappedRegistry$1Mixin",
+    "ParrotMixin",
+    "RegistryLookupDelegateMixin",
+    "RegistryLookupMixin",
+    "VibrationSystemMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

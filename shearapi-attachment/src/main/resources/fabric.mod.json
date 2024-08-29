@@ -1,0 +1,50 @@
+{
+	"schemaVersion": 1,
+	"id": "shearapi-attachment",
+	"version": "${version}",
+	"name": "Shear API (Attachment)",
+	"description": "Port NeoForge \"API\" of attachment to Fabric",
+	"authors": [
+		"PillowMC"
+	],
+	"contact": {
+		"homepage": "https://github.com/PillowMC/ShearAPI",
+		"sources": "https://github.com/PillowMC/ShearAPI"
+	},
+	"license": "LGPL-2.1",
+	"icon": "assets/shearapi-attachment/icon.png",
+	"environment": "*",
+	"depends": {
+		"fabricloader": ">=0.15.6",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*",
+		"shearapi-utils": "~${version}",
+		"shearapi-registries": "~${version}",
+		"shearapi-entity": "~${version}",
+		"shearapi-runtime": "~${version}"
+	},
+	"entrypoints": {
+		"main": [
+			"net.pillowmc.shearapi.attachment.ShearAPIAttachmentInit"
+		]
+	},
+	"mixins": ["shearapi-attachment.mixins.json"],
+	"custom": {
+		"loom:injected_interfaces": {
+			"net/minecraft/class_1297": ["net/pillowmc/shearapi/attachment/IntoAttachmentHolder"],
+			"net/minecraft/class_1799": [
+				"net/pillowmc/shearapi/attachment/IntoAttachmentHolder", "net/pillowmc/shearapi/attachment/ItemStackInjection"
+			],
+			"net/minecraft/class_1937": ["net/pillowmc/shearapi/attachment/IntoAttachmentHolder"],
+			"net/minecraft/class_2586": ["net/pillowmc/shearapi/attachment/IntoAttachmentHolder"],
+			"net/minecraft/class_2791": [
+				"net/neoforged/neoforge/attachment/IAttachmentHolder", "net/pillowmc/shearapi/attachment/IntoAttachmentHolder"
+			]
+		},
+		"modmenu": {
+			"parent": "shearapi",
+            "badges": ["library"]
+		}
+	}
+}

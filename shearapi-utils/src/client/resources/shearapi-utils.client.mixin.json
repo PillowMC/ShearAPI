@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "net.pillowmc.shearapi.utils.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "client.MinecraftMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

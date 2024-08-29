@@ -5,4 +5,5 @@ loom {
 
 dependencies {
     compileOnly project(path: ":shearapi-compile-fml", configuration: "namedElements")
+    implementation "org.apache.maven:maven-artifact:${rootProject.apache_maven_artifact_version}"
 }

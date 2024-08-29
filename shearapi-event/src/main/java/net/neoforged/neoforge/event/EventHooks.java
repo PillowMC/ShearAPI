@@ -103,46 +103,6 @@ import net.neoforged.neoforge.event.brewing.PlayerBrewedPotionEvent;
 import net.neoforged.neoforge.event.brewing.PotionBrewEvent;
 import net.neoforged.neoforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent;
-import net.neoforged.neoforge.event.entity.EntityEvent;
-import net.neoforged.neoforge.event.entity.EntityMobGriefingEvent;
-import net.neoforged.neoforge.event.entity.EntityMountEvent;
-import net.neoforged.neoforge.event.entity.EntityStruckByLightningEvent;
-import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
-import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
-import net.neoforged.neoforge.event.entity.item.ItemExpireEvent;
-import net.neoforged.neoforge.event.entity.living.AnimalTameEvent;
-import net.neoforged.neoforge.event.entity.living.LivingConversionEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDestroyBlockEvent;
-import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
-import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
-import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
-import net.neoforged.neoforge.event.entity.living.LivingPackSizeEvent;
-import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
-import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
-import net.neoforged.neoforge.event.entity.living.MobSpawnEvent.AllowDespawn;
-import net.neoforged.neoforge.event.entity.living.MobSpawnEvent.PositionCheck;
-import net.neoforged.neoforge.event.entity.living.MobSpawnEvent.SpawnPlacementCheck;
-import net.neoforged.neoforge.event.entity.living.MobSplitEvent;
-import net.neoforged.neoforge.event.entity.living.ZombieEvent.SummonAidEvent;
-import net.neoforged.neoforge.event.entity.player.AdvancementEvent.AdvancementEarnEvent;
-import net.neoforged.neoforge.event.entity.player.AdvancementEvent.AdvancementProgressEvent;
-import net.neoforged.neoforge.event.entity.player.AdvancementEvent.AdvancementProgressEvent.ProgressType;
-import net.neoforged.neoforge.event.entity.player.ArrowLooseEvent;
-import net.neoforged.neoforge.event.entity.player.ArrowNockEvent;
-import net.neoforged.neoforge.event.entity.player.BonemealEvent;
-import net.neoforged.neoforge.event.entity.player.EntityItemPickupEvent;
-import net.neoforged.neoforge.event.entity.player.FillBucketEvent;
-import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
-import net.neoforged.neoforge.event.entity.player.PermissionsChangedEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerDestroyItemEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerFlyableFallEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerSetSpawnEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerSleepInBedEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerSpawnPhantomsEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerWakeUpEvent;
-import net.neoforged.neoforge.event.entity.player.SleepingLocationCheckEvent;
-import net.neoforged.neoforge.event.entity.player.SleepingTimeCheckEvent;
 import net.neoforged.neoforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.neoforged.neoforge.event.level.AlterGroundEvent;
 import net.neoforged.neoforge.event.level.AlterGroundEvent.StateProvider;
@@ -184,176 +144,10 @@ public class EventHooks {
         return event;
     }
 
-    public static boolean doPlayerHarvestCheck(Player player, BlockState state, boolean success) {
-        PlayerEvent.HarvestCheck event = new PlayerEvent.HarvestCheck(player, state, success);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event.canHarvest();
-    }
-
-    public static float getBreakSpeed(Player player, BlockState state, float original, BlockPos pos) {
-        PlayerEvent.BreakSpeed event = new PlayerEvent.BreakSpeed(player, state, original, pos);
-        return (ShearAPIEvent.EVENT_BUS.post(event).isCanceled() ? -1 : event.getNewSpeed());
-    }
-
-    public static void onPlayerDestroyItem(Player player, ItemStack stack, @Nullable InteractionHand hand) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerDestroyItemEvent(player, stack, hand));
-    }
-
-    /**
-     * Internal, should only be called via {@link SpawnPlacements#checkSpawnRules}.
-     * 
-     * @see SpawnPlacementCheck
-     */
-    @ApiStatus.Internal
-    public static boolean checkSpawnPlacements(EntityType<?> entityType, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random, boolean defaultResult) {
-        var event = new SpawnPlacementCheck(entityType, level, spawnType, pos, random, defaultResult);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event.getResult() == Result.DEFAULT ? defaultResult : event.getResult() == Result.ALLOW;
-    }
-
-    /**
-     * Checks if the current position of the passed mob is valid for spawning, by firing {@link PositionCheck}.<br>
-     * The default check is to perform the logical and of {@link Mob#checkSpawnRules} and {@link Mob#checkSpawnObstruction}.<br>
-     * 
-     * @param mob       The mob being spawned.
-     * @param level     The level the mob will be added to, if successful.
-     * @param spawnType The spawn type of the spawn.
-     * @return True, if the position is valid, as determined by the contract of {@link PositionCheck}.
-     * @see PositionCheck
-     */
-    public static boolean checkSpawnPosition(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType) {
-        var event = new PositionCheck(mob, level, spawnType, null);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        if (event.getResult() == Result.DEFAULT) {
-            return mob.checkSpawnRules(level, spawnType) && mob.checkSpawnObstruction(level);
-        }
-        return event.getResult() == Result.ALLOW;
-    }
-
-    /**
-     * Specialized variant of {@link #checkSpawnPosition} for spawners, as they have slightly different checks.
-     * 
-     * @see #CheckSpawnPosition
-     * @implNote See in-line comments about custom spawn rules.
-     */
-    public static boolean checkSpawnPositionSpawner(Mob mob, ServerLevelAccessor level, MobSpawnType spawnType, SpawnData spawnData, BaseSpawner spawner) {
-        var event = new PositionCheck(mob, level, spawnType, null);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        if (event.getResult() == Result.DEFAULT) {
-            // Spawners do not evaluate Mob#checkSpawnRules if any custom rules are present. This is despite the fact that these two methods do not check the same things.
-            return (spawnData.getCustomSpawnRules().isPresent() || mob.checkSpawnRules(level, spawnType)) && mob.checkSpawnObstruction(level);
-        }
-        return event.getResult() == Result.ALLOW;
-    }
-
-    /**
-     * Vanilla calls to {@link Mob#finalizeSpawn} are replaced with calls to this method via coremod.<br>
-     * Mods should call this method in place of calling {@link Mob#finalizeSpawn}. Super calls (from within overrides) should not be wrapped.
-     * <p>
-     * When interfacing with this event, write all code as normal, and replace the call to {@link Mob#finalizeSpawn} with a call to this method.<p>
-     * As an example, the following code block:
-     * <code>
-     * 
-     * <pre>
-     * var zombie = new Zombie(level);
-     * zombie.finalizeSpawn(level, difficulty, spawnType, spawnData, spawnTag);
-     * level.tryAddFreshEntityWithPassengers(zombie);
-     * if (zombie.isAddedToWorld()) {
-     *     // Do stuff with your new zombie
-     * }
-     * </pre>
-     * 
-     * </code>
-     * Would become:
-     * <code>
-     * 
-     * <pre>
-     * var zombie = new Zombie(level);
-     * EventHook.onFinalizeSpawn(zombie, level, difficulty, spawnType, spawnData, spawnTag);
-     * level.tryAddFreshEntityWithPassengers(zombie);
-     * if (zombie.isAddedToWorld()) {
-     *     // Do stuff with your new zombie
-     * }
-     * </pre>
-     * 
-     * </code>
-     * The only code that changes is the {@link Mob#finalizeSpawn} call.
-     * 
-     * @return The SpawnGroupData from this event, or null if it was canceled. The return value of this method has no bearing on if the entity will be spawned.
-     * @see MobSpawnEvent.FinalizeSpawn
-     * @see Mob#finalizeSpawn(ServerLevelAccessor, DifficultyInstance, MobSpawnType, SpawnGroupData, CompoundTag)
-     * @apiNote Callers do not need to check if the entity's spawn was cancelled, as the spawn will be blocked by Forge.
-     * @implNote Changes to the signature of this method must be reflected in the method redirector coremod.
-     */
-    @Nullable
-    @SuppressWarnings("deprecation") // Call to deprecated Mob#finalizeSpawn is expected.
-    public static SpawnGroupData onFinalizeSpawn(Mob mob, ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag spawnTag) {
-        var event = new MobSpawnEvent.FinalizeSpawn(mob, level, mob.getX(), mob.getY(), mob.getZ(), difficulty, spawnType, spawnData, spawnTag, null);
-        boolean cancel = ShearAPIEvent.EVENT_BUS.post(event).isCanceled();
-
-        if (!cancel) {
-            mob.finalizeSpawn(level, event.getDifficulty(), event.getSpawnType(), event.getSpawnData(), event.getSpawnTag());
-        }
-
-        return cancel ? null : event.getSpawnData();
-    }
-
-    /**
-     * Returns the FinalizeSpawn event instance, or null if it was canceled.<br>
-     * This is separate since mob spawners perform special finalizeSpawn handling when NBT data is present, but we still want to fire the event.<br>
-     * This overload is also the only way to pass through a {@link BaseSpawner} instance.
-     * 
-     * @see #onFinalizeSpawn
-     */
-    @Nullable
-    public static MobSpawnEvent.FinalizeSpawn onFinalizeSpawnSpawner(Mob mob, ServerLevelAccessor level, DifficultyInstance difficulty, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag spawnTag, BaseSpawner spawner) {
-        var event = new MobSpawnEvent.FinalizeSpawn(mob, level, mob.getX(), mob.getY(), mob.getZ(), difficulty, MobSpawnType.SPAWNER, spawnData, spawnTag, spawner);
-        boolean cancel = ShearAPIEvent.EVENT_BUS.post(event).isCanceled();
-        return cancel ? null : event;
-    }
-
-    public static PlayerSpawnPhantomsEvent onPhantomSpawn(ServerPlayer player, int phantomsToSpawn) {
-        var event = new PlayerSpawnPhantomsEvent(player, phantomsToSpawn);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event;
-    }
-
-    public static Result canEntityDespawn(Mob entity, ServerLevelAccessor level) {
-        AllowDespawn event = new AllowDespawn(entity, level);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event.getResult();
-    }
-
     public static int getItemBurnTime(ItemStack itemStack, int burnTime, @Nullable RecipeType<?> recipeType) {
         FurnaceFuelBurnTimeEvent event = new FurnaceFuelBurnTimeEvent(itemStack, burnTime, recipeType);
         ShearAPIEvent.EVENT_BUS.post(event);
         return event.getBurnTime();
-    }
-
-    public static int getExperienceDrop(LivingEntity entity, Player attackingPlayer, int originalExperience) {
-        LivingExperienceDropEvent event = new LivingExperienceDropEvent(entity, attackingPlayer, originalExperience);
-        if (ShearAPIEvent.EVENT_BUS.post(event).isCanceled()) {
-            return 0;
-        }
-        return event.getDroppedExperience();
-    }
-
-    public static int getMaxSpawnPackSize(Mob entity) {
-        LivingPackSizeEvent maxCanSpawnEvent = new LivingPackSizeEvent(entity);
-        ShearAPIEvent.EVENT_BUS.post(maxCanSpawnEvent);
-        return maxCanSpawnEvent.getResult() == Result.ALLOW ? maxCanSpawnEvent.getMaxPackSize() : entity.getMaxSpawnClusterSize();
-    }
-
-    public static Component getPlayerDisplayName(Player player, Component username) {
-        PlayerEvent.NameFormat event = new PlayerEvent.NameFormat(player, username);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event.getDisplayname();
-    }
-
-    public static Component getPlayerTabListDisplayName(Player player) {
-        PlayerEvent.TabListNameFormat event = new PlayerEvent.TabListNameFormat(player);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event.getDisplayName();
     }
 
     public static BlockState fireFluidPlaceBlockEvent(LevelAccessor level, BlockPos pos, BlockPos liquidPos, BlockState state) {
@@ -362,98 +156,10 @@ public class EventHooks {
         return event.getNewState();
     }
 
-    public static ItemTooltipEvent onItemTooltip(ItemStack itemStack, @Nullable Player entityPlayer, List<Component> list, TooltipFlag flags) {
-        ItemTooltipEvent event = new ItemTooltipEvent(itemStack, entityPlayer, list, flags);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event;
-    }
-
-    public static SummonAidEvent fireZombieSummonAid(Zombie zombie, Level level, int x, int y, int z, LivingEntity attacker, double summonChance) {
-        SummonAidEvent summonEvent = new SummonAidEvent(zombie, level, x, y, z, attacker, summonChance);
-        ShearAPIEvent.EVENT_BUS.post(summonEvent);
-        return summonEvent;
-    }
-
-    public static boolean onEntityStruckByLightning(Entity entity, LightningBolt bolt) {
-        return ShearAPIEvent.EVENT_BUS.post(new EntityStruckByLightningEvent(entity, bolt)).isCanceled();
-    }
-
-    public static int onItemUseStart(LivingEntity entity, ItemStack item, int duration) {
-        var event = new LivingEntityUseItemEvent.Start(entity, item, duration);
-        return ShearAPIEvent.EVENT_BUS.post(event).isCanceled() ? -1 : event.getDuration();
-    }
-
-    public static int onItemUseTick(LivingEntity entity, ItemStack item, int duration) {
-        var event = new LivingEntityUseItemEvent.Tick(entity, item, duration);
-        return ShearAPIEvent.EVENT_BUS.post(event).isCanceled() ? -1 : event.getDuration();
-    }
-
-    public static boolean onUseItemStop(LivingEntity entity, ItemStack item, int duration) {
-        return ShearAPIEvent.EVENT_BUS.post(new LivingEntityUseItemEvent.Stop(entity, item, duration)).isCanceled();
-    }
-
-    public static ItemStack onItemUseFinish(LivingEntity entity, ItemStack item, int duration, ItemStack result) {
-        LivingEntityUseItemEvent.Finish event = new LivingEntityUseItemEvent.Finish(entity, item, duration, result);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event.getResultStack();
-    }
-
-    public static void onStartEntityTracking(Entity entity, Player player) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerEvent.StartTracking(player, entity));
-    }
-
-    public static void onStopEntityTracking(Entity entity, Player player) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerEvent.StopTracking(player, entity));
-    }
-
-    public static void firePlayerLoadingEvent(Player player, File playerDirectory, String uuidString) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerEvent.LoadFromFile(player, playerDirectory, uuidString));
-    }
-
-    public static void firePlayerSavingEvent(Player player, File playerDirectory, String uuidString) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerEvent.SaveToFile(player, playerDirectory, uuidString));
-    }
-
-    public static void firePlayerLoadingEvent(Player player, PlayerDataStorage playerFileData, String uuidString) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerEvent.LoadFromFile(player, playerFileData.getPlayerDataFolder(), uuidString));
-    }
-
     @Nullable
     public static BlockState onToolUse(BlockState originalState, UseOnContext context, ToolAction toolAction, boolean simulate) {
         BlockToolModificationEvent event = new BlockToolModificationEvent(originalState, context, toolAction, simulate);
         return ShearAPIEvent.EVENT_BUS.post(event).isCanceled() ? null : event.getFinalState();
-    }
-
-    public static int onApplyBonemeal(Player player, Level level, BlockPos pos, BlockState state, ItemStack stack) {
-        BonemealEvent event = new BonemealEvent(player, level, pos, state, stack);
-        if (ShearAPIEvent.EVENT_BUS.post(event).isCanceled()) return -1;
-        if (event.getResult() == Result.ALLOW) {
-            if (!level.isClientSide)
-                stack.shrink(1);
-            return 1;
-        }
-        return 0;
-    }
-
-    @Nullable
-    public static InteractionResultHolder<ItemStack> onBucketUse(Player player, Level level, ItemStack stack, @Nullable HitResult target) {
-        FillBucketEvent event = new FillBucketEvent(player, stack, level, target);
-        if (ShearAPIEvent.EVENT_BUS.post(event).isCanceled()) return new InteractionResultHolder<ItemStack>(InteractionResult.FAIL, stack);
-
-        if (event.getResult() == Result.ALLOW) {
-            if (player.getAbilities().instabuild)
-                return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
-
-            stack.shrink(1);
-            if (stack.isEmpty())
-                return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, event.getFilledBucket());
-
-            if (!player.getInventory().add(event.getFilledBucket()))
-                player.drop(event.getFilledBucket(), false);
-
-            return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
-        }
-        return null;
     }
 
     public static PlayLevelSoundEvent.AtEntity onPlaySoundAtEntity(Entity entity, Holder<SoundEvent> name, SoundSource category, float volume, float pitch) {
@@ -466,55 +172,6 @@ public class EventHooks {
         PlayLevelSoundEvent.AtPosition event = new PlayLevelSoundEvent.AtPosition(level, new Vec3(x, y, z), name, category, volume, pitch);
         ShearAPIEvent.EVENT_BUS.post(event);
         return event;
-    }
-
-    public static int onItemExpire(ItemEntity entity, ItemStack item) {
-        if (item.isEmpty()) return -1;
-        ItemExpireEvent event = new ItemExpireEvent(entity, (item.isEmpty() ? 6000 : item.getItem().getEntityLifespan(item, entity.level())));
-        if (!ShearAPIEvent.EVENT_BUS.post(event).isCanceled()) return -1;
-        return event.getExtraLife();
-    }
-
-    public static int onItemPickup(ItemEntity entityItem, Player player) {
-        var event = new EntityItemPickupEvent(player, entityItem);
-        if (ShearAPIEvent.EVENT_BUS.post(event).isCanceled()) return -1;
-        return event.getResult() == Result.ALLOW ? 1 : 0;
-    }
-
-    public static boolean canMountEntity(Entity entityMounting, Entity entityBeingMounted, boolean isMounting) {
-        boolean isCanceled = ShearAPIEvent.EVENT_BUS.post(new EntityMountEvent(entityMounting, entityBeingMounted, entityMounting.level(), isMounting)).isCanceled();
-
-        if (isCanceled) {
-            entityMounting.absMoveTo(entityMounting.getX(), entityMounting.getY(), entityMounting.getZ(), entityMounting.yRotO, entityMounting.xRotO);
-            return false;
-        } else
-            return true;
-    }
-
-    public static boolean onAnimalTame(Animal animal, Player tamer) {
-        return ShearAPIEvent.EVENT_BUS.post(new AnimalTameEvent(animal, tamer)).isCanceled();
-    }
-
-    public static Player.BedSleepingProblem onPlayerSleepInBed(Player player, Optional<BlockPos> pos) {
-        PlayerSleepInBedEvent event = new PlayerSleepInBedEvent(player, pos);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event.getResultStatus();
-    }
-
-    public static void onPlayerWakeup(Player player, boolean wakeImmediately, boolean updateLevel) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerWakeUpEvent(player, wakeImmediately, updateLevel));
-    }
-
-    public static void onPlayerFall(Player player, float distance, float multiplier) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerFlyableFallEvent(player, distance, multiplier));
-    }
-
-    public static boolean onPlayerSpawnSet(Player player, ResourceKey<Level> levelKey, BlockPos pos, boolean forced) {
-        return ShearAPIEvent.EVENT_BUS.post(new PlayerSetSpawnEvent(player, levelKey, pos, forced)).isCanceled();
-    }
-
-    public static void onPlayerClone(Player player, Player oldPlayer, boolean wasDeath) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerEvent.Clone(player, oldPlayer, wasDeath));
     }
 
     public static boolean onExplosionStart(Level level, Explosion explosion) {
@@ -540,11 +197,6 @@ public class EventHooks {
         return ShearAPIEvent.EVENT_BUS.post(new LevelEvent.CreateSpawnPosition(level, settings)).isCanceled();
     }
 
-    public static float onLivingHeal(LivingEntity entity, float amount) {
-        LivingHealEvent event = new LivingHealEvent(entity, amount);
-        return (ShearAPIEvent.EVENT_BUS.post(event).isCanceled() ? 0 : event.getAmount());
-    }
-
     public static boolean onPotionAttemptBrew(NonNullList<ItemStack> stacks) {
         NonNullList<ItemStack> tmp = NonNullList.withSize(stacks.size(), ItemStack.EMPTY);
         for (int x = 0; x < tmp.size(); x++)
@@ -566,53 +218,6 @@ public class EventHooks {
 
     public static void onPotionBrewed(NonNullList<ItemStack> brewingItemStacks) {
         ShearAPIEvent.EVENT_BUS.post(new PotionBrewEvent.Post(brewingItemStacks));
-    }
-
-    public static void onPlayerBrewedPotion(Player player, ItemStack stack) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerBrewedPotionEvent(player, stack));
-    }
-
-    public static boolean fireSleepingLocationCheck(LivingEntity player, BlockPos sleepingLocation) {
-        SleepingLocationCheckEvent evt = new SleepingLocationCheckEvent(player, sleepingLocation);
-        ShearAPIEvent.EVENT_BUS.post(evt);
-
-        Result canContinueSleep = evt.getResult();
-        if (canContinueSleep == Result.DEFAULT) {
-            return player.getSleepingPos().map(pos -> {
-                BlockState state = player.level().getBlockState(pos);
-                return state.getBlock().isBed(state, player.level(), pos, player);
-            }).orElse(false);
-        } else
-            return canContinueSleep == Result.ALLOW;
-    }
-
-    public static boolean fireSleepingTimeCheck(Player player, Optional<BlockPos> sleepingLocation) {
-        SleepingTimeCheckEvent evt = new SleepingTimeCheckEvent(player, sleepingLocation);
-        ShearAPIEvent.EVENT_BUS.post(evt);
-
-        Result canContinueSleep = evt.getResult();
-        if (canContinueSleep == Result.DEFAULT)
-            return !player.level().isDay();
-        else
-            return canContinueSleep == Result.ALLOW;
-    }
-
-    public static InteractionResultHolder<ItemStack> onArrowNock(ItemStack item, Level level, Player player, InteractionHand hand, boolean hasAmmo) {
-        ArrowNockEvent event = new ArrowNockEvent(player, item, hand, level, hasAmmo);
-        if (ShearAPIEvent.EVENT_BUS.post(event).isCanceled())
-            return new InteractionResultHolder<ItemStack>(InteractionResult.FAIL, item);
-        return event.getAction();
-    }
-
-    public static int onArrowLoose(ItemStack stack, Level level, Player player, int charge, boolean hasAmmo) {
-        ArrowLooseEvent event = new ArrowLooseEvent(player, stack, level, charge, hasAmmo);
-        if (ShearAPIEvent.EVENT_BUS.post(event).isCanceled())
-            return -1;
-        return event.getCharge();
-    }
-
-    public static boolean onProjectileImpact(Projectile projectile, HitResult ray) {
-        return ShearAPIEvent.EVENT_BUS.post(new ProjectileImpactEvent(projectile, ray)).isCanceled();
     }
 
     public static LootTable loadLootTable(ResourceLocation name, LootTable table) {
@@ -641,21 +246,6 @@ public class EventHooks {
         EnchantmentLevelSetEvent e = new EnchantmentLevelSetEvent(level, pos, enchantRow, power, itemStack, enchantmentLevel);
         ShearAPIEvent.EVENT_BUS.post(e);
         return e.getEnchantLevel();
-    }
-
-    public static boolean onEntityDestroyBlock(LivingEntity entity, BlockPos pos, BlockState state) {
-        return !ShearAPIEvent.EVENT_BUS.post(new LivingDestroyBlockEvent(entity, pos, state)).isCanceled();
-    }
-
-    public static boolean getMobGriefingEvent(Level level, @Nullable Entity entity) {
-        if (entity == null)
-            return level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING);
-
-        EntityMobGriefingEvent event = new EntityMobGriefingEvent(entity);
-        ShearAPIEvent.EVENT_BUS.post(event);
-
-        Result result = event.getResult();
-        return result == Result.DEFAULT ? level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING) : result == Result.ALLOW;
     }
 
     public static SaplingGrowTreeEvent blockGrowFeature(LevelAccessor level, RandomSource randomSource, BlockPos pos, @Nullable Holder<ConfiguredFeature<?, ?>> holder) {
@@ -722,94 +312,6 @@ public class EventHooks {
         ShearAPIEvent.EVENT_BUS.post(event);
     }
 
-    public static EntityEvent.Size getEntitySizeForge(Entity entity, Pose pose, EntityDimensions size, float eyeHeight) {
-        EntityEvent.Size evt = new EntityEvent.Size(entity, pose, size, eyeHeight);
-        ShearAPIEvent.EVENT_BUS.post(evt);
-        return evt;
-    }
-
-    public static EntityEvent.Size getEntitySizeForge(Entity entity, Pose pose, EntityDimensions oldSize, EntityDimensions newSize, float newEyeHeight) {
-        EntityEvent.Size evt = new EntityEvent.Size(entity, pose, oldSize, newSize, entity.getEyeHeight(), newEyeHeight);
-        ShearAPIEvent.EVENT_BUS.post(evt);
-        return evt;
-    }
-
-    public static boolean canLivingConvert(LivingEntity entity, EntityType<? extends LivingEntity> outcome, Consumer<Integer> timer) {
-        return !ShearAPIEvent.EVENT_BUS.post(new LivingConversionEvent.Pre(entity, outcome, timer)).isCanceled();
-    }
-
-    public static void onLivingConvert(LivingEntity entity, LivingEntity outcome) {
-        ShearAPIEvent.EVENT_BUS.post(new LivingConversionEvent.Post(entity, outcome));
-    }
-
-    public static EntityTeleportEvent.TeleportCommand onEntityTeleportCommand(Entity entity, double targetX, double targetY, double targetZ) {
-        EntityTeleportEvent.TeleportCommand event = new EntityTeleportEvent.TeleportCommand(entity, targetX, targetY, targetZ);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event;
-    }
-
-    public static EntityTeleportEvent.SpreadPlayersCommand onEntityTeleportSpreadPlayersCommand(Entity entity, double targetX, double targetY, double targetZ) {
-        EntityTeleportEvent.SpreadPlayersCommand event = new EntityTeleportEvent.SpreadPlayersCommand(entity, targetX, targetY, targetZ);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event;
-    }
-
-    public static EntityTeleportEvent.EnderEntity onEnderTeleport(LivingEntity entity, double targetX, double targetY, double targetZ) {
-        EntityTeleportEvent.EnderEntity event = new EntityTeleportEvent.EnderEntity(entity, targetX, targetY, targetZ);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event;
-    }
-
-    @ApiStatus.Internal
-    public static EntityTeleportEvent.EnderPearl onEnderPearlLand(ServerPlayer entity, double targetX, double targetY, double targetZ, ThrownEnderpearl pearlEntity, float attackDamage, HitResult hitResult) {
-        EntityTeleportEvent.EnderPearl event = new EntityTeleportEvent.EnderPearl(entity, targetX, targetY, targetZ, pearlEntity, attackDamage, hitResult);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event;
-    }
-
-    public static EntityTeleportEvent.ChorusFruit onChorusFruitTeleport(LivingEntity entity, double targetX, double targetY, double targetZ) {
-        EntityTeleportEvent.ChorusFruit event = new EntityTeleportEvent.ChorusFruit(entity, targetX, targetY, targetZ);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event;
-    }
-
-    public static boolean onPermissionChanged(GameProfile gameProfile, int newLevel, PlayerList playerList) {
-        int oldLevel = playerList.getServer().getProfilePermissions(gameProfile);
-        ServerPlayer player = playerList.getPlayer(gameProfile.getId());
-        if (newLevel != oldLevel && player != null) {
-            return ShearAPIEvent.EVENT_BUS.post(new PermissionsChangedEvent(player, newLevel, oldLevel)).isCanceled();
-        }
-        return false;
-    }
-
-    public static void firePlayerChangedDimensionEvent(Player player, ResourceKey<Level> fromDim, ResourceKey<Level> toDim) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerEvent.PlayerChangedDimensionEvent(player, fromDim, toDim));
-    }
-
-    public static void firePlayerLoggedIn(Player player) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerEvent.PlayerLoggedInEvent(player));
-    }
-
-    public static void firePlayerLoggedOut(Player player) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerEvent.PlayerLoggedOutEvent(player));
-    }
-
-    public static void firePlayerRespawnEvent(Player player, boolean endConquered) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerEvent.PlayerRespawnEvent(player, endConquered));
-    }
-
-    public static void firePlayerItemPickupEvent(Player player, ItemEntity item, ItemStack clone) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerEvent.ItemPickupEvent(player, item, clone));
-    }
-
-    public static void firePlayerCraftingEvent(Player player, ItemStack crafted, Container craftMatrix) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerEvent.ItemCraftedEvent(player, crafted, craftMatrix));
-    }
-
-    public static void firePlayerSmeltedEvent(Player player, ItemStack smelted) {
-        ShearAPIEvent.EVENT_BUS.post(new PlayerEvent.ItemSmeltedEvent(player, smelted));
-    }
-
     public static void onRenderTickStart(float timer) {
         ShearAPIEvent.EVENT_BUS.post(new TickEvent.RenderTickEvent(TickEvent.Phase.START, timer));
     }
@@ -855,30 +357,6 @@ public class EventHooks {
         if (ShearAPIEvent.EVENT_BUS.post(event).isCanceled())
             return WeightedRandomList.create();
         return WeightedRandomList.create(event.getSpawnerDataList());
-    }
-
-    public static StatAwardEvent onStatAward(Player player, Stat<?> stat, int value) {
-        StatAwardEvent event = new StatAwardEvent(player, stat, value);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event;
-    }
-
-    @ApiStatus.Internal
-    public static void onAdvancementEarnedEvent(Player player, AdvancementHolder earned) {
-        ShearAPIEvent.EVENT_BUS.post(new AdvancementEarnEvent(player, earned));
-    }
-
-    @ApiStatus.Internal
-    public static void onAdvancementProgressedEvent(Player player, AdvancementHolder progressed, AdvancementProgress advancementProgress, String criterion, ProgressType progressType) {
-        ShearAPIEvent.EVENT_BUS.post(new AdvancementProgressEvent(player, progressed, advancementProgress, criterion, progressType));
-    }
-
-    public static boolean onEffectRemoved(LivingEntity entity, MobEffect effect, @Nullable EffectCure cure) {
-        return ShearAPIEvent.EVENT_BUS.post(new MobEffectEvent.Remove(entity, effect, cure)).isCanceled();
-    }
-
-    public static boolean onEffectRemoved(LivingEntity entity, MobEffectInstance effectInstance, @Nullable EffectCure cure) {
-        return ShearAPIEvent.EVENT_BUS.post(new MobEffectEvent.Remove(entity, effectInstance, cure)).isCanceled();
     }
 
     /**
@@ -941,18 +419,5 @@ public class EventHooks {
 
         for (var entry : entries)
             output.accept(entry.getKey(), entry.getValue());
-    }
-
-    /**
-     * Fires the mob split event. Returns the event for cancellation checking.
-     * 
-     * @param parent   The parent mob, which is in the process of being removed.
-     * @param children All child mobs that would have normally spawned.
-     * @return The event object.
-     */
-    public static MobSplitEvent onMobSplit(Mob parent, List<Mob> children) {
-        var event = new MobSplitEvent(parent, children);
-        ShearAPIEvent.EVENT_BUS.post(event);
-        return event;
     }
 }

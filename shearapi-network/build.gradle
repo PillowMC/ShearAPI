@@ -1,0 +1,4 @@
+dependencies {
+    api project(path: ":shearapi-utils", configuration: "namedElements")
+    api project(path: ":shearapi-runtime", configuration: "namedElements")
+}

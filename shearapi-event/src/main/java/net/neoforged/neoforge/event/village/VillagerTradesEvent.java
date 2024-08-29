@@ -11,7 +11,6 @@ import net.minecraft.world.entity.npc.VillagerData;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.neoforged.bus.api.Event;
-import net.neoforged.neoforge.common.BasicItemListing;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 
 /**

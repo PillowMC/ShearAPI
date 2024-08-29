@@ -16,8 +16,8 @@ import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.neoforged.bus.api.Event;
-import net.neoforged.fml.ModLoader;
 import net.neoforged.neoforge.common.conditions.ICondition;
+import net.pillowmc.shearapi.runtime.ShearAPIRuntime;
 
 /**
  * The main ResourceManager is recreated on each reload, just after {@link ReloadableServerResources}'s creation.
@@ -81,7 +81,7 @@ public class AddReloadListenerEvent extends Event {
 
         @Override
         public CompletableFuture<Void> reload(final PreparationBarrier stage, final ResourceManager resourceManager, final ProfilerFiller preparationsProfiler, final ProfilerFiller reloadProfiler, final Executor backgroundExecutor, final Executor gameExecutor) {
-            if (ModLoader.isLoadingStateValid())
+            if (ShearAPIRuntime.getRuntime().isLoadingStateVaild())
                 return wrapped.reload(stage, resourceManager, preparationsProfiler, reloadProfiler, backgroundExecutor, gameExecutor);
             else
                 return CompletableFuture.completedFuture(null);

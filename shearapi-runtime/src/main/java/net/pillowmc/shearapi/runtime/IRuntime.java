@@ -4,7 +4,10 @@ import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.IEventBus;
 
 public interface IRuntime {
+    boolean isLoadingStateVaild();
+    boolean isProduction();
     <T extends Event & IModBusEvent> void postModBusEventWrapContainerInModOrder(T event);
     <T extends Event & IModBusEvent> void postModBusEvent(T event);
     IEventBus getModBus();
+    boolean isModLoaded(String modid);
 }

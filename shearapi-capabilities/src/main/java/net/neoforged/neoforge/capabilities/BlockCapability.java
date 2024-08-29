@@ -141,6 +141,21 @@ public final class BlockCapability<T, C> extends BaseCapability<T, C> {
     @ApiStatus.Internal
     @Nullable
     public T getCapability(Level level, BlockPos pos, @Nullable BlockState state, @Nullable BlockEntity blockEntity, C context) {
+        var ret = shearapi$getCapabilityWithoutGeneric(level, pos, state, blockEntity, context);
+        if (ret != null)
+            return ret;
+
+        for (var provider : this.genericProviders) {
+            ret = provider.getCapability(level, pos, state, blockEntity, context);
+            if (ret != null)
+                return ret;
+        }
+        return null;
+    }
+
+    @ApiStatus.Internal
+    @Nullable
+    public T shearapi$getCapabilityWithoutGeneric(Level level, BlockPos pos, @Nullable BlockState state, @Nullable BlockEntity blockEntity, C context) {
         // Convert pos to immutable, it's easy to forget otherwise
         pos = pos.immutable();
 
@@ -157,12 +172,6 @@ public final class BlockCapability<T, C> extends BaseCapability<T, C> {
         }
 
         for (var provider : providers.getOrDefault(state.getBlock(), List.of())) {
-            var ret = provider.getCapability(level, pos, state, blockEntity, context);
-            if (ret != null)
-                return ret;
-        }
-
-        for (var provider : this.genericProviders) {
             var ret = provider.getCapability(level, pos, state, blockEntity, context);
             if (ret != null)
                 return ret;

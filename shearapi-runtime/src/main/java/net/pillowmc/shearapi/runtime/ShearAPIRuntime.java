@@ -6,6 +6,7 @@ import net.fabricmc.loader.api.FabricLoader;
 
 public enum ShearAPIRuntime {
     ;
+    public static final String MOD_ID = "neoforge";
     private static IRuntime INSTANCE = null;
     public static IRuntime getRuntime() {
         if (INSTANCE != null) {
@@ -18,7 +19,7 @@ public enum ShearAPIRuntime {
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                     | InvocationTargetException | NoSuchMethodException | SecurityException
                     | ClassNotFoundException e) {
-                throw new RuntimeException("Pillow Loader detected, but ShearAPI (With Pillow) is missing!");
+                throw new RuntimeException("Pillow Loader is detected, but ShearAPI (With Pillow) is missing!");
             }
         } else {
             try {
@@ -26,7 +27,7 @@ public enum ShearAPIRuntime {
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                     | InvocationTargetException | NoSuchMethodException | SecurityException
                     | ClassNotFoundException e) {
-                throw new RuntimeException("Pillow Loader not detected, but ShearAPI (Without Pillow) is missing!", e);
+                throw new RuntimeException("Pillow Loader not is detected, but ShearAPI (Without Pillow) is missing!", e);
             }
         }
     }

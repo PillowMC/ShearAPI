@@ -78,7 +78,7 @@ public class RegisterCapabilitiesEvent extends Event implements IModBusEvent {
      * {@link Level#invalidateCapabilities(BlockPos)} MUST be called to notify the caches.</b>
      * See {@link IBlockCapabilityProvider} for details.
      */
-    public <T, C> void registerGenericBlock(BlockCapability<T, C> capability, IBlockCapabilityProvider<T, C> provider) {
+    public <T, C> void shearapi$registerGenericBlock(BlockCapability<T, C> capability, IBlockCapabilityProvider<T, C> provider) {
         Objects.requireNonNull(provider);
         capability.genericProviders.add(provider);
     }
@@ -130,7 +130,7 @@ public class RegisterCapabilitiesEvent extends Event implements IModBusEvent {
     /**
      * Register a generic capability provider for items. (ShearAPI)
      */
-    public <T, C> void registerGenericItem(ItemCapability<T, C> capability, ICapabilityProvider<ItemStack, C, T> provider) {
+    public <T, C> void shearapi$registerGenericItem(ItemCapability<T, C> capability, ICapabilityProvider<ItemStack, C, T> provider) {
         Objects.requireNonNull(provider);
         capability.genericProviders.add(provider);
     }

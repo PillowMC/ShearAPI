@@ -21,7 +21,17 @@
 		"fabric-api": "*"
 	},
 	"accessWidener": "shearapi-utils.accesswidener",
+	"mixins": [
+		{
+			"config": "shearapi-utils.client.mixin.json",
+			"environment": "client"
+		},
+		"shearapi-utils.mixin.json"
+	],
 	"custom": {
+		"loom:injected_interfaces": {
+			"net/minecraft/class_1946": ["net/neoforged/neoforge/common/util/ITeleporter"]
+		},
 		"modmenu": {
 			"parent": "shearapi",
             "badges": ["library"]

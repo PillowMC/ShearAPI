@@ -1,0 +1,14 @@
+repositories {
+    maven {
+        url "https://jitpack.io/"
+        name "Jitpack"
+    }
+}
+
+dependencies {
+    api project(path: ":shearapi-registries", configuration: "namedElements")
+    api project(path: ":shearapi-utils", configuration: "namedElements")
+    api project(path: ":shearapi-runtime", configuration: "namedElements")
+    api project(path: ":shearapi-entity", configuration: "namedElements")
+    modImplementation "com.github.Chocohead:Fabric-ASM:v${project.fabric_asm_version}"
+}

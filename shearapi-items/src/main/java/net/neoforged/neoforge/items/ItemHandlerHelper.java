@@ -12,6 +12,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.attachment.AttachmentHolder;
 import net.neoforged.neoforge.items.wrapper.PlayerMainInvWrapper;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,7 +33,7 @@ public class ItemHandlerHelper {
 
     public static boolean canItemStacksStack(ItemStack a, ItemStack b) {
         if (a.isEmpty() || !ItemStack.isSameItem(a, b) || a.hasTag() != b.hasTag())
-            return false;
+            return false;   
 
         return (!a.hasTag() || a.getTag().equals(b.getTag())) && a.areAttachmentsCompatible(b);
     }
@@ -40,7 +41,7 @@ public class ItemHandlerHelper {
     /**
      * A relaxed version of canItemStacksStack that stacks itemstacks with different metadata if they don't have subtypes.
      * This usually only applies when players pick up items.
-     */
+     */ 
     public static boolean canItemStacksStackRelaxed(ItemStack a, ItemStack b) {
         if (a.isEmpty() || b.isEmpty() || a.getItem() != b.getItem())
             return false;

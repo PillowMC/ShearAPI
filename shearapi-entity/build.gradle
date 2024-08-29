@@ -1,0 +1,10 @@
+loom {
+    accessWidenerPath = file("src/main/resources/shearapi-entity.accesswidener")
+}
+
+dependencies {
+    compileOnly project(path: ":shearapi-compile-fml", configuration: "namedElements")
+    api project(path: ":shearapi-runtime", configuration: "namedElements")
+    api project(path: ":shearapi-event", configuration: "namedElements")
+    api project(path: ":shearapi-utils", configuration: "namedElements")
+}

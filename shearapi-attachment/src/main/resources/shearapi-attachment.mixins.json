@@ -1,0 +1,26 @@
+{
+  "required": true,
+  "package": "net.pillowmc.shearapi.attachment.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "BlockEntityMixin",
+    "BookCloningRecipeMixin",
+    "CauldronInteractionMixin",
+    "ChunkAccessMixin",
+    "ChunkSerializerMixin",
+    "CompassItemMixin",
+    "EnchantmentMenuMixin",
+    "FoodOnAStickItemMixin",
+    "FriendlyByteBufMixin",
+    "ImposterProtoChunkMixin",
+    "ItemEntityMixin",
+    "ItemStackMixin",
+    "LevelChunkMixin",
+    "ServerGamePacketListenerImplMixin",
+    "ServerLevelMixin",
+    "SmithingTransformRecipeMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

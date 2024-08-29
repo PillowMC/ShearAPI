@@ -20,7 +20,8 @@
 		"java": ">=17",
 		"fabric-api": "*",
 		"shearapi-utils": "~${version}",
-		"shearapi-capabilities": "~${version}"
+		"shearapi-capabilities": "~${version}",
+		"shearapi-attachment": "~${version}"
 	},
 	"custom": {
 		"modmenu": {

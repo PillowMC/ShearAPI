@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "shearapi-player",
+	"version": "${version}",
+	"name": "Shear API (Player)",
+	"description": "Port NeoForge \"API\" of player to Fabric",
+	"authors": [
+		"PillowMC"
+	],
+	"contact": {
+		"homepage": "https://github.com/PillowMC/ShearAPI",
+		"sources": "https://github.com/PillowMC/ShearAPI"
+	},
+	"license": "LGPL-2.1",
+	"icon": "assets/shearapi-player/icon.png",
+	"environment": "*",
+	"depends": {
+		"fabricloader": ">=0.15.6",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*",
+		"shearapi-entity": "~${version}",
+		"shearapi-event": "~${version}"
+	},
+	"custom": {
+		"modmenu": {
+			"parent": "shearapi",
+            "badges": ["library"]
+		}
+	}
+}

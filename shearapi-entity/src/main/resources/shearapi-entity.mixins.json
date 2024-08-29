@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.pillowmc.shearapi.entity.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "EntityMixin",
+    "MobMixin",
+    "SpawnUtilMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

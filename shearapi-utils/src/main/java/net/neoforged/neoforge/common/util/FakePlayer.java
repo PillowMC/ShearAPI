@@ -73,7 +73,8 @@ import net.minecraft.stats.Stat;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.RelativeMovement;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
+import net.pillowmc.shearapi.utils.ServerUtils;
+
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -113,7 +114,7 @@ public class FakePlayer extends ServerPlayer {
     @Override
     @Nullable
     public MinecraftServer getServer() {
-        return ServerLifecycleHooks.getCurrentServer();
+        return ServerUtils.getCurrentServer();
     }
 
     @ParametersAreNonnullByDefault

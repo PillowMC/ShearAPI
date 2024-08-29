@@ -30,7 +30,6 @@ public class ServerLevelMixin implements ServerLevelInjection {
 
     @Override
     public void cleanCapabilityListenerReferences() {
-        // TODO Auto-generated method stub
         capListenerHolder.clean();
     }
     

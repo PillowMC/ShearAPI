@@ -3,7 +3,7 @@
 	"id": "shearapi",
 	"version": "${version}",
 	"name": "Shear API",
-	"description": "Port NeoForge \"API\" to Fabric",
+	"description": "Port NeoForge \"API\" to Fabric, targeting 20.4.200",
 	"authors": [
 		"PillowMC"
 	],
@@ -35,8 +35,10 @@
 		"java": ">=17",
 		"fabric-api": "*"
 	},
-	"provides": ["neoforge"],
 	"custom": {
+		"pillow-provided": {
+			"neoforge": "20.4.999"
+		},
 		"modmenu": {
 			"badges": ["library"]
 		}

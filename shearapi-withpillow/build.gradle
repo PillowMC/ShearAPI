@@ -7,6 +7,6 @@ repositories {
 
 dependencies {
     implementation "net.neoforged.fancymodloader:loader:${project.fancy_mod_loader_version}"
-    implementation project(path: ":shearapi-runtime", configuration: "namedElements")
-    implementation project(path: ":shearapi-withoutpillow", configuration: "namedElements")
+    api project(path: ":shearapi-runtime", configuration: "namedElements")
+    api project(path: ":shearapi-withoutpillow", configuration: "namedElements")
 }

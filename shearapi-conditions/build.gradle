@@ -1,0 +1,9 @@
+loom {
+    accessWidenerPath = file("src/main/resources/shearapi-conditions.accesswidener")
+}
+
+dependencies {
+    api project(path: ":shearapi-registries", configuration: "namedElements")
+    api project(path: ":shearapi-runtime", configuration: "namedElements")
+    api project(path: ":shearapi-utils", configuration: "namedElements")
+}

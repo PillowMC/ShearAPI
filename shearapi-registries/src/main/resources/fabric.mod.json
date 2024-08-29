@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "shearapi-registries",
+	"version": "${version}",
+	"name": "Shear API (Registries)",
+	"description": "Port NeoForge \"API\" of registries to Fabric",
+	"authors": [
+		"PillowMC"
+	],
+	"contact": {
+		"homepage": "https://github.com/PillowMC/ShearAPI",
+		"sources": "https://github.com/PillowMC/ShearAPI"
+	},
+	"license": "LGPL-2.1",
+	"icon": "assets/shearapi-registries/icon.png",
+	"environment": "*",
+	"depends": {
+		"fabricloader": ">=0.15.6",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*",
+		"shearapi-event": "~${version}",
+		"shearapi-runtime": "~${version}"
+	},
+	"accessWidener": "shearapi-registries.accesswidener",
+	"entrypoints": {
+		"main": [
+			"net.pillowmc.shearapi.registries.ShearAPIRegistries"
+		]
+	},
+	"custom": {
+		"modmenu": {
+			"parent": "shearapi",
+            "badges": ["library"]
+		},
+		"loom:injected_interfaces": {
+			"net/minecraft/class_2378": ["net/neoforged/neoforge/registries/IRegistryExtension<TT;>"],
+			"net/minecraft/class_2960": ["net/pillowmc/shearapi/registries/injection/ResourceLocationInjection"]
+		}
+	}
+}

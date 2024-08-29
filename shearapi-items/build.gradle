@@ -1,4 +1,5 @@
 dependencies {
     api project(path: ":shearapi-utils", configuration: "namedElements")
     api project(path: ":shearapi-capabilities", configuration: "namedElements")
+    api project(path: ":shearapi-attachment", configuration: "namedElements")
 }

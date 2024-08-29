@@ -89,7 +89,7 @@ public final class ItemCapability<T, C> extends BaseCapability<T, C> {
 
     @ApiStatus.Internal
     @Nullable
-    public T getCapability(ItemStack stack, C context) {
+    public T shearapi$getCapabilityWithoutGeneric(ItemStack stack, C context) {
         if (stack.isEmpty()) {
             // This check exists in case modders still register capability providers for Items.AIR,
             // for example when registering a provider for all items.
@@ -103,9 +103,17 @@ public final class ItemCapability<T, C> extends BaseCapability<T, C> {
             if (ret != null)
                 return ret;
         }
-    
+        return null;
+    }
+
+    @ApiStatus.Internal
+    @Nullable
+    public T getCapability(ItemStack stack, C context) {
+        var ret = shearapi$getCapabilityWithoutGeneric(stack, context);
+        if (ret != null) return ret;
+
         for (var provider : genericProviders) {
-            var ret = provider.getCapability(stack, context);
+            ret = provider.getCapability(stack, context);
             if (ret != null)
                 return ret;
         }
