@@ -50,7 +50,9 @@ allprojects {
 		inputs.property "version", project.version
 
 		filesMatching("fabric.mod.json") {
-			expand "version": project.version
+			filter {
+				return it.replace("\${version}", project.version)
+			}
 		}
 	}
 
