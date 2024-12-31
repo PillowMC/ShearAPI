@@ -22,6 +22,9 @@
 		"shearapi-utils": "~${version}",
 		"shearapi-runtime": "~${version}"
 	},
+	"entrypoints": {
+		"client": ["net.pillowmc.shearapi.network.client.ShearAPINetworkClient"]
+	},
 	"mixins": ["shearapi-network.mixins.json"],
 	"custom": {
 		"loom:injected_interfaces": {

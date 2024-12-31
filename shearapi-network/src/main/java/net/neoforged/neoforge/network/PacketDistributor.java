@@ -27,7 +27,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.pillowmc.shearapi.utils.ServerUtils;
 
 /**

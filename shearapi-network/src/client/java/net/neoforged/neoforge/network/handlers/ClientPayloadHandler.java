@@ -9,7 +9,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import io.netty.buffer.Unpooled;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import net.minecraft.client.Minecraft;
@@ -20,18 +19,15 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.common.TierSortingRegistry;
 import net.neoforged.neoforge.common.world.AuxiliaryLightManager;
 import net.neoforged.neoforge.common.world.LevelChunkAuxiliaryLightManager;
-import net.neoforged.neoforge.entity.IEntityWithComplexSpawn;
 import net.neoforged.neoforge.network.ConfigSync;
 import net.neoforged.neoforge.network.handling.ConfigurationPayloadContext;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
-import net.neoforged.neoforge.network.payload.AdvancedAddEntityPayload;
 import net.neoforged.neoforge.network.payload.AdvancedContainerSetDataPayload;
 import net.neoforged.neoforge.network.payload.AdvancedOpenScreenPayload;
 import net.neoforged.neoforge.network.payload.AuxiliaryLightDataPayload;
@@ -97,25 +93,6 @@ public class ClientPayloadHandler {
 
     public void handle(TierSortingRegistryPayload payload, IPayloadContext context) {
         TierSortingRegistry.handleSync(payload, context);
-    }
-
-    public void handle(AdvancedAddEntityPayload advancedAddEntityPayload, PlayPayloadContext context) {
-        context.workHandler().submitAsync(
-                () -> {
-                    Entity entity = Objects.requireNonNull(Minecraft.getInstance().level).getEntity(advancedAddEntityPayload.entityId());
-                    if (entity instanceof IEntityWithComplexSpawn entityAdditionalSpawnData) {
-                        final FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.wrappedBuffer(advancedAddEntityPayload.customPayload()));
-                        try {
-                            entityAdditionalSpawnData.readSpawnData(buf);
-                        } finally {
-                            buf.release();
-                        }
-                    }
-                })
-                .exceptionally(e -> {
-                    context.packetHandler().disconnect(Component.translatable("neoforge.network.advanced_add_entity.failed", e.getMessage()));
-                    return null;
-                });
     }
 
     public void handle(AdvancedOpenScreenPayload msg, PlayPayloadContext context) {
