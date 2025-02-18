@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "net.pillowmc.shearapi.holderset.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "HolderSetNamedMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

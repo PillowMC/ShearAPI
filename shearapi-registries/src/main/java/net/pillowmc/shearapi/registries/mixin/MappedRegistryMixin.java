@@ -1,6 +1,5 @@
 package net.pillowmc.shearapi.registries.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyReceiver;
 import com.mojang.serialization.Lifecycle;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
@@ -96,8 +95,8 @@ public abstract class MappedRegistryMixin<T> implements IRegistryExtension<T>, M
         ((BaseMappedRegistry<T>)(Object)this).addCallbacks.forEach(addCallback -> addCallback.onAdd((Registry<T>) this, i, resourceKey, object));
     }
 
-    @Redirect(method = "registerMapping", at = @At(value = "INVOKE", target = "Lit/unimi/dsi/fastutil/objects/ObjectList;size(I)V"))
-    public void redirecttRegisterMappingSize(ObjectList<T> instance, int i) {
+    @Redirect(method = "registerMapping", at = @At(value = "INVOKE", target = "Lit/unimi/dsi/fastutil/objects/ObjectList;size(I)V", remap = false))
+    public void redirectRegisterMappingSize(ObjectList<T> instance, int i) {
         while (this.byId.size() < i) this.byId.add(null);
     }
 

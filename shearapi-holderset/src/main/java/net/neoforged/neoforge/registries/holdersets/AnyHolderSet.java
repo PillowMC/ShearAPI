@@ -22,11 +22,10 @@ import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
-import net.neoforged.neoforge.common.NeoForgeMod;
 
 /**
  * <p>Holderset that represents all elements of a registry. Json format:</p>
- * 
+ *
  * <pre>
  * {
  *   "type": "neoforge:any"

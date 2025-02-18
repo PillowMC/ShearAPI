@@ -1,4 +1,4 @@
-package net.pillomc.shearapi.entity.client.network;
+package net.pillowmc.shearapi.entity.client.network;
 
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;

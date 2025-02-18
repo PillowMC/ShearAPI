@@ -21,13 +21,13 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.ProtoChunk;
 import net.neoforged.neoforge.common.util.INBTSerializable;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.pillowmc.shearapi.attachment.ShearAPIAttachmentInit;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a data attachment type: some data that can be added to any object implementing {@link IAttachmentHolder}.
  *
- * <p>Data attachment types must be registered to {@link NeoForgeRegistries.Keys#ATTACHMENT_TYPES the registry}.
+ * <p>Data attachment types must be registered to {@link ShearAPIAttachmentInit#ATTACHMENT_TYPES_KEY the registry}.
  *
  * <h3>{@link BlockEntity}-exclusive behavior:</h3>
  * <ul>

@@ -144,10 +144,10 @@ public abstract class CompositeHolderSet<T> implements ICustomHolderSet<T> {
      * if the list contains more than one element, and is non-homogenous,
      * each element of the list will serialize as an object.
      * Prevents crashes from trying to serialize non-homogenous lists to NBT.
-     * 
+     *
      * Lists are considered non-homogenous if it contains more than one serialization type of holderset.
      * Holdersets may be serialized as strings, lists, or maps.
-     * 
+     *
      * @see {@link #isHomogenous}
      * @return List of holdersets with homogenous serialization behavior.
      *         Returns a new List if size > 1 and serialization would be non-homogenous,

@@ -21,8 +21,7 @@
 		"fabric-api": "*",
 		"shearapi-utils": "~${version}",
 		"shearapi-runtime": "~${version}",
-		"shearapi-network": "~${version}",
-		"shearapi-event": "~${version}"
+		"shearapi-network": "~${version}"
 	},
 	"entrypoints": {
 		"client": ["net.pillowmc.shearapi.entity.client.ShearAPIEntityClient"]

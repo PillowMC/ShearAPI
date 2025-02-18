@@ -23,14 +23,13 @@ import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
-import net.neoforged.neoforge.common.NeoForgeMod;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * <p>Holderset that represents all elements of a registry not present in another holderset.
  * neoforge:exclusion is preferable when the number of allowed elements is small relative to the size of the registry.
  * Json format:</p>
- * 
+ *
  * <pre>
  * {
  *   "type": "neoforge:not",

@@ -28,12 +28,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Unit;
 import net.neoforged.neoforge.registries.RegistryBuilder;
+import net.pillowmc.shearapi.conditons.ShearAPIConditionsInit;
 import net.pillowmc.shearapi.runtime.ShearAPIRuntime;
 
 public interface ICondition {
-    ResourceKey<Registry<Codec<? extends ICondition>>> CONDITION_CODECS_KEY = ResourceKey.createRegistryKey(new ResourceLocation(ShearAPIRuntime.MOD_ID, "condition_codecs"));
-    Registry<Codec<? extends ICondition>> CONDITION_SERIALIZERS = new RegistryBuilder<>(CONDITION_CODECS_KEY).create();
-    Codec<ICondition> CODEC = CONDITION_SERIALIZERS.byNameCodec()
+    Codec<ICondition> CODEC = ShearAPIConditionsInit.CONDITION_SERIALIZERS.byNameCodec()
             .dispatch(ICondition::codec, Function.identity());
     Codec<List<ICondition>> LIST_CODEC = CODEC.listOf();
 

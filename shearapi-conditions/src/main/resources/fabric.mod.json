@@ -24,6 +24,11 @@
 		"shearapi-registries": "~${version}"
 	},
 	"accessWidener": "shearapi-conditions.accesswidener",
+  "entrypoints": {
+    "main": [
+      "net.pillowmc.shearapi.conditons.ShearAPIConditionsInit"
+    ]
+  },
 	"custom": {
 		"modmenu": {
 			"parent": "shearapi",

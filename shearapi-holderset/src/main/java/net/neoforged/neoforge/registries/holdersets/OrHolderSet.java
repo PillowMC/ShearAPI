@@ -14,11 +14,10 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.HolderSetCodec;
 import net.minecraft.resources.ResourceKey;
-import net.neoforged.neoforge.common.NeoForgeMod;
 
 /**
  * <p>Holderset that represents a union of other holdersets. Json format:</p>
- * 
+ *
  * <pre>
  * {
  *   "type": "neoforge:or",

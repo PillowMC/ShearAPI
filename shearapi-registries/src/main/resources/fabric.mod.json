@@ -28,6 +28,7 @@
 			"net.pillowmc.shearapi.registries.ShearAPIRegistries"
 		]
 	},
+  "mixins": ["shearapi-registries.mixins.json"],
 	"custom": {
 		"modmenu": {
 			"parent": "shearapi",
