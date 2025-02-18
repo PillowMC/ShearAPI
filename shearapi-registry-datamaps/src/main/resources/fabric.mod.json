@@ -31,7 +31,7 @@
 	"custom": {
 		"modmenu": {
 			"parent": "shearapi",
-            "badges": ["library"]
+      "badges": ["library"]
 		},
 		"loom:injected_interfaces": {
 			"net/minecraft/class_7225$class_7226": ["net/pillowmc/shearapi/registries/datamaps/injections/GetDataInjection<TT;>"],

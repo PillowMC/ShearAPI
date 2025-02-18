@@ -34,7 +34,7 @@
 		},
 		"modmenu": {
 			"parent": "shearapi",
-            "badges": ["library"]
+      "badges": ["library"]
 		}
 	}
 }

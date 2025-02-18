@@ -32,7 +32,7 @@
 	"custom": {
 		"modmenu": {
 			"parent": "shearapi",
-            "badges": ["library"]
+      "badges": ["library"]
 		},
 		"loom:injected_interfaces": {
 			"net/minecraft/class_2378": ["net/neoforged/neoforge/registries/IRegistryExtension<TT;>"],
