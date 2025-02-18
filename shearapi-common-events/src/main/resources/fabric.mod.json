@@ -3,7 +3,7 @@
 	"id": "shearapi-common-events",
 	"version": "${version}",
 	"name": "Shear API (Common-events)",
-	"description": "Port NeoForge \"API\" of common-events to Fabric",
+	"description": "Contains event classes that are not split.",
 	"authors": [
 		"PillowMC"
 	],
