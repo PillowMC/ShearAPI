@@ -2,7 +2,7 @@
 	"schemaVersion": 1,
 	"id": "shearapi-holderset",
 	"version": "${version}",
-	"name": "Shear API (HolderSet)",
+	"name": "Shear API (Holder Set)",
 	"description": "Port NeoForge \"API\" of holder set to Fabric",
 	"authors": [
 		"PillowMC"
