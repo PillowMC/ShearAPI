@@ -14,6 +14,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.HolderSetCodec;
 import net.minecraft.resources.ResourceKey;
+import net.pillowmc.shearapi.holderset.ShearAPIHolderSetInit;
 
 /**
  * <p>Holderset that represents an intersection of other holdersets. Json format:</p>
@@ -43,7 +44,7 @@ public class AndHolderSet<T> extends CompositeHolderSet<T> {
 
     @Override
     public HolderSetType type() {
-        return NeoForgeMod.AND_HOLDER_SET.value();
+        return ShearAPIHolderSetInit.AND_HOLDER_SET.value();
     }
 
     @Override

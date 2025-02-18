@@ -11,7 +11,7 @@ import net.neoforged.neoforge.registries.holdersets.*;
 import net.pillowmc.shearapi.runtime.ShearAPIRuntime;
 
 public class ShearAPIHolderSetInit implements ModInitializer {
-    public static final ResourceKey<Registry<HolderSetType>> HOLDER_SET_TYPES_KEY = ResourceKey.createRegistryKey(new ResourceLocation(ShearAPIRuntime.MOD_ID, "attachment_types"));
+    public static final ResourceKey<Registry<HolderSetType>> HOLDER_SET_TYPES_KEY = ResourceKey.createRegistryKey(new ResourceLocation(ShearAPIRuntime.MOD_ID, "holder_set_type"));
     public static final Registry<HolderSetType> HOLDER_SET_TYPES = new RegistryBuilder<>(HOLDER_SET_TYPES_KEY).create();
     private static final DeferredRegister<HolderSetType> HOLDER_SET_TYPES_REGISTER = DeferredRegister.create(HOLDER_SET_TYPES, ShearAPIRuntime.MOD_ID);
 

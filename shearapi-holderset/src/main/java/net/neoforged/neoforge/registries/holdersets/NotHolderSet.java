@@ -23,6 +23,7 @@ import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
+import net.pillowmc.shearapi.holderset.ShearAPIHolderSetInit;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -70,7 +71,7 @@ public class NotHolderSet<T> implements ICustomHolderSet<T> {
 
     @Override
     public HolderSetType type() {
-        return NeoForgeMod.NOT_HOLDER_SET.value();
+        return ShearAPIHolderSetInit.NOT_HOLDER_SET.value();
     }
 
     @Override

@@ -22,6 +22,7 @@ import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
+import net.pillowmc.shearapi.holderset.ShearAPIHolderSetInit;
 
 /**
  * <p>Holderset that represents all elements of a registry. Json format:</p>
@@ -41,7 +42,7 @@ public record AnyHolderSet<T>(HolderLookup.RegistryLookup<T> registryLookup) imp
 
     @Override
     public HolderSetType type() {
-        return NeoForgeMod.ANY_HOLDER_SET.value();
+        return ShearAPIHolderSetInit.ANY_HOLDER_SET.value();
     }
 
     @Override

@@ -14,6 +14,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.HolderSetCodec;
 import net.minecraft.resources.ResourceKey;
+import net.pillowmc.shearapi.holderset.ShearAPIHolderSetInit;
 
 /**
  * <p>Holderset that represents a union of other holdersets. Json format:</p>
@@ -43,7 +44,7 @@ public class OrHolderSet<T> extends CompositeHolderSet<T> {
 
     @Override
     public HolderSetType type() {
-        return NeoForgeMod.OR_HOLDER_SET.value();
+        return ShearAPIHolderSetInit.OR_HOLDER_SET.value();
     }
 
     @Override
