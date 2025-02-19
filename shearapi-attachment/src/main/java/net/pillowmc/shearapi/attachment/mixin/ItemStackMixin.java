@@ -38,7 +38,6 @@ import static net.neoforged.neoforge.attachment.AttachmentHolder.ATTACHMENTS_NBT
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements IntoAttachmentHolder, ItemStackInjection {
     @Shadow
-    @Unique
     @Nullable
     private CompoundTag tag;
 

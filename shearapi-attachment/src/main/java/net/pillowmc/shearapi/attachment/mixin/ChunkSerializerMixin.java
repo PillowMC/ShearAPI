@@ -26,7 +26,6 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(ChunkSerializer.class)
 public abstract class ChunkSerializerMixin {
-    @Unique
     @Shadow
     @Final
     private static Logger LOGGER;

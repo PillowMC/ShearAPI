@@ -4,6 +4,12 @@ accessible field net/minecraft/core/registries/BuiltInRegistries LOADERS Ljava/u
 accessible field net/minecraft/core/IdMapper tToId Lit/unimi/dsi/fastutil/objects/Reference2IntMap;
 accessible field net/minecraft/core/IdMapper idToT Ljava/util/List;
 accessible field net/minecraft/core/IdMapper nextId I
+accessible field net/minecraft/world/level/levelgen/DebugLevelSource ALL_BLOCKS Ljava/util/List;
+mutable field net/minecraft/world/level/levelgen/DebugLevelSource ALL_BLOCKS Ljava/util/List;
+accessible field net/minecraft/world/level/levelgen/DebugLevelSource GRID_WIDTH I
+mutable field net/minecraft/world/level/levelgen/DebugLevelSource GRID_WIDTH I
+accessible field net/minecraft/world/level/levelgen/DebugLevelSource GRID_HEIGHT I
+mutable field net/minecraft/world/level/levelgen/DebugLevelSource GRID_HEIGHT I
 #accessible class net/minecraft/core/RegistrySynchronization$NetworkedRegistryData
 accessible method net/minecraft/core/RegistrySynchronization$NetworkedRegistryData <init> (Lnet/minecraft/resources/ResourceKey;Lcom/mojang/serialization/Codec;)V
 accessible method net/minecraft/core/Holder$Reference bindValue (Ljava/lang/Object;)V

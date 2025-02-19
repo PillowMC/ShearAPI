@@ -3,5 +3,7 @@ package net.pillowmc.shearapi.registries.injection;
 import net.minecraft.resources.ResourceLocation;
 
 public interface ResourceLocationInjection {
-    int compareNamespaced(ResourceLocation o);
+    default int compareNamespaced(ResourceLocation o) {
+        throw new AssertionError("This should be implemented by mixin!");
+    }
 }

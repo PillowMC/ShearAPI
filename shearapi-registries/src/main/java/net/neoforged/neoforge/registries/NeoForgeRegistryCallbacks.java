@@ -26,6 +26,7 @@ import net.minecraft.world.level.levelgen.DebugLevelSource;
 import net.neoforged.neoforge.registries.callback.AddCallback;
 import net.neoforged.neoforge.registries.callback.BakeCallback;
 import net.neoforged.neoforge.registries.callback.ClearCallback;
+import net.pillowmc.shearapi.registries.ShearAPIRegistries;
 
 class NeoForgeRegistryCallbacks {
     static class BlockCallbacks implements AddCallback<Block>, ClearCallback<Block>, BakeCallback<Block> {
@@ -64,7 +65,7 @@ class NeoForgeRegistryCallbacks {
                 }
             }
 
-            DebugLevelSource.initValidStates();
+            ShearAPIRegistries.initValidStatesInDebugLevelSource();
         }
 
         private static class ClearableObjectIntIdentityMap<T> extends IdMapper<T> {
