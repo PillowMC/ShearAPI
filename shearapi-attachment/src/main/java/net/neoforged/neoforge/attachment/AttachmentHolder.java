@@ -14,7 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.pillowmc.shearapi.attachment.IntoAttachmentHolder;
-import net.pillowmc.shearapi.attachment.ShearAPIAttachmentInit;
+import net.pillowmc.shearapi.attachment.ShearAPIAttachmentEarlyRiser;
 import net.pillowmc.shearapi.runtime.ShearAPIRuntime;
 
 import org.jetbrains.annotations.ApiStatus;
@@ -35,7 +35,7 @@ public abstract class AttachmentHolder implements IAttachmentHolder, IntoAttachm
         Objects.requireNonNull(type);
         if (!IN_DEV) return;
 
-        if (!ShearAPIAttachmentInit.ATTACHMENT_TYPES.containsValue(type)) {
+        if (!ShearAPIAttachmentEarlyRiser.ATTACHMENT_TYPES.containsValue(type)) {
             throw new IllegalArgumentException("Data attachment type with default value " + type.defaultValueSupplier.apply(getExposedHolder()) + " must be registered!");
         }
     }
@@ -128,7 +128,7 @@ public abstract class AttachmentHolder implements IAttachmentHolder, IntoAttachm
                 if (serialized != null) {
                     if (tag == null)
                         tag = new CompoundTag();
-                    tag.put(ShearAPIAttachmentInit.ATTACHMENT_TYPES.getKey(type).toString(), serialized);
+                    tag.put(ShearAPIAttachmentEarlyRiser.ATTACHMENT_TYPES.getKey(type).toString(), serialized);
                 }
             }
         }
@@ -148,7 +148,7 @@ public abstract class AttachmentHolder implements IAttachmentHolder, IntoAttachm
                 continue;
             }
 
-            var type = ShearAPIAttachmentInit.ATTACHMENT_TYPES.get(keyLocation);
+            var type = ShearAPIAttachmentEarlyRiser.ATTACHMENT_TYPES.get(keyLocation);
             if (type == null || type.serializer == null) {
                 LOGGER.error("Encountered unknown or non-serializable data attachment {}. Skipping.", key);
                 continue;

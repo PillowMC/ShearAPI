@@ -26,7 +26,10 @@
 	"entrypoints": {
 		"main": [
 			"net.pillowmc.shearapi.registries.ShearAPIRegistries"
-		]
+		],
+    "mm:early_risers": [
+      "net.pillowmc.shearapi.registries.ShearAPIRegistries$EarlyRiser"
+    ]
 	},
   "mixins": ["shearapi-registries.mixins.json"],
 	"custom": {

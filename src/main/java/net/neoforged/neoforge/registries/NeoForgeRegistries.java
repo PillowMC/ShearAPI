@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceKey;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.registries.holdersets.HolderSetType;
-import net.pillowmc.shearapi.attachment.ShearAPIAttachmentInit;
+import net.pillowmc.shearapi.attachment.ShearAPIAttachmentEarlyRiser;
 import net.pillowmc.shearapi.conditons.ShearAPIConditionsInit;
 import net.pillowmc.shearapi.holderset.ShearAPIHolderSetInit;
 
@@ -40,7 +40,7 @@ public class NeoForgeRegistries {
     public static final Registry<Codec<? extends ICondition>> CONDITION_SERIALIZERS = ShearAPIConditionsInit.CONDITION_SERIALIZERS;
 //    public static final Registry<Codec<? extends ICustomEntityPredicate>> ENTITY_PREDICATE_SERIALIZERS = new RegistryBuilder<>(Keys.ENTITY_PREDICATE_SERIALIZERS).create();
 //    public static final Registry<Codec<? extends ICustomItemPredicate>> ITEM_PREDICATE_SERIALIZERS = new RegistryBuilder<>(Keys.ITEM_PREDICATE_SERIALIZERS).create();
-    public static final Registry<AttachmentType<?>> ATTACHMENT_TYPES = ShearAPIAttachmentInit.ATTACHMENT_TYPES;
+    public static final Registry<AttachmentType<?>> ATTACHMENT_TYPES = ShearAPIAttachmentEarlyRiser.ATTACHMENT_TYPES;
 
     // Reminder: If you add a registry to NeoForge itself, remember to add it to NeoForgeRegistriesSetup#registerRegistries.
 
@@ -57,7 +57,7 @@ public class NeoForgeRegistries {
         public static final ResourceKey<Registry<Codec<? extends ICondition>>> CONDITION_CODECS = ShearAPIConditionsInit.CONDITION_CODECS_KEY;
 //        public static final ResourceKey<Registry<Codec<? extends ICustomEntityPredicate>>> ENTITY_PREDICATE_SERIALIZERS = key("entity_predicates");
 //        public static final ResourceKey<Registry<Codec<? extends ICustomItemPredicate>>> ITEM_PREDICATE_SERIALIZERS = key("item_predicates");
-        public static final ResourceKey<Registry<AttachmentType<?>>> ATTACHMENT_TYPES = ShearAPIAttachmentInit.ATTACHMENT_TYPES_KEY;
+        public static final ResourceKey<Registry<AttachmentType<?>>> ATTACHMENT_TYPES = ShearAPIAttachmentEarlyRiser.ATTACHMENT_TYPES_KEY;
 
         // NeoForge Dynamic
 //        public static final ResourceKey<Registry<BiomeModifier>> BIOME_MODIFIERS = key("biome_modifier");

@@ -6,7 +6,6 @@ import org.objectweb.asm.tree.*;
 
 import com.chocohead.mm.api.ClassTinkerers;
 
-import net.fabricmc.api.ModInitializer;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +14,7 @@ import net.neoforged.neoforge.registries.RegistryBuilder;
 
 import java.util.Objects;
 
-public class ShearAPIAttachmentInit implements ModInitializer {
+public class ShearAPIAttachmentEarlyRiser implements Runnable {
     public static final ResourceKey<Registry<AttachmentType<?>>> ATTACHMENT_TYPES_KEY = ResourceKey.createRegistryKey(new ResourceLocation(ShearAPIRuntime.MOD_ID, "attachment_types"));
     public static final Registry<AttachmentType<?>> ATTACHMENT_TYPES = new RegistryBuilder<>(ATTACHMENT_TYPES_KEY).create();
 
@@ -69,11 +68,11 @@ public class ShearAPIAttachmentInit implements ModInitializer {
     }
 
     @Override
-    public void onInitialize() {
-        ClassTinkerers.addTransformation("net/minecraft/world/entity/Entity", ShearAPIAttachmentInit::addAttachmentHolder);
-        ClassTinkerers.addTransformation("net/minecraft/world/item/ItemStack", ShearAPIAttachmentInit::addAttachmentHolder);
-        ClassTinkerers.addTransformation("net/minecraft/world/item/ItemStack", ShearAPIAttachmentInit::itemStackAddConstructors);
-        ClassTinkerers.addTransformation("net/minecraft/world/level/Level", ShearAPIAttachmentInit::addAttachmentHolder);
-        ClassTinkerers.addTransformation("net/minecraft/world/level/block/entity/BlockEntity", ShearAPIAttachmentInit::addAttachmentHolder);
+    public void run() {
+        ClassTinkerers.addTransformation("net/minecraft/world/entity/Entity", ShearAPIAttachmentEarlyRiser::addAttachmentHolder);
+        ClassTinkerers.addTransformation("net/minecraft/world/item/ItemStack", ShearAPIAttachmentEarlyRiser::addAttachmentHolder);
+        ClassTinkerers.addTransformation("net/minecraft/world/item/ItemStack", ShearAPIAttachmentEarlyRiser::itemStackAddConstructors);
+        ClassTinkerers.addTransformation("net/minecraft/world/level/Level", ShearAPIAttachmentEarlyRiser::addAttachmentHolder);
+        ClassTinkerers.addTransformation("net/minecraft/world/level/block/entity/BlockEntity", ShearAPIAttachmentEarlyRiser::addAttachmentHolder);
     }
 }
