@@ -6,10 +6,15 @@
 package net.neoforged.neoforge.registries;
 
 import java.util.Set;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.village.poi.PoiType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
+import net.pillowmc.shearapi.registries.injection.MappedRegistryInjection;
 import org.jetbrains.annotations.ApiStatus;
 
 @ApiStatus.Internal
@@ -66,13 +71,13 @@ public class NeoForgeRegistriesSetup {
 
     private static void modifyRegistries(ModifyRegistriesEvent event) {
         for (var registry : VANILLA_SYNC_REGISTRIES) {
-            ((BaseMappedRegistry<?>) registry).setSync(true);
+            ((MappedRegistryInjection<?>) registry).setSync(true);
         }
 
-        ((BaseMappedRegistry)BuiltInRegistries.BLOCK).addCallback(NeoForgeRegistryCallbacks.BlockCallbacks.INSTANCE);
-        ((BaseMappedRegistry)BuiltInRegistries.ITEM).addCallback(NeoForgeRegistryCallbacks.ItemCallbacks.INSTANCE);
-        ((BaseMappedRegistry)BuiltInRegistries.ATTRIBUTE).addCallback(NeoForgeRegistryCallbacks.AttributeCallbacks.INSTANCE);
-        ((BaseMappedRegistry)BuiltInRegistries.POINT_OF_INTEREST_TYPE).addCallback(NeoForgeRegistryCallbacks.PoiTypeCallbacks.INSTANCE);
+        ((IRegistryExtension<Block>)BuiltInRegistries.BLOCK).addCallback(NeoForgeRegistryCallbacks.BlockCallbacks.INSTANCE);
+        ((IRegistryExtension<Item>)BuiltInRegistries.ITEM).addCallback(NeoForgeRegistryCallbacks.ItemCallbacks.INSTANCE);
+        ((IRegistryExtension<Attribute>)BuiltInRegistries.ATTRIBUTE).addCallback(NeoForgeRegistryCallbacks.AttributeCallbacks.INSTANCE);
+        ((IRegistryExtension<PoiType>)BuiltInRegistries.POINT_OF_INTEREST_TYPE).addCallback(NeoForgeRegistryCallbacks.PoiTypeCallbacks.INSTANCE);
         // We add this callback here to not cause a tricky classloading loop with ForgeRegistries#DISPLAY_CONTEXTS and ItemDisplayContext#CODEC
 //        NeoForgeRegistries.DISPLAY_CONTEXTS.addCallback(ItemDisplayContext.ADD_CALLBACK);
     }

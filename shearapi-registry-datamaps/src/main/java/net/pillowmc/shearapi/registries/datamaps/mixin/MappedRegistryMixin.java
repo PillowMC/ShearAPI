@@ -1,7 +1,10 @@
 package net.pillowmc.shearapi.registries.datamaps.mixin;
 
+import com.mojang.serialization.Lifecycle;
+import net.minecraft.core.MappedRegistry;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
-import net.neoforged.neoforge.registries.BaseMappedRegistry;
+import net.neoforged.neoforge.registries.callback.ClearCallback;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import net.pillowmc.shearapi.registries.datamaps.injections.IBaseMappedRegistryInjection;
 import net.pillowmc.shearapi.registries.datamaps.injections.IRegistryExtensionInjection;
@@ -14,8 +17,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
-@Mixin(value = BaseMappedRegistry.class, remap = false)
-public abstract class BaseMappedRegistryMixin<T> implements IRegistryExtensionInjection<T>, IBaseMappedRegistryInjection<T> {
+@Mixin(value = MappedRegistry.class)
+public abstract class MappedRegistryMixin<T> implements IRegistryExtensionInjection<T>, IBaseMappedRegistryInjection<T> {
     final Map<DataMapType<T, ?>, Map<ResourceKey<T>, ?>> dataMaps = new IdentityHashMap<>();
 
     @Override
@@ -34,10 +37,12 @@ public abstract class BaseMappedRegistryMixin<T> implements IRegistryExtensionIn
         return dataMaps;
     }
 
-    @Inject(method = "clear", at = @At("TAIL"), remap = false)
-    public void injectClear(boolean full, CallbackInfo ci) {
-        if (full) {
-            dataMaps.clear();
-        }
+    @Inject(method = "<init>(Lnet/minecraft/resources/ResourceKey;Lcom/mojang/serialization/Lifecycle;Z)V", at = @At("TAIL"))
+    public void injectInit(ResourceKey<T> resourceKey, Lifecycle lifecycle, boolean bl, CallbackInfo ci) {
+        this.addCallback((ClearCallback<T>)(registry, full) -> {
+            if (full) {
+                dataMaps.clear();
+            }
+        });
     }
 }

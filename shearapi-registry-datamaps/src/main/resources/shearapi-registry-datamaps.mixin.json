@@ -3,7 +3,7 @@
   "package": "net.pillowmc.shearapi.registries.datamaps.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "BaseMappedRegistryMixin",
+    "MappedRegistryMixin",
     "ComposterBlockMixin",
     "ComposterBlockMixin$InputContainerMixin",
     "CompostingChanceRegistryMixin",

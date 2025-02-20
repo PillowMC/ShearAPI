@@ -20,6 +20,7 @@ public class ShearAPIAttachmentEarlyRiser implements Runnable {
 
     private static void addAttachmentHolder(ClassNode target) {
         // Sorry Fabric, but I have to do this.
+        // TODO Remove this.
         target.superName = "net/neoforged/neoforge/attachment/AttachmentHolder";
         target.interfaces.add("net/pillowmc/shearapi/attachment/IntoAttachmentHolder");
     }

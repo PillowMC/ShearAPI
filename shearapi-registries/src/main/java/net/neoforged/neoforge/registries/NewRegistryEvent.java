@@ -13,6 +13,7 @@ import net.minecraft.core.WritableRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.Event;
+import net.pillowmc.shearapi.registries.injection.MappedRegistryInjection;
 import net.pillowmc.shearapi.runtime.IModBusEvent;
 
 /**
@@ -56,7 +57,7 @@ public class NewRegistryEvent extends Event implements IModBusEvent {
     }
 
     void fill() {
-        ((BaseMappedRegistry<?>) BuiltInRegistries.REGISTRY).unfreeze();
+        BuiltInRegistries.REGISTRY.unfreeze();
 
         for (final var registry : this.registries) {
             registerToRootRegistry(registry);

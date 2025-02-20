@@ -7,28 +7,15 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.levelgen.DebugLevelSource;
 import net.neoforged.neoforge.registries.GameData;
 import net.neoforged.neoforge.registries.RegistryManager;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodInsnNode;
 
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class ShearAPIRegistries implements ModInitializer {
-    private static void addBaseMappedRegistry(ClassNode target) {
-        // Sorry Fabric, but I have to do this.
-        target.superName = "net/neoforged/neoforge/registries/BaseMappedRegistry";
-        var init = target.methods.stream().filter((m) ->
-                        m.name.equals("<init>") && m.desc.equals("(Lnet/minecraft/resources/ResourceKey;Lcom/mojang/serialization/Lifecycle;Z)V"))
-                .findFirst().get();
-        // TODO
-    }
-
-    public static class EarlyRiser implements Runnable {
-        @Override
-        public void run() {
-            ClassTinkerers.addTransformation("net/minecraft/core/MappedRegistry", ShearAPIRegistries::addBaseMappedRegistry);
-        }
-    }
     @Override
     public void onInitialize() {
         RegistryManager.postNewRegistryEvent();

@@ -26,10 +26,7 @@
 	"entrypoints": {
 		"main": [
 			"net.pillowmc.shearapi.registries.ShearAPIRegistries"
-		],
-    "mm:early_risers": [
-      "net.pillowmc.shearapi.registries.ShearAPIRegistries$EarlyRiser"
-    ]
+		]
 	},
   "mixins": ["shearapi-registries.mixins.json"],
 	"custom": {
@@ -38,7 +35,10 @@
       "badges": ["library"]
 		},
 		"loom:injected_interfaces": {
-			"net/minecraft/class_2378": ["net/neoforged/neoforge/registries/IRegistryExtension<TT;>"],
+			"net/minecraft/class_2378": [
+        "net/neoforged/neoforge/registries/IRegistryExtension<TT;>",
+        "net/pillowmc/shearapi/registries/injection/MappedRegistryInjection<TT;>"
+      ],
 			"net/minecraft/class_2960": ["net/pillowmc/shearapi/registries/injection/ResourceLocationInjection"]
 		}
 	}

@@ -18,6 +18,7 @@ import net.neoforged.neoforge.registries.callback.AddCallback;
 import net.neoforged.neoforge.registries.callback.BakeCallback;
 import net.neoforged.neoforge.registries.callback.ClearCallback;
 import net.neoforged.neoforge.registries.callback.RegistryCallback;
+import net.pillowmc.shearapi.registries.injection.MappedRegistryInjection;
 import org.jetbrains.annotations.Nullable;
 
 public class RegistryBuilder<T> {
@@ -102,7 +103,7 @@ public class RegistryBuilder<T> {
      * @see NewRegistryEvent#register(Registry)
      */
     public Registry<T> create() {
-        BaseMappedRegistry<T> registry = (BaseMappedRegistry<T>)(Object) (this.defaultKey != null
+        MappedRegistry<T> registry = (this.defaultKey != null
                 ? new DefaultedMappedRegistry<>(this.defaultKey.toString(), this.registryKey, Lifecycle.stable(), false)
                 : new MappedRegistry<>(this.registryKey, Lifecycle.stable(), false));
         this.callbacks.forEach(registry::addCallback);
