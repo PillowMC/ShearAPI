@@ -12,7 +12,7 @@ import net.minecraft.core.HolderSet;
  */
 public interface ICustomHolderSet<T> extends HolderSet<T> {
     /**
-     * {@return HolderSetType registered to {@link ForgeRegistries.HOLDER_SET_TYPES}}
+     * {@return HolderSetType registered to {@link ShearAPIHolderSetInit.HOLDER_SET_TYPES}}
      */
     HolderSetType type();
 

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "shearapi-registry-datamaps-testmod",
+  "version": "${version}",
+  "name": "Shear API (Registries) Test Mod",
+  "license": "LGPL-2.1",
+  "icon": "assets/shearapi-registries/icon.png",
+  "environment": "*",
+  "depends": {
+    "shearapi-registry-datamaps": "*"
+  }
+}

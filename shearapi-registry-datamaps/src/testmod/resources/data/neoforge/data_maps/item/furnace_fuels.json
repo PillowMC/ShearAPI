@@ -1,0 +1,7 @@
+{
+  "values": {
+    "minecraft:diamond": {
+      "burn_time": 200
+    }
+  }
+}
