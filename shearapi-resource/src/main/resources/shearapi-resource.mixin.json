@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "net.pillowmc.shearapi.resource.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "PackRepositoryMixin",
+    "ReloadableServerResourcesMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

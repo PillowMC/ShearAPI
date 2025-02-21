@@ -1,0 +1,8 @@
+loom {
+    accessWidenerPath = file("src/main/resources/shearapi-resource.accesswidener")
+}
+
+dependencies {
+    api project(path: ":shearapi-runtime", configuration: "namedElements")
+    api project(path: ":shearapi-event", configuration: "namedElements")
+}

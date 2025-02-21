@@ -6,4 +6,5 @@ dependencies {
     api project(path: ":shearapi-conditions", configuration: "namedElements")
     api project(path: ":shearapi-registries", configuration: "namedElements")
     api project(path: ":shearapi-network", configuration: "namedElements")
+    api project(path: ":shearapi-resource", configuration: "namedElements")
 }

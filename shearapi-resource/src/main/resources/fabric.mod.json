@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
-	"id": "shearapi-conditions",
+	"id": "shearapi-resource",
 	"version": "${version}",
-	"name": "Shear API (Conditions)",
-	"description": "Port NeoForge \"API\" of conditions to Fabric",
+	"name": "Shear API (Resource)",
+	"description": "Port NeoForge \"API\" of resource to Fabric",
 	"authors": [
 		"PillowMC"
 	],
@@ -12,23 +12,21 @@
 		"sources": "https://github.com/PillowMC/ShearAPI"
 	},
 	"license": "LGPL-2.1",
-	"icon": "assets/shearapi-conditions/icon.png",
+	"icon": "assets/shearapi-resource/icon.png",
 	"environment": "*",
 	"depends": {
 		"fabricloader": ">=0.15.6",
 		"minecraft": "~1.20.4",
 		"java": ">=17",
 		"fabric-api": "*",
-		"shearapi-runtime": "~${version}",
-		"shearapi-utils": "~${version}",
-		"shearapi-registries": "~${version}",
-    "shearapi-resource": "~${version}"
+    "shearapi-runtime": "${version}",
+    "shearapi-event": "${version}"
 	},
-	"accessWidener": "shearapi-conditions.accesswidener",
+  "mixins": [
+    "shearapi-resource.mixin.json"
+  ],
   "entrypoints": {
-    "main": [
-      "net.pillowmc.shearapi.conditons.ShearAPIConditionsInit"
-    ]
+    "main": ["net.pillowmc.shearapi.resource.ShearAPIResourceInit"]
   },
 	"custom": {
 		"modmenu": {

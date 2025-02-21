@@ -21,7 +21,8 @@
 		"fabric-api": "*",
 		"shearapi-conditions": "~${version}",
 		"shearapi-registries": "~${version}",
-		"shearapi-network": "~${version}"
+    "shearapi-network": "~${version}",
+    "shearapi-resource": "~${version}"
 	},
 	"entrypoints": {
 		"main": ["net.pillowmc.shearapi.registries.datamaps.DataMapManager::shearapi$fabricInitialize"],

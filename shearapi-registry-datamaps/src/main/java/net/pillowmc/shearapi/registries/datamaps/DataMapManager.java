@@ -9,13 +9,17 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.behavior.GiveGiftToHero;
 import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.TagsUpdatedEvent;
 import net.neoforged.neoforge.network.event.OnGameConfigurationEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 import net.neoforged.neoforge.network.handling.ConfigurationPayloadContext;
 import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+import net.neoforged.neoforge.registries.DataMapLoader;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import net.neoforged.neoforge.registries.datamaps.network.KnownRegistryDataMapsReplyPayload;
+import net.pillowmc.shearapi.event.ShearAPIEvent;
 import net.pillowmc.shearapi.runtime.ShearAPIRuntime;
 import net.pillowmc.shearapi.runtime.ShearAPIVersion;
 import org.jetbrains.annotations.ApiStatus;
@@ -24,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public class DataMapManager {
+    private static DataMapLoader DATA_MAPS;
     private static Map<ResourceKey<Registry<?>>, Map<ResourceLocation, DataMapType<?, ?>>> dataMaps = Map.of();
     @ApiStatus.Internal
     public void shearapi$fabricInitialize(){
@@ -45,6 +50,8 @@ public class DataMapManager {
         ShearAPIRuntime.getRuntime().getModBus().addListener(((DataMapMap<?, ?, ?>) Parrot.MOB_SOUND_MAP)::onDataMapsLoadedEvent);
         ShearAPIRuntime.getRuntime().getModBus().addListener(((DataMapMap<?, ?, ?>) GiveGiftToHero.GIFTS)::onDataMapsLoadedEvent);
         ShearAPIRuntime.getRuntime().getModBus().addListener(((Object2IntDataMapMap<?, ?>) VibrationSystem.VIBRATION_FREQUENCY_FOR_EVENT)::onDataMapsLoadedEvent);
+        ShearAPIEvent.EVENT_BUS.addListener((AddReloadListenerEvent event) -> event.addListener(DATA_MAPS = new DataMapLoader(event.getConditionContext(), event.getRegistryAccess())));
+        ShearAPIEvent.EVENT_BUS.addListener((TagsUpdatedEvent event) -> DATA_MAPS.apply());
         initDataMaps();
     };
 

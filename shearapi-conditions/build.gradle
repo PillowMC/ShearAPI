@@ -4,6 +4,7 @@ loom {
 
 dependencies {
     api project(path: ":shearapi-registries", configuration: "namedElements")
+    api project(path: ":shearapi-resource", configuration: "namedElements")
     api project(path: ":shearapi-runtime", configuration: "namedElements")
     api project(path: ":shearapi-utils", configuration: "namedElements")
 }
