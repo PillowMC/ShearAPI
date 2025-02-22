@@ -1,41 +1,41 @@
 {
-	"schemaVersion": 1,
-	"id": "shearapi-network",
-	"version": "${version}",
-	"name": "Shear API (Network)",
-	"description": "Port NeoForge \"API\" of network to Fabric",
-	"authors": [
-		"PillowMC"
-	],
-	"contact": {
-		"homepage": "https://github.com/PillowMC/ShearAPI",
-		"sources": "https://github.com/PillowMC/ShearAPI"
-	},
-	"license": "LGPL-2.1",
-	"icon": "assets/shearapi-network/icon.png",
-	"environment": "*",
-	"depends": {
-		"fabricloader": ">=0.15.6",
-		"minecraft": "~1.20.4",
-		"java": ">=17",
-		"fabric-api": "*",
-		"shearapi-utils": "~${version}",
-		"shearapi-runtime": "~${version}"
-	},
-	"entrypoints": {
-		"client": ["net.pillowmc.shearapi.network.client.ShearAPINetworkClient"]
-	},
-	"mixins": ["shearapi-network.mixins.json"],
-	"custom": {
-		"loom:injected_interfaces": {
-			"net/minecraft/class_8706": ["net/pillowmc/shearapi/network/injection/IServerCommonPacketListenerExtension"],
-			"net/minecraft/class_8735": ["net/pillowmc/shearapi/network/injection/IServerConfigurationPacketListenerExtension"],
-			"net/minecraft/class_2792": ["net/pillowmc/shearapi/network/injection/IServerGamePacketListenerExtension"],
-			"net/minecraft/class_2540": ["net/pillowmc/shearapi/network/injection/IFriendlyByteBufExtension"]
-		},
-		"modmenu": {
-			"parent": "shearapi",
+  "schemaVersion": 1,
+  "id": "shearapi-network",
+  "version": "${version}",
+  "name": "Shear API (Network)",
+  "description": "Port NeoForge \"API\" of network to Fabric",
+  "authors": [
+    "PillowMC"
+  ],
+  "contact": {
+    "homepage": "https://github.com/PillowMC/ShearAPI",
+    "sources": "https://github.com/PillowMC/ShearAPI"
+  },
+  "license": "LGPL-2.1",
+  "icon": "assets/shearapi-network/icon.png",
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=0.15.6",
+    "minecraft": "~1.20.4",
+    "java": ">=17",
+    "fabric-api": "*",
+    "shearapi-utils": "~${version}",
+    "shearapi-runtime": "~${version}"
+  },
+  "entrypoints": {
+    "client": ["net.pillowmc.shearapi.network.client.ShearAPINetworkClient"]
+  },
+  "mixins": ["shearapi-network.mixins.json"],
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_8706": ["net/pillowmc/shearapi/network/injection/IServerCommonPacketListenerExtension"],
+      "net/minecraft/class_8735": ["net/pillowmc/shearapi/network/injection/IServerConfigurationPacketListenerExtension"],
+      "net/minecraft/class_2792": ["net/pillowmc/shearapi/network/injection/IServerGamePacketListenerExtension"],
+      "net/minecraft/class_2540": ["net/pillowmc/shearapi/network/injection/IFriendlyByteBufExtension"]
+    },
+    "modmenu": {
+      "parent": "shearapi",
       "badges": ["library"]
-		}
-	}
+    }
+  }
 }

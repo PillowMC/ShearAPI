@@ -1,31 +1,31 @@
 {
-	"schemaVersion": 1,
-	"id": "shearapi-summary",
-	"version": "${version}",
-	"name": "Shear API (Summary)",
-	"description": "To solve dependency loops, classes in certain modules (such as capabilities) that require other modules but are not closely related to the module itself are placed separately here",
-	"authors": [
-		"PillowMC"
-	],
-	"contact": {
-		"homepage": "https://github.com/PillowMC/ShearAPI",
-		"sources": "https://github.com/PillowMC/ShearAPI"
-	},
-	"license": "LGPL-2.1",
-	"icon": "assets/shearapi-summary/icon.png",
-	"environment": "*",
-	"depends": {
-		"fabricloader": ">=0.15.6",
-		"minecraft": "~1.20.4",
-		"java": ">=17",
-		"fabric-api": "*",
-		"shearapi-energy": "~${version}",
-		"shearapi-capabilities": "~${version}"
-	},
-	"custom": {
-		"modmenu": {
-			"parent": "shearapi",
+  "schemaVersion": 1,
+  "id": "shearapi-summary",
+  "version": "${version}",
+  "name": "Shear API (Summary)",
+  "description": "To solve dependency loops, classes in certain modules (such as capabilities) that require other modules but are not closely related to the module itself are placed separately here",
+  "authors": [
+    "PillowMC"
+  ],
+  "contact": {
+    "homepage": "https://github.com/PillowMC/ShearAPI",
+    "sources": "https://github.com/PillowMC/ShearAPI"
+  },
+  "license": "LGPL-2.1",
+  "icon": "assets/shearapi-summary/icon.png",
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=0.15.6",
+    "minecraft": "~1.20.4",
+    "java": ">=17",
+    "fabric-api": "*",
+    "shearapi-energy": "~${version}",
+    "shearapi-capabilities": "~${version}"
+  },
+  "custom": {
+    "modmenu": {
+      "parent": "shearapi",
       "badges": ["library"]
-		}
-	}
+    }
+  }
 }

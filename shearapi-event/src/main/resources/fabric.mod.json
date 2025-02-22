@@ -1,31 +1,31 @@
 {
-	"schemaVersion": 1,
-	"id": "shearapi-event",
-	"version": "${version}",
-	"name": "Shear API (Event)",
-	"description": "Port NeoForge \"API\" of event to Fabric",
-	"authors": [
-		"PillowMC"
-	],
-	"contact": {
-		"homepage": "https://github.com/PillowMC/ShearAPI",
-		"sources": "https://github.com/PillowMC/ShearAPI"
-	},
-	"license": "LGPL-2.1",
-	"icon": "assets/shearapi-event/icon.png",
-	"environment": "*",
-	"depends": {
-		"fabricloader": ">=0.15.6",
-		"minecraft": "~1.20.4",
-		"java": ">=17",
-		"fabric-api": "*",
-		"shearapi-runtime": "~${version}"
-	},
-	"accessWidener": "shearapi-event.accesswidener",
-	"custom": {
-		"modmenu": {
-			"parent": "shearapi",
+  "schemaVersion": 1,
+  "id": "shearapi-event",
+  "version": "${version}",
+  "name": "Shear API (Event)",
+  "description": "Port NeoForge \"API\" of event to Fabric",
+  "authors": [
+    "PillowMC"
+  ],
+  "contact": {
+    "homepage": "https://github.com/PillowMC/ShearAPI",
+    "sources": "https://github.com/PillowMC/ShearAPI"
+  },
+  "license": "LGPL-2.1",
+  "icon": "assets/shearapi-event/icon.png",
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=0.15.6",
+    "minecraft": "~1.20.4",
+    "java": ">=17",
+    "fabric-api": "*",
+    "shearapi-runtime": "~${version}"
+  },
+  "accessWidener": "shearapi-event.accesswidener",
+  "custom": {
+    "modmenu": {
+      "parent": "shearapi",
       "badges": ["library"]
-		}
-	}
+    }
+  }
 }

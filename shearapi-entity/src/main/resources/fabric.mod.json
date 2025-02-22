@@ -1,42 +1,42 @@
 {
-	"schemaVersion": 1,
-	"id": "shearapi-entity",
-	"version": "${version}",
-	"name": "Shear API (Entity)",
-	"description": "Port NeoForge \"API\" of entity to Fabric",
-	"authors": [
-		"PillowMC"
-	],
-	"contact": {
-		"homepage": "https://github.com/PillowMC/ShearAPI",
-		"sources": "https://github.com/PillowMC/ShearAPI"
-	},
-	"license": "LGPL-2.1",
-	"icon": "assets/shearapi-entity/icon.png",
-	"environment": "*",
-	"depends": {
-		"fabricloader": ">=0.15.6",
-		"minecraft": "~1.20.4",
-		"java": ">=17",
-		"fabric-api": "*",
-		"shearapi-utils": "~${version}",
-		"shearapi-runtime": "~${version}",
-		"shearapi-network": "~${version}"
-	},
-	"entrypoints": {
-		"client": ["net.pillowmc.shearapi.entity.client.ShearAPIEntityClient"]
-	},
-	"mixins": [
-		"shearapi-entity.mixins.json"
-	],
-	"accessWidener": "shearapi-entity.accesswidener",
-	"custom": {
-		"loom:injected_interfaces": {
-			"net/minecraft/class_1297": ["net/pillowmc/shearapi/entity/injection/EntityInjection"]
-		},
-		"modmenu": {
-			"parent": "shearapi",
+  "schemaVersion": 1,
+  "id": "shearapi-entity",
+  "version": "${version}",
+  "name": "Shear API (Entity)",
+  "description": "Port NeoForge \"API\" of entity to Fabric",
+  "authors": [
+    "PillowMC"
+  ],
+  "contact": {
+    "homepage": "https://github.com/PillowMC/ShearAPI",
+    "sources": "https://github.com/PillowMC/ShearAPI"
+  },
+  "license": "LGPL-2.1",
+  "icon": "assets/shearapi-entity/icon.png",
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=0.15.6",
+    "minecraft": "~1.20.4",
+    "java": ">=17",
+    "fabric-api": "*",
+    "shearapi-utils": "~${version}",
+    "shearapi-runtime": "~${version}",
+    "shearapi-network": "~${version}"
+  },
+  "entrypoints": {
+    "client": ["net.pillowmc.shearapi.entity.client.ShearAPIEntityClient"]
+  },
+  "mixins": [
+    "shearapi-entity.mixins.json"
+  ],
+  "accessWidener": "shearapi-entity.accesswidener",
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_1297": ["net/pillowmc/shearapi/entity/injection/EntityInjection"]
+    },
+    "modmenu": {
+      "parent": "shearapi",
       "badges": ["library"]
-		}
-	}
+    }
+  }
 }

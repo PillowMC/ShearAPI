@@ -1,40 +1,40 @@
 {
-	"schemaVersion": 1,
-	"id": "shearapi-utils",
-	"version": "${version}",
-	"name": "Shear API (Utils)",
-	"description": "Port NeoForge \"API\" of utils to Fabric, and our utils",
-	"authors": [
-		"PillowMC"
-	],
-	"contact": {
-		"homepage": "https://github.com/PillowMC/ShearAPI",
-		"sources": "https://github.com/PillowMC/ShearAPI"
-	},
-	"license": "LGPL-2.1",
-	"icon": "assets/shearapi-utils/icon.png",
-	"environment": "*",
-	"depends": {
-		"fabricloader": ">=0.15.6",
-		"minecraft": "~1.20.4",
-		"java": ">=17",
-		"fabric-api": "*"
-	},
-	"accessWidener": "shearapi-utils.accesswidener",
-	"mixins": [
-		{
-			"config": "shearapi-utils.client.mixin.json",
-			"environment": "client"
-		},
-		"shearapi-utils.mixin.json"
-	],
-	"custom": {
-		"loom:injected_interfaces": {
-			"net/minecraft/class_1946": ["net/neoforged/neoforge/common/util/ITeleporter"]
-		},
-		"modmenu": {
-			"parent": "shearapi",
+  "schemaVersion": 1,
+  "id": "shearapi-utils",
+  "version": "${version}",
+  "name": "Shear API (Utils)",
+  "description": "Port NeoForge \"API\" of utils to Fabric, and our utils",
+  "authors": [
+    "PillowMC"
+  ],
+  "contact": {
+    "homepage": "https://github.com/PillowMC/ShearAPI",
+    "sources": "https://github.com/PillowMC/ShearAPI"
+  },
+  "license": "LGPL-2.1",
+  "icon": "assets/shearapi-utils/icon.png",
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=0.15.6",
+    "minecraft": "~1.20.4",
+    "java": ">=17",
+    "fabric-api": "*"
+  },
+  "accessWidener": "shearapi-utils.accesswidener",
+  "mixins": [
+    {
+      "config": "shearapi-utils.client.mixin.json",
+      "environment": "client"
+    },
+    "shearapi-utils.mixin.json"
+  ],
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_1946": ["net/neoforged/neoforge/common/util/ITeleporter"]
+    },
+    "modmenu": {
+      "parent": "shearapi",
       "badges": ["library"]
-		}
-	}
+    }
+  }
 }

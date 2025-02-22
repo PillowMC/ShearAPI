@@ -1,46 +1,46 @@
 {
-	"schemaVersion": 1,
-	"id": "shearapi",
-	"version": "${version}",
-	"name": "Shear API",
-	"description": "Port NeoForge \"API\" to Fabric, targeting 20.4.200",
-	"authors": [
-		"PillowMC"
-	],
-	"contact": {
-		"homepage": "https://github.com/PillowMC/ShearAPI",
-		"sources": "https://github.com/PillowMC/ShearAPI"
-	},
-	"license": "LGPL-2.1",
-	"icon": "assets/shearapi/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"net.pillowmc.shearapi.ShearAPI"
-		],
-		"client": [
-			"net.pillowmc.shearapi.client.ShearAPIClient"
-		]
-	},
-	"mixins": [
-		"shearapi.mixins.json",
-		{
-			"config": "shearapi.client.mixins.json",
-			"environment": "client"
-		}
-	],
-	"depends": {
-		"fabricloader": ">=0.15.6",
-		"minecraft": "~1.20.4",
-		"java": ">=17",
-		"fabric-api": "*"
-	},
-	"custom": {
-		"pillow-provided": {
-			"neoforge": "20.4.999"
-		},
-		"modmenu": {
-			"badges": ["library"]
-		}
-	}
+  "schemaVersion": 1,
+  "id": "shearapi",
+  "version": "${version}",
+  "name": "Shear API",
+  "description": "Port NeoForge \"API\" to Fabric, targeting 20.4.200",
+  "authors": [
+    "PillowMC"
+  ],
+  "contact": {
+    "homepage": "https://github.com/PillowMC/ShearAPI",
+    "sources": "https://github.com/PillowMC/ShearAPI"
+  },
+  "license": "LGPL-2.1",
+  "icon": "assets/shearapi/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.pillowmc.shearapi.ShearAPI"
+    ],
+    "client": [
+      "net.pillowmc.shearapi.client.ShearAPIClient"
+    ]
+  },
+  "mixins": [
+    "shearapi.mixins.json",
+    {
+      "config": "shearapi.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.6",
+    "minecraft": "~1.20.4",
+    "java": ">=17",
+    "fabric-api": "*"
+  },
+  "custom": {
+    "pillow-provided": {
+      "neoforge": "20.4.999"
+    },
+    "modmenu": {
+      "badges": ["library"]
+    }
+  }
 }
