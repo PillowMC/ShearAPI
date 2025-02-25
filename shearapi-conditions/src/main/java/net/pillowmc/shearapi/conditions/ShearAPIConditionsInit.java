@@ -1,4 +1,4 @@
-package net.pillowmc.shearapi.conditons;
+package net.pillowmc.shearapi.conditions;
 
 import com.mojang.serialization.Codec;
 import net.fabricmc.api.ModInitializer;
@@ -12,6 +12,7 @@ import net.neoforged.neoforge.registries.RegistryBuilder;
 import net.pillowmc.shearapi.runtime.ShearAPIRuntime;
 
 public class ShearAPIConditionsInit implements ModInitializer {
+    // TODO: Mixins for data generators.
     public static final ResourceKey<Registry<Codec<? extends ICondition>>> CONDITION_CODECS_KEY = ResourceKey.createRegistryKey(new ResourceLocation(ShearAPIRuntime.MOD_ID, "condition_codecs"));
     public static final Registry<Codec<? extends ICondition>> CONDITION_SERIALIZERS = new RegistryBuilder<>(CONDITION_CODECS_KEY).create();
     private static final DeferredRegister<Codec<? extends ICondition>> CONDITION_CODECS_REGISTER = DeferredRegister.create(CONDITION_SERIALIZERS, ShearAPIRuntime.MOD_ID);

@@ -14,7 +14,7 @@ import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.registries.holdersets.HolderSetType;
 import net.pillowmc.shearapi.attachment.ShearAPIAttachmentEarlyRiser;
-import net.pillowmc.shearapi.conditons.ShearAPIConditionsInit;
+import net.pillowmc.shearapi.conditions.ShearAPIConditionsInit;
 import net.pillowmc.shearapi.holderset.ShearAPIHolderSetInit;
 
 /**

@@ -1,12 +1,12 @@
 {
-	"required": true,
-	"package": "net.pillowmc.shearapi.withpillow.mixin",
+  "required": true,
+  "package": "net.pillowmc.shearapi.withpillow.mixin",
     "plugin": "net.pillowmc.shearapi.withpillow.mixin.MixinPlugin",
-	"compatibilityLevel": "JAVA_17",
-	"mixins": [
-		"IModBusEventMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "IModBusEventMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

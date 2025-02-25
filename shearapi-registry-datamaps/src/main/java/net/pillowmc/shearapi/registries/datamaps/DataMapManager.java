@@ -19,6 +19,7 @@ import net.neoforged.neoforge.registries.DataMapLoader;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import net.neoforged.neoforge.registries.datamaps.network.KnownRegistryDataMapsReplyPayload;
+import net.pillowmc.shearapi.conditions.injection.AddReloadListenerEventInjection;
 import net.pillowmc.shearapi.event.ShearAPIEvent;
 import net.pillowmc.shearapi.runtime.ShearAPIRuntime;
 import net.pillowmc.shearapi.runtime.ShearAPIVersion;
@@ -50,7 +51,7 @@ public class DataMapManager {
         ShearAPIRuntime.getRuntime().getModBus().addListener(((DataMapMap<?, ?, ?>) Parrot.MOB_SOUND_MAP)::onDataMapsLoadedEvent);
         ShearAPIRuntime.getRuntime().getModBus().addListener(((DataMapMap<?, ?, ?>) GiveGiftToHero.GIFTS)::onDataMapsLoadedEvent);
         ShearAPIRuntime.getRuntime().getModBus().addListener(((Object2IntDataMapMap<?, ?>) VibrationSystem.VIBRATION_FREQUENCY_FOR_EVENT)::onDataMapsLoadedEvent);
-        ShearAPIEvent.EVENT_BUS.addListener((AddReloadListenerEvent event) -> event.addListener(DATA_MAPS = new DataMapLoader(event.getConditionContext(), event.getRegistryAccess())));
+        ShearAPIEvent.EVENT_BUS.addListener((AddReloadListenerEvent event) -> event.addListener(DATA_MAPS = new DataMapLoader(((AddReloadListenerEventInjection)event).getConditionContext(), event.getRegistryAccess())));
         ShearAPIEvent.EVENT_BUS.addListener((TagsUpdatedEvent event) -> DATA_MAPS.apply());
         initDataMaps();
     };

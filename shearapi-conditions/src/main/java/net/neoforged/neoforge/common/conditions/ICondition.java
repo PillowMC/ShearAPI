@@ -27,9 +27,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Unit;
-import net.neoforged.neoforge.registries.RegistryBuilder;
-import net.pillowmc.shearapi.conditons.ShearAPIConditionsInit;
-import net.pillowmc.shearapi.runtime.ShearAPIRuntime;
+import net.pillowmc.shearapi.conditions.ShearAPIConditionsInit;
 
 public interface ICondition {
     Codec<ICondition> CODEC = ShearAPIConditionsInit.CONDITION_SERIALIZERS.byNameCodec()

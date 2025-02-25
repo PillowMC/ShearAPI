@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.pillowmc.shearapi.conditions.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "AddReloadListenerEventMixin",
+    "LootTableMixin",
+    "ReloadableServerResourcesMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

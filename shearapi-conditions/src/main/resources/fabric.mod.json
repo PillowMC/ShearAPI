@@ -27,10 +27,14 @@
   "accessWidener": "shearapi-conditions.accesswidener",
   "entrypoints": {
     "main": [
-      "net.pillowmc.shearapi.conditons.ShearAPIConditionsInit"
+      "net.pillowmc.shearapi.conditions.ShearAPIConditionsInit"
     ]
   },
+  "mixins": ["shearapi-conditions.mixin.json"],
   "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_5350": ["net/pillowmc/shearapi/conditions/injection/ReloadableServerResourcesInjection"]
+    },
     "modmenu": {
       "parent": "shearapi",
       "badges": ["library"]

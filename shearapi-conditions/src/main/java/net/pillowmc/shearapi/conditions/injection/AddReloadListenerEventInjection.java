@@ -1,4 +1,4 @@
-package net.pillowmc.shearapi.conditons.injection;
+package net.pillowmc.shearapi.conditions.injection;
 
 import net.neoforged.neoforge.common.conditions.ICondition;
 
