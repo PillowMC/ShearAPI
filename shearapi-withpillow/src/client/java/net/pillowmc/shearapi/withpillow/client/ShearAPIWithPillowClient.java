@@ -1,0 +1,39 @@
+package net.pillowmc.shearapi.withpillow.client;
+
+import net.minecraft.client.Minecraft;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.config.ConfigTracker;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.neoforged.neoforge.network.payload.ConfigFilePayload;
+import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+import net.pillowmc.shearapi.runtime.ShearAPIRuntime;
+import net.pillowmc.shearapi.runtime.ShearAPIVersion;
+import net.pillowmc.shearapi.withpillow.ShearAPIWithPillow;
+
+import java.util.Optional;
+
+public class ShearAPIWithPillowClient {
+    @SubscribeEvent
+    public void onRegisterPayloadHandlerEvent(RegisterPayloadHandlerEvent event) {
+        if (!(ShearAPIRuntime.getRuntime() instanceof ShearAPIWithPillow)) {
+            return;
+        }
+        final IPayloadRegistrar registrar = event.registrar(ShearAPIRuntime.MOD_ID)
+            .versioned(ShearAPIVersion.getSpec())
+            .optional();
+        registrar
+            .configuration(
+                ConfigFilePayload.ID,
+                ConfigFilePayload::new,
+                handlers -> handlers.client(this::handleConfigFile));
+    }
+
+    private void handleConfigFile(ConfigFilePayload payload, IPayloadContext context) {
+        if (!Minecraft.getInstance().isLocalServer()) {
+            Optional.ofNullable(
+                    ConfigTracker.INSTANCE.fileMap().get(payload.fileName())
+            ).ifPresent(mc -> mc.acceptSyncedConfig(payload.contents()));
+        }
+    }
+}

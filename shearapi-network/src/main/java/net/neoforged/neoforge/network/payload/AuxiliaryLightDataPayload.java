@@ -11,7 +11,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ChunkPos;
-import net.neoforged.neoforge.common.extensions.IFriendlyByteBufExtension;
 import net.pillowmc.shearapi.runtime.ShearAPIRuntime;
 
 public record AuxiliaryLightDataPayload(ChunkPos pos, Map<BlockPos, Byte> entries) implements CustomPacketPayload {
@@ -24,7 +23,7 @@ public record AuxiliaryLightDataPayload(ChunkPos pos, Map<BlockPos, Byte> entrie
     @Override
     public void write(FriendlyByteBuf buf) {
         buf.writeChunkPos(pos);
-        buf.writeMap(entries, FriendlyByteBuf::writeBlockPos, IFriendlyByteBufExtension::writeByte);
+        buf.writeMap(entries, FriendlyByteBuf::writeBlockPos, FriendlyByteBuf::writeByte);
     }
 
     @Override

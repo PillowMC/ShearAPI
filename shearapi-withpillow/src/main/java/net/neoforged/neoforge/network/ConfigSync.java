@@ -39,10 +39,4 @@ public class ConfigSync {
                 .map(e -> new ConfigFilePayload(e.getValue(), e.getKey()))
                 .toList();
     }
-
-    public void receiveSyncedConfig(final byte[] contents, final String fileName) {
-        if (!Minecraft.getInstance().isLocalServer()) {
-            Optional.ofNullable(tracker.fileMap().get(fileName)).ifPresent(mc -> mc.acceptSyncedConfig(contents));
-        }
-    }
 }

@@ -11,7 +11,7 @@ import java.util.Objects;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.common.conditions.ConditionalOps;
+//import net.neoforged.neoforge.common.conditions.ConditionalOps;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
  * <pre>{@code
  * <map namespace>/data_maps/<registry namespace>/<registry path>/<map path>.json
  * }</pre>
- * 
+ *
  * <p>
  * The {@code registry namespace} is omitted if it is {@value ResourceLocation#DEFAULT_NAMESPACE}. <br>
  * The structure of the json file is as follows:

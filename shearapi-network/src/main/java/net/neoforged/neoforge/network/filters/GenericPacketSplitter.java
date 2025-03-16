@@ -35,6 +35,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.payload.SplitPacketPayload;
 import net.neoforged.neoforge.network.registration.NetworkRegistry;
+import net.pillowmc.shearapi.runtime.ShearAPIVersion;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.ApiStatus;
@@ -60,7 +61,7 @@ public class GenericPacketSplitter extends MessageToMessageEncoder<Packet<?>> im
     private static final AttributeKey<GenericPacketSplitter> SPLITTER_ATTRIBUTE = AttributeKey.valueOf("neoforge:splitter");
 
     public GenericPacketSplitter(Connection connection, ConnectionType connectionType) {
-        this(getProtocolKey(connection.getDirection().getOpposite()), connectionType);
+        this(getProtocolKey(connection.getReceiving().getOpposite()), connectionType); // TODO: (ShearAPI) getDirection
 
         connection.channel().attr(SPLITTER_ATTRIBUTE).set(this);
     }
@@ -73,7 +74,7 @@ public class GenericPacketSplitter extends MessageToMessageEncoder<Packet<?>> im
     @SubscribeEvent
     private static void register(final RegisterPayloadHandlerEvent event) {
         event.registrar(ShearAPIRuntime.MOD_ID)
-                .versioned(NeoForgeVersion.getSpec())
+                .versioned(ShearAPIVersion.getSpec())
                 .optional()
                 .common(
                         SplitPacketPayload.ID,

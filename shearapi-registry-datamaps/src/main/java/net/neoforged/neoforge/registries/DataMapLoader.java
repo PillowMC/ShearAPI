@@ -35,8 +35,8 @@ import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.neoforged.neoforge.common.conditions.ConditionalOps;
-import net.neoforged.neoforge.common.conditions.ICondition;
+//import net.neoforged.neoforge.common.conditions.ConditionalOps;
+//import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType;
 import net.neoforged.neoforge.registries.datamaps.DataMapFile;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
@@ -52,11 +52,11 @@ public class DataMapLoader implements PreparableReloadListener {
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final String PATH = "data/neoforge/data_maps";
     private Map<ResourceKey<? extends Registry<?>>, LoadResult<?>> results;
-    private final ICondition.IContext conditionContext;
+//    private final ICondition.IContext conditionContext;
     private final RegistryAccess registryAccess;
 
-    public DataMapLoader(ICondition.IContext conditionContext, RegistryAccess registryAccess) {
-        this.conditionContext = conditionContext;
+    public DataMapLoader(/*ICondition.IContext conditionContext, */RegistryAccess registryAccess) {
+//        this.conditionContext = conditionContext;
         this.registryAccess = registryAccess;
     }
 
@@ -95,7 +95,7 @@ public class DataMapLoader implements PreparableReloadListener {
                 if (value.isEmpty()) return;
 
                 valueResolver.accept(tKey, holder -> {
-                    final var newValue = value.get().carrier();
+                    final var newValue = value.get();//.carrier();
                     final var key = holder.unwrapKey().orElseThrow();
                     final var oldValue = result.get(key);
                     if (oldValue == null || newValue.replace()) {
@@ -130,11 +130,13 @@ public class DataMapLoader implements PreparableReloadListener {
     }
 
     private CompletableFuture<Map<ResourceKey<? extends Registry<?>>, LoadResult<?>>> load(ResourceManager manager, Executor executor, ProfilerFiller profiler) {
-        return CompletableFuture.supplyAsync(() -> load(manager, profiler, registryAccess, conditionContext), executor);
+        return CompletableFuture.supplyAsync(() -> load(manager, profiler, registryAccess), executor);
     }
 
-    private static Map<ResourceKey<? extends Registry<?>>, LoadResult<?>> load(ResourceManager manager, ProfilerFiller profiler, RegistryAccess access, ICondition.IContext context) {
-        final RegistryOps<JsonElement> ops = new ConditionalOps<>(RegistryOps.create(JsonOps.INSTANCE, access), context);
+    private static Map<ResourceKey<? extends Registry<?>>, LoadResult<?>> load(ResourceManager manager, ProfilerFiller profiler, RegistryAccess access/*, ICondition.IContext context */) {
+        final RegistryOps<JsonElement> ops = //new ConditionalOps<>(
+                RegistryOps.create(JsonOps.INSTANCE, access);
+                //, context);
 
         final Map<ResourceKey<? extends Registry<?>>, LoadResult<?>> values = new HashMap<>();
         access.registries().forEach(registryEntry -> {

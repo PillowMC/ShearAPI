@@ -43,7 +43,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.network.ServerConfigurationPacketListenerImpl;
 import net.minecraft.server.network.ServerPlayerConnection;
 import net.minecraft.util.thread.ReentrantBlockableEventLoop;
-import net.neoforged.fml.ModLoader;
 import net.neoforged.fml.config.ConfigTracker;
 import net.pillowmc.shearapi.runtime.ShearAPIRuntime;
 import net.neoforged.neoforge.network.connection.ConnectionPhase;

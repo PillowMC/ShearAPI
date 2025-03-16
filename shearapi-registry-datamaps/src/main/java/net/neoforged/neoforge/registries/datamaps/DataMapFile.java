@@ -15,13 +15,13 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.ExtraCodecs;
-import net.neoforged.neoforge.common.conditions.ConditionalOps;
-import net.neoforged.neoforge.common.conditions.WithConditions;
+//import net.neoforged.neoforge.common.conditions.ConditionalOps;
+//import net.neoforged.neoforge.common.conditions.WithConditions;
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs;
 
 public record DataMapFile<T, R>(
         boolean replace,
-        Map<Either<TagKey<R>, ResourceKey<R>>, Optional<WithConditions<DataMapEntry<T>>>> values,
+        Map<Either<TagKey<R>, ResourceKey<R>>, Optional</*WithConditions<*/DataMapEntry<T>/*>*/>> values,
         List<DataMapEntry.Removal<T, R>> removals) {
     public static <T, R> Codec<DataMapFile<T, R>> codec(ResourceKey<Registry<R>> registryKey, DataMapType<R, T> dataMap) {
         final Codec<Either<TagKey<R>, ResourceKey<R>>> tagOrValue = ExtraCodecs.TAG_OR_ELEMENT_ID.xmap(
@@ -46,7 +46,7 @@ public record DataMapFile<T, R>(
 
         return RecordCodecBuilder.create(in -> in.group(
                 ExtraCodecs.strictOptionalField(Codec.BOOL, "replace", false).forGetter(DataMapFile::replace),
-                ExtraCodecs.strictUnboundedMap(tagOrValue, ConditionalOps.createConditionalCodecWithConditions(DataMapEntry.codec(dataMap))).fieldOf("values").forGetter(DataMapFile::values),
+//                ExtraCodecs.strictUnboundedMap(tagOrValue, ConditionalOps.createConditionalCodecWithConditions(DataMapEntry.codec(dataMap))).fieldOf("values").forGetter(DataMapFile::values),
                 ExtraCodecs.strictOptionalField(removalsCodec, "remove", List.of()).forGetter(DataMapFile::removals))
                 .apply(in, DataMapFile::new));
     }

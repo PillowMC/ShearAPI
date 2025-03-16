@@ -9,4 +9,5 @@ dependencies {
     implementation "net.neoforged.fancymodloader:loader:${project.fancy_mod_loader_version}"
     api project(path: ":shearapi-runtime", configuration: "namedElements")
     api project(path: ":shearapi-withoutpillow", configuration: "namedElements")
+    api project(path: ":shearapi-network", configuration: "namedElements")
 }

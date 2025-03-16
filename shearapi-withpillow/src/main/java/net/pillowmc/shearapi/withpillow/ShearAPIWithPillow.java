@@ -9,6 +9,10 @@ import net.pillowmc.shearapi.withoutpillow.ShearAPIWithoutPillow;
 
 public class ShearAPIWithPillow extends ShearAPIWithoutPillow {
 
+    public static void onInitialize() {
+
+    }
+
     @Override
     public boolean isProduction() {
         return FMLLoader.isProduction();

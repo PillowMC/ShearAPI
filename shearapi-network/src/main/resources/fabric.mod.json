@@ -23,7 +23,8 @@
     "shearapi-runtime": "~${version}"
   },
   "entrypoints": {
-    "client": ["net.pillowmc.shearapi.network.client.ShearAPINetworkClient"]
+    "client": ["net.pillowmc.shearapi.network.client.ShearAPINetworkClient"],
+    "shearapi-runtime:mod_bus_subscriber": ["net.neoforged.neoforge.network.ConfigurationInitialization"]
   },
   "mixins": ["shearapi-network.mixins.json"],
   "custom": {

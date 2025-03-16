@@ -7,4 +7,5 @@ dependencies {
     api project(path: ":shearapi-runtime", configuration: "namedElements")
     api project(path: ":shearapi-network", configuration: "namedElements")
     api project(path: ":shearapi-utils", configuration: "namedElements")
+    api project(path: ":shearapi-event", configuration: "namedElements")
 }

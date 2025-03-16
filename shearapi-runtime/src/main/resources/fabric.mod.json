@@ -20,6 +20,11 @@
     "java": ">=17",
     "fabric-api": "*"
   },
+  "entrypoints": {
+    "main": [
+      "net.pillowmc.shearapi.runtime.ShearAPIRuntime::onInitialize"
+    ]
+  },
   "custom": {
     "modmenu": {
       "parent": "shearapi",

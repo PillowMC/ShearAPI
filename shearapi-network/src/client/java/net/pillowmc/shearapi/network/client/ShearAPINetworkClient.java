@@ -21,10 +21,6 @@ public class ShearAPINetworkClient implements ClientModInitializer {
                             TierSortingRegistryPayload.ID,
                             TierSortingRegistryPayload::new,
                             handlers -> handlers.client(ClientPayloadHandler.getInstance()::handle))
-                    .common(
-                            ConfigFilePayload.ID,
-                            ConfigFilePayload::new,
-                            handlers -> handlers.client(ClientPayloadHandler.getInstance()::handle))
                     .configuration(
                             FrozenRegistrySyncStartPayload.ID,
                             FrozenRegistrySyncStartPayload::new,

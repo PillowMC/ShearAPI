@@ -1,7 +1,10 @@
 package net.pillowmc.shearapi.runtime;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.function.Consumer;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 
 public enum ShearAPIRuntime {
@@ -27,8 +30,20 @@ public enum ShearAPIRuntime {
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                     | InvocationTargetException | NoSuchMethodException | SecurityException
                     | ClassNotFoundException e) {
-                throw new RuntimeException("Pillow Loader not is detected, but ShearAPI (Without Pillow) is missing!", e);
+                throw new RuntimeException("Pillow Loader is not detected, but ShearAPI (Without Pillow) is missing!", e);
             }
+        }
+    }
+
+    public static void onInitialize() {
+        var bus = getRuntime().getModBus();
+        FabricLoader.getInstance()
+                .getEntrypoints("shearapi-runtime:mod_bus_subscriber", Object.class)
+                .forEach(bus::register);
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            FabricLoader.getInstance()
+                .getEntrypoints("shearapi-runtime:client_mod_bus_subscriber", Object.class)
+                .forEach(bus::register);
         }
     }
 }

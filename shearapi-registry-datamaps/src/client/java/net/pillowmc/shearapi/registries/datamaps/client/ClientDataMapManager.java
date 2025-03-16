@@ -22,6 +22,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 import net.neoforged.neoforge.network.handling.ConfigurationPayloadContext;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
@@ -40,24 +41,23 @@ import org.slf4j.Logger;
 public class ClientDataMapManager {
     private static final Logger LOGGER = LogUtils.getLogger();
     @ApiStatus.Internal
-    public void shearapi$fabricClientInitialize(){
-        ShearAPIRuntime.getRuntime().getModBus().addListener((RegisterPayloadHandlerEvent event) -> {
-            final IPayloadRegistrar registrar = event.registrar(ShearAPIRuntime.MOD_ID)
-                    .versioned(ShearAPIVersion.getSpec())
-                    .optional();
-            registrar
-                    .configuration(
-                            KnownRegistryDataMapsPayload.ID,
-                            KnownRegistryDataMapsPayload::new,
-                            handlers -> handlers.client(ClientDataMapManager::handleKnownDataMaps))
-                    .play(
-                            RegistryDataMapSyncPayload.ID,
-                            RegistryDataMapSyncPayload::decode,
-                            handlers -> handlers.client(ClientDataMapManager::handleDataMapSync));
-        });
+    @SubscribeEvent
+    public void shearapi$onRegisterPayloadHandlerEvent(RegisterPayloadHandlerEvent event) {
+        final IPayloadRegistrar registrar = event.registrar(ShearAPIRuntime.MOD_ID)
+                .versioned(ShearAPIVersion.getSpec())
+                .optional();
+        registrar
+                .configuration(
+                        KnownRegistryDataMapsPayload.ID,
+                        KnownRegistryDataMapsPayload::new,
+                        handlers -> handlers.client(this::handleKnownDataMaps))
+                .play(
+                        RegistryDataMapSyncPayload.ID,
+                        RegistryDataMapSyncPayload::decode,
+                        handlers -> handlers.client(this::handleDataMapSync));
     };
 
-    public static <R> void handleDataMapSync(final RegistryDataMapSyncPayload<R> payload, final PlayPayloadContext context) {
+    private <R> void handleDataMapSync(final RegistryDataMapSyncPayload<R> payload, final PlayPayloadContext context) {
         context.workHandler().submitAsync(() -> {
             final IBaseMappedRegistryInjection<R> registry = (IBaseMappedRegistryInjection<R>) Minecraft.getInstance().level.registryAccess()
                     .registryOrThrow(payload.registryKey());
@@ -70,7 +70,7 @@ public class ClientDataMapManager {
         });
     }
 
-    public static void handleKnownDataMaps(final KnownRegistryDataMapsPayload payload, final ConfigurationPayloadContext context) {
+    private void handleKnownDataMaps(final KnownRegistryDataMapsPayload payload, final ConfigurationPayloadContext context) {
         record MandatoryEntry(ResourceKey<Registry<?>> registry, ResourceLocation id) {}
         final Set<MandatoryEntry> ourMandatory = new HashSet<>();
         DataMapManager.getDataMaps().forEach((reg, values) -> values.values().forEach(attach -> {

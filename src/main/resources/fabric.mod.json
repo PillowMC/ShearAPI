@@ -20,6 +20,9 @@
     ],
     "client": [
       "net.pillowmc.shearapi.client.ShearAPIClient"
+    ],
+    "shearapi-runtime:mod_bus_subscriber": [
+      "net.pillowmc.shearapi.compat.ShearAPITransferCompat"
     ]
   },
   "mixins": [
