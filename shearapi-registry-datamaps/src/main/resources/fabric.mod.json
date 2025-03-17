@@ -26,7 +26,7 @@
   },
   "entrypoints": {
     "main": ["net.pillowmc.shearapi.registries.datamaps.DataMapManager::shearapi$fabricInitialize"],
-    "shearapi-runtime:client_mod_bus_subscriber": ["net.pillowmc.shearapi.registries.datamaps.client.ClientDataMapManager"]
+    "shearapi-runtime:client_mod_bus_subscriber": ["net.pillowmc.shearapi.registries.datamaps.client.ClientDataMapManager::clazz"]
   },
   "accessWidener": "shearapi-registry-datamaps.accesswidener",
   "custom": {

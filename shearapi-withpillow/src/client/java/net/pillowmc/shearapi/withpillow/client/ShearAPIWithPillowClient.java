@@ -14,8 +14,9 @@ import net.pillowmc.shearapi.withpillow.ShearAPIWithPillow;
 import java.util.Optional;
 
 public class ShearAPIWithPillowClient {
+    public static Class<ShearAPIWithPillowClient> clazz = ShearAPIWithPillowClient.class;
     @SubscribeEvent
-    public void onRegisterPayloadHandlerEvent(RegisterPayloadHandlerEvent event) {
+    public static void onRegisterPayloadHandlerEvent(RegisterPayloadHandlerEvent event) {
         if (!(ShearAPIRuntime.getRuntime() instanceof ShearAPIWithPillow)) {
             return;
         }
@@ -26,10 +27,10 @@ public class ShearAPIWithPillowClient {
             .configuration(
                 ConfigFilePayload.ID,
                 ConfigFilePayload::new,
-                handlers -> handlers.client(this::handleConfigFile));
+                handlers -> handlers.client(ShearAPIWithPillowClient::handleConfigFile));
     }
 
-    private void handleConfigFile(ConfigFilePayload payload, IPayloadContext context) {
+    private static void handleConfigFile(ConfigFilePayload payload, IPayloadContext context) {
         if (!Minecraft.getInstance().isLocalServer()) {
             Optional.ofNullable(
                     ConfigTracker.INSTANCE.fileMap().get(payload.fileName())

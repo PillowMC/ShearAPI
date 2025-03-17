@@ -16,16 +16,13 @@ import org.jetbrains.annotations.ApiStatus;
 
 @ApiStatus.Internal
 public class ConfigurationInitialization {
+    public static Class<ConfigurationInitialization> clazz = ConfigurationInitialization.class;
     @SubscribeEvent
-    private void configureModdedClient(OnGameConfigurationEvent event) {
+    private static void configureModdedClient(OnGameConfigurationEvent event) {
         if (event.getListener().isConnected(FrozenRegistrySyncStartPayload.ID) &&
                 event.getListener().isConnected(FrozenRegistryPayload.ID) &&
                 event.getListener().isConnected(FrozenRegistrySyncCompletedPayload.ID)) {
             event.register(new SyncRegistries());
-        }
-
-        if (event.getListener().isConnected(ConfigFilePayload.ID)) {
-            event.register(new SyncConfig(event.getListener()));
         }
 
         //These two can always be registered they detect the listener connection type internally and will skip themselves.

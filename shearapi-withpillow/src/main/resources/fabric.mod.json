@@ -3,7 +3,7 @@
 	"id": "shearapi-withpillow",
 	"version": "${version}",
 	"name": "Shear API (With Pillow)",
-	"description": "Perform special actions and interact with FML for ShearAPI on a Pillow installation.",
+	"description": "Perform special actions, deal with \"Modded\" connection and interact with FML for ShearAPI on a Pillow installation.",
 	"authors": [
 		"PillowMC"
 	],
@@ -22,8 +22,8 @@
 		"shearapi-runtime": "~${version}"
 	},
   "entrypoints": {
-    "shearapi-runtime:client_mod_bus_subscriber": ["net.pillowmc.shearapi.withpillow.client.ShearAPIWithPillowClient"],
-    "main": ["net.pillowmc.shearapi.withpillow.ShearAPIWithPillow::onInitialize"]
+    "shearapi-runtime:client_mod_bus_subscriber": ["net.pillowmc.shearapi.withpillow.client.ShearAPIWithPillowClient::clazz"],
+    "shearapi-runtime:mod_bus_subscriber": ["net.pillowmc.shearapi.withpillow.ShearAPIWithPillow::clazz"]
   },
 	"mixins": [
 		"shearapi-withpillow.mixins.json"

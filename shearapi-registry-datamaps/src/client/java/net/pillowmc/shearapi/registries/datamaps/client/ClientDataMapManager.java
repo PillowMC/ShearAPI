@@ -39,10 +39,12 @@ import org.slf4j.Logger;
 
 @ApiStatus.Internal
 public class ClientDataMapManager {
+    public static Class<ClientDataMapManager> clazz = ClientDataMapManager.class;
     private static final Logger LOGGER = LogUtils.getLogger();
+
     @ApiStatus.Internal
     @SubscribeEvent
-    public void shearapi$onRegisterPayloadHandlerEvent(RegisterPayloadHandlerEvent event) {
+    public static void shearapi$onRegisterPayloadHandlerEvent(RegisterPayloadHandlerEvent event) {
         final IPayloadRegistrar registrar = event.registrar(ShearAPIRuntime.MOD_ID)
                 .versioned(ShearAPIVersion.getSpec())
                 .optional();
@@ -50,14 +52,14 @@ public class ClientDataMapManager {
                 .configuration(
                         KnownRegistryDataMapsPayload.ID,
                         KnownRegistryDataMapsPayload::new,
-                        handlers -> handlers.client(this::handleKnownDataMaps))
+                        handlers -> handlers.client(ClientDataMapManager::handleKnownDataMaps))
                 .play(
                         RegistryDataMapSyncPayload.ID,
                         RegistryDataMapSyncPayload::decode,
-                        handlers -> handlers.client(this::handleDataMapSync));
-    };
+                        handlers -> handlers.client(ClientDataMapManager::handleDataMapSync));
+    }
 
-    private <R> void handleDataMapSync(final RegistryDataMapSyncPayload<R> payload, final PlayPayloadContext context) {
+    private static  <R> void handleDataMapSync(final RegistryDataMapSyncPayload<R> payload, final PlayPayloadContext context) {
         context.workHandler().submitAsync(() -> {
             final IBaseMappedRegistryInjection<R> registry = (IBaseMappedRegistryInjection<R>) Minecraft.getInstance().level.registryAccess()
                     .registryOrThrow(payload.registryKey());
@@ -70,7 +72,7 @@ public class ClientDataMapManager {
         });
     }
 
-    private void handleKnownDataMaps(final KnownRegistryDataMapsPayload payload, final ConfigurationPayloadContext context) {
+    private static void handleKnownDataMaps(final KnownRegistryDataMapsPayload payload, final ConfigurationPayloadContext context) {
         record MandatoryEntry(ResourceKey<Registry<?>> registry, ResourceLocation id) {}
         final Set<MandatoryEntry> ourMandatory = new HashSet<>();
         DataMapManager.getDataMaps().forEach((reg, values) -> values.values().forEach(attach -> {

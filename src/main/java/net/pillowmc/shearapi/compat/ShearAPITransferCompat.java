@@ -7,6 +7,8 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import team.reborn.energy.api.EnergyStorage;
 
 public class ShearAPITransferCompat {
+    public static Class<ShearAPITransferCompat> clazz = ShearAPITransferCompat.class;
+
     @SubscribeEvent
     public void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
         event.shearapi$registerGenericBlock(Capabilities.EnergyStorage.BLOCK, (level, pos, state, blockEntity, context) -> {
