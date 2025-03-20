@@ -3,7 +3,12 @@
   "package": "net.pillowmc.shearapi.network.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "ServerCommonPacketListenerMixin"
+    "ConnectionMixin",
+    "ConnectionProtocolMixin",
+    "FriendlyByteBufMixin",
+    "ServerCommonPacketListenerImplMixin",
+    "ServerCommonPacketListenerMixin",
+    "ServerConfigurationPacketListenerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

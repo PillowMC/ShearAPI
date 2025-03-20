@@ -22,6 +22,7 @@
     "shearapi-utils": "~${version}",
     "shearapi-runtime": "~${version}"
   },
+  "accessWidener": "shearapi-network.accesswidener",
   "entrypoints": {
     "client": ["net.pillowmc.shearapi.network.client.ShearAPINetworkClient"],
     "shearapi-runtime:mod_bus_subscriber": ["net.neoforged.neoforge.network.ConfigurationInitialization::clazz"]

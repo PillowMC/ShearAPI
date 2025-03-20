@@ -25,19 +25,6 @@ import net.neoforged.neoforge.network.registration.NetworkRegistry;
  * </p>
  */
 public interface IServerCommonPacketListenerExtension {
-    /**
-     * {@return the {@link ServerCommonPacketListener} that the extensions is attached to}
-     */
-    private ServerCommonPacketListener self() {
-        return (ServerCommonPacketListener) this;
-    }
-
-    /**
-     * Sends a packet to the client which this listener is attached to.
-     *
-     * @param packet The packet to send
-     */
-    void send(Packet<?> packet);
 
     /**
      * Sends a custom payload to the client which this listener is attached to.
@@ -45,16 +32,8 @@ public interface IServerCommonPacketListenerExtension {
      * @param packetPayload The payload to send
      */
     default void send(CustomPacketPayload packetPayload) {
-        this.send(new ClientboundCustomPayloadPacket(packetPayload));
+        throw new AssertionError("This should be implemented by mixin!");
     }
-
-    /**
-     * Sends a packet to the client which this listener is attached to.
-     *
-     * @param packet             The packet to send
-     * @param packetSendListener The listener to call when the packet is sent
-     */
-    void send(Packet<?> packet, @Nullable PacketSendListener packetSendListener);
 
     /**
      * Sends a custom payload to the client which this listener is attached to.
@@ -63,15 +42,8 @@ public interface IServerCommonPacketListenerExtension {
      * @param listener      The listener to call when the packet is sent
      */
     default void send(CustomPacketPayload packetPayload, @Nullable PacketSendListener listener) {
-        this.send(new ClientboundCustomPayloadPacket(packetPayload), listener);
+        throw new AssertionError("This should be implemented by mixin!");
     }
-
-    /**
-     * Triggers a disconnection with the given reason.
-     *
-     * @param reason The reason for the disconnection
-     */
-    void disconnect(Component reason);
 
     /**
      * {@return the connection this listener is attached to}
@@ -85,12 +57,12 @@ public interface IServerCommonPacketListenerExtension {
 
     /**
      * {@return true if the connection is to a vanilla client}
-     * 
+     *
      * @deprecated Use {@link #getConnectionType()} instead
      */
     @Deprecated(forRemoval = true)
     default boolean isVanillaConnection() {
-        return getConnectionType().isVanilla();
+        throw new AssertionError("This should be implemented by mixin!");
     }
 
     /**
@@ -99,16 +71,16 @@ public interface IServerCommonPacketListenerExtension {
      * @param payloadId The payload id to check
      */
     default boolean isConnected(final ResourceLocation payloadId) {
-        return NetworkRegistry.getInstance().isConnected(self(), payloadId);
+        throw new AssertionError("This should be implemented by mixin!");
     }
 
     /**
      * {@return true if the custom payload is usable by this connection}
-     * 
+     *
      * @param payload The payload to check
      */
     default boolean isConnected(final CustomPacketPayload payload) {
-        return isConnected(payload.id());
+        throw new AssertionError("This should be implemented by mixin!");
     }
 
     /**
