@@ -5,9 +5,11 @@
 
 package net.pillowmc.shearapi.network.injection;
 
+import net.minecraft.network.protocol.common.ServerboundCustomPayloadPacket;
 import net.minecraft.network.protocol.configuration.ServerConfigurationPacketListener;
 import net.minecraft.server.network.ConfigurationTask;
 import net.minecraft.server.network.ServerConfigurationPacketListenerImpl;
+import net.neoforged.neoforge.network.connection.ConnectionType;
 
 /**
  * Extension class for {@link ServerConfigurationPacketListener}
@@ -20,4 +22,8 @@ public interface IServerConfigurationPacketListenerExtension extends IServerComm
      * @implNote This forces the normally private method implementation in {@link ServerConfigurationPacketListenerImpl#finishCurrentTask(ConfigurationTask.Type)} to become public, and adds this to the signature of {@link ServerConfigurationPacketListener}
      */
     void finishCurrentTask(ConfigurationTask.Type task);
+
+    void shearapi$setConnectionType(ConnectionType type);
+    boolean shearapi$isHandlingModdedConfigurationPhase();
+    void shearapi$setHandlingModdedConfigurationPhase();
 }
