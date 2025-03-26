@@ -44,9 +44,11 @@ public abstract class ServerCommonPacketListenerImplMixin implements IServerComm
     protected MinecraftServer server;
 
     @Shadow
+    @Override
     public abstract void send(Packet<?> packet);
 
     @Shadow
+    @Override
     public abstract void send(Packet<?> packet, @Nullable PacketSendListener packetSendListener);
 
     @Override
@@ -54,32 +56,11 @@ public abstract class ServerCommonPacketListenerImplMixin implements IServerComm
         return server;
     }
 
-    @Override
-    public abstract ConnectionType getConnectionType();
-
-    @Override
-    public void send(CustomPacketPayload packetPayload) {
-        this.send(new ClientboundCustomPayloadPacket(packetPayload));
-    }
-
-    @Override
-    public void send(CustomPacketPayload packetPayload, @Nullable PacketSendListener listener) {
-        this.send(new ClientboundCustomPayloadPacket(packetPayload), listener);
-    }
-
-    @Override
-    public boolean isVanillaConnection() {
-        return getConnectionType().isVanilla();
-    }
-
-    @Override
-    public boolean isConnected(ResourceLocation payloadId) {
-        return NetworkRegistry.getInstance().isConnected((ServerCommonPacketListener) (Object)this, payloadId);
-    }
-
-    @Override
-    public boolean isConnected(CustomPacketPayload payload) {
-        return this.isConnected(payload.id());
+    @Inject(method = "send(Lnet/minecraft/network/protocol/Packet;Lnet/minecraft/network/PacketSendListener;)V", at = @At("HEAD"), cancellable = true)
+    private void injectSend(Packet<?> packet, PacketSendListener packetSendListener, CallbackInfo ci) {
+        if (!NetworkRegistry.getInstance().canSendPacket(packet, (ServerCommonPacketListener) this)) {
+            ci.cancel();
+        }
     }
 
     // This should be in ServerConfigurationPacketListenerImplMixin...
