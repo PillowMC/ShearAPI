@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "shearapi-fmlstuff",
+  "version": "${version}",
+  "name": "Shear API (FML Stuff)",
+  "description": "Deal with stuff things if FML installed",
+  "authors": [
+    "PillowMC"
+  ],
+  "contact": {
+    "homepage": "https://github.com/PillowMC/ShearAPI",
+    "sources": "https://github.com/PillowMC/ShearAPI"
+  },
+  "license": "LGPL-2.1",
+  "icon": "assets/shearapi-fmlstuff/icon.png",
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=0.15.6",
+    "minecraft": "~1.20.4",
+    "java": ">=17",
+    "fabric-api": "*",
+    "shearapi-runtime": "~${version}",
+    "shearapi-network": "~${version}",
+    "shearapi-withpillow": "~${version}"
+  },
+  "entrypoints": {
+    "shearapi-runtime:client_mod_bus_subscriber": ["net.pillowmc.shearapi.fmlstuff.client.ShearAPIFMLStuffClient::clazz"],
+    "shearapi-runtime:mod_bus_subscriber": ["net.pillowmc.shearapi.fmlstuff.ShearAPIFMLStuff::clazz"]
+  },
+  "custom": {
+    "modmenu": {
+      "parent": "shearapi",
+      "badges": ["library"]
+    }
+  }
+}

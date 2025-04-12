@@ -21,10 +21,6 @@
 		"fabric-api": "*",
 		"shearapi-runtime": "~${version}"
 	},
-  "entrypoints": {
-    "shearapi-runtime:client_mod_bus_subscriber": ["net.pillowmc.shearapi.withpillow.client.ShearAPIWithPillowClient::clazz"],
-    "shearapi-runtime:mod_bus_subscriber": ["net.pillowmc.shearapi.withpillow.ShearAPIWithPillow::clazz"]
-  },
 	"mixins": [
 		"shearapi-withpillow.mixins.json"
 	],
