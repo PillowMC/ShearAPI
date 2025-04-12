@@ -22,6 +22,7 @@
     "shearapi-utils": "~${version}",
     "shearapi-runtime": "~${version}"
   },
+  "accessWidener": "shearapi-network.accesswidener",
   "entrypoints": {
     "client": ["net.pillowmc.shearapi.network.client.ShearAPINetworkClient"],
     "shearapi-runtime:mod_bus_subscriber": ["net.neoforged.neoforge.network.ConfigurationInitialization::clazz"]
@@ -32,7 +33,8 @@
       "net/minecraft/class_8706": ["net/pillowmc/shearapi/network/injection/IServerCommonPacketListenerExtension"],
       "net/minecraft/class_8735": ["net/pillowmc/shearapi/network/injection/IServerConfigurationPacketListenerExtension"],
       "net/minecraft/class_2792": ["net/pillowmc/shearapi/network/injection/IServerGamePacketListenerExtension"],
-      "net/minecraft/class_2540": ["net/pillowmc/shearapi/network/injection/IFriendlyByteBufExtension"]
+      "net/minecraft/class_2540": ["net/pillowmc/shearapi/network/injection/IFriendlyByteBufExtension"],
+      "net/minecraft/class_2539": ["net/pillowmc/shearapi/network/injection/IConnectionProtocolExtension"]
     },
     "modmenu": {
       "parent": "shearapi",

@@ -43,7 +43,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.network.ServerConfigurationPacketListenerImpl;
 import net.minecraft.server.network.ServerPlayerConnection;
 import net.minecraft.util.thread.ReentrantBlockableEventLoop;
-import net.neoforged.fml.config.ConfigTracker;
 import net.pillowmc.shearapi.runtime.ShearAPIRuntime;
 import net.neoforged.neoforge.network.connection.ConnectionPhase;
 import net.neoforged.neoforge.network.connection.ConnectionType;
@@ -65,6 +64,7 @@ import net.neoforged.neoforge.network.payload.ModdedNetworkPayload;
 import net.neoforged.neoforge.network.payload.ModdedNetworkQueryComponent;
 import net.neoforged.neoforge.network.payload.ModdedNetworkQueryPayload;
 import net.neoforged.neoforge.network.payload.ModdedNetworkSetupFailedPayload;
+import net.pillowmc.shearapi.runtime.ShearAPIVersion;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -284,11 +284,11 @@ public class NetworkRegistry {
      * @param packet   The packet that was received.
      */
     public void onModdedPacketAtServer(ServerCommonPacketListener listener, ServerboundCustomPayloadPacket packet) {
-        final NetworkPayloadSetup payloadSetup = listener.getConnection().channel().attr(ATTRIBUTE_PAYLOAD_SETUP).get();
+        final NetworkPayloadSetup payloadSetup = listener.getConnection().channel.attr(ATTRIBUTE_PAYLOAD_SETUP).get();
         //Check if this client was even setup properly.
         if (payloadSetup == null) {
             LOGGER.warn("Received a modded custom payload packet from a client that has not negotiated with the server. Disconnecting client.");
-            listener.disconnect(Component.translatable("multiplayer.disconnect.incompatible", "NeoForge %s".formatted(NeoForgeVersion.getVersion())));
+            listener.disconnect(Component.translatable("multiplayer.disconnect.incompatible", "NeoForge %s".formatted(ShearAPIVersion.getVersion())));
             return;
         }
 
@@ -299,7 +299,7 @@ public class NetworkRegistry {
             //Check if the channel should even be processed.
             if (channel == null && !isAdhocConfigurationChannelReadable(packet.payload().id(), PacketFlow.SERVERBOUND)) {
                 LOGGER.warn("Received a modded custom payload packet from a client with an unknown or not accepted channel. Disconnecting client.");
-                listener.disconnect(Component.translatable("multiplayer.disconnect.incompatible", "NeoForge %s".formatted(NeoForgeVersion.getVersion())));
+                listener.disconnect(Component.translatable("multiplayer.disconnect.incompatible", "NeoForge %s".formatted(ShearAPIVersion.getVersion())));
                 return;
             }
 
@@ -319,7 +319,7 @@ public class NetworkRegistry {
                             configurationPacketListener::finishCurrentTask,
                             new EventLoopSynchronizedWorkHandler<>(configurationPacketListener.getMainThreadEventLoop(), packet.payload()),
                             PacketFlow.SERVERBOUND,
-                            listener.getConnection().channel().pipeline().lastContext(),
+                            listener.getConnection().channel.pipeline().lastContext(),
                             Optional.empty()));
         } else if (listener instanceof ServerGamePacketListener playPacketListener) {
             //Get the configuration channel for the packet.
@@ -328,7 +328,7 @@ public class NetworkRegistry {
             //Check if the channel should even be processed.
             if (channel == null && !isAdhocPlayChannelReadable(packet.payload().id(), PacketFlow.SERVERBOUND)) {
                 LOGGER.warn("Received a modded custom payload packet from a client with an unknown or not accepted channel. Disconnecting client.");
-                listener.disconnect(Component.translatable("multiplayer.disconnect.incompatible", "NeoForge %s".formatted(NeoForgeVersion.getVersion())));
+                listener.disconnect(Component.translatable("multiplayer.disconnect.incompatible", "NeoForge %s".formatted(ShearAPIVersion.getVersion())));
                 return;
             }
 
@@ -347,7 +347,7 @@ public class NetworkRegistry {
                             new ServerPacketHandler(playPacketListener),
                             new EventLoopSynchronizedWorkHandler<>(playPacketListener.getMainThreadEventLoop(), packet.payload()),
                             PacketFlow.SERVERBOUND,
-                            listener.getConnection().channel().pipeline().lastContext(),
+                            listener.getConnection().channel.pipeline().lastContext(),
                             listener instanceof ServerPlayerConnection connection ? Optional.of(connection.getPlayer()) : Optional.empty()));
         } else {
             LOGGER.error("Received a modded custom payload packet from a client that is not in the configuration or play phase. Disconnecting client.");
@@ -367,12 +367,13 @@ public class NetworkRegistry {
      * @param listener The listener which received the packet.
      * @param packet   The packet that was received.
      */
+    // TODO: (ShearAPI) move to client
     public boolean onModdedPacketAtClient(ClientCommonPacketListener listener, ClientboundCustomPayloadPacket packet) {
         if (packet.payload().id().getNamespace().equals("minecraft")) {
             return false;
         }
 
-        final NetworkPayloadSetup payloadSetup = listener.getConnection().channel().attr(ATTRIBUTE_PAYLOAD_SETUP).get();
+        final NetworkPayloadSetup payloadSetup = listener.getConnection().channel.attr(ATTRIBUTE_PAYLOAD_SETUP).get();
         //Check if this server was even setup properly.
         if (payloadSetup == null) {
             LOGGER.warn("Received a modded custom payload packet from a server that has not negotiated with the client. Disconnecting server.");
@@ -407,7 +408,7 @@ public class NetworkRegistry {
                             (task) -> LOGGER.warn("Tried to finish a task on the client. This should not happen. Ignoring. Task: {}", task),
                             new EventLoopSynchronizedWorkHandler<>(configurationPacketListener.getMainThreadEventLoop(), packet.payload()),
                             PacketFlow.CLIENTBOUND,
-                            listener.getConnection().channel().pipeline().lastContext(),
+                            listener.getConnection().channel.pipeline().lastContext(),
                             Optional.ofNullable(configurationPacketListener.getMinecraft().player)));
         } else if (listener instanceof ClientGamePacketListener playPacketListener) {
             //Get the configuration channel for the packet.
@@ -416,7 +417,7 @@ public class NetworkRegistry {
             //Check if the channel should even be processed.
             if (channel == null && !isAdhocPlayChannelReadable(packet.payload().id(), PacketFlow.CLIENTBOUND)) {
                 LOGGER.warn("Received a modded custom payload packet from a server with an unknown or not accepted channel. Disconnecting server.");
-                listener.getConnection().disconnect(Component.translatable("multiplayer.disconnect.incompatible", "NeoForge %s".formatted(NeoForgeVersion.getVersion())));
+                listener.getConnection().disconnect(Component.translatable("multiplayer.disconnect.incompatible", "NeoForge %s".formatted(ShearAPIVersion.getVersion())));
                 return false;
             }
 
@@ -435,7 +436,7 @@ public class NetworkRegistry {
                             new ClientPacketHandler(playPacketListener),
                             new EventLoopSynchronizedWorkHandler<>(playPacketListener.getMainThreadEventLoop(), packet.payload()),
                             PacketFlow.CLIENTBOUND,
-                            listener.getConnection().channel().pipeline().lastContext(),
+                            listener.getConnection().channel.pipeline().lastContext(),
                             Optional.ofNullable(playPacketListener.getMinecraft().player)));
         } else {
             LOGGER.error("Received a modded custom payload packet from a server that is not in the configuration or play phase. Disconnecting server.");
@@ -469,9 +470,9 @@ public class NetworkRegistry {
                         .map(entry -> new NegotiableNetworkComponent(entry.id(), entry.version(), entry.flow(), entry.optional()))
                         .toList());
 
-        sender.getConnection().channel().attr(ATTRIBUTE_CONNECTION_TYPE).set(sender.getConnectionType());
-        sender.getConnection().channel().attr(ATTRIBUTE_FLOW).set(PacketFlow.SERVERBOUND);
-        sender.getConnection().channel().attr(ATTRIBUTE_PAYLOAD_SETUP).set(NetworkPayloadSetup.empty());
+        sender.getConnection().channel.attr(ATTRIBUTE_CONNECTION_TYPE).set(sender.getConnectionType());
+        sender.getConnection().channel.attr(ATTRIBUTE_FLOW).set(PacketFlow.SERVERBOUND);
+        sender.getConnection().channel.attr(ATTRIBUTE_PAYLOAD_SETUP).set(NetworkPayloadSetup.empty());
 
         //Negotiation failed. Disconnect the client.
         if (!configurationNegotiationResult.success()) {
@@ -479,7 +480,7 @@ public class NetworkRegistry {
                 sender.send(new ModdedNetworkSetupFailedPayload(configurationNegotiationResult.failureReasons()));
             }
 
-            sender.disconnect(Component.translatable("multiplayer.disconnect.incompatible", "NeoForge %s".formatted(NeoForgeVersion.getVersion())));
+            sender.disconnect(Component.translatable("multiplayer.disconnect.incompatible", "NeoForge %s".formatted(ShearAPIVersion.getVersion())));
             return;
         }
 
@@ -497,7 +498,7 @@ public class NetworkRegistry {
                 sender.send(new ModdedNetworkSetupFailedPayload(playNegotiationResult.failureReasons()));
             }
 
-            sender.disconnect(Component.translatable("multiplayer.disconnect.incompatible", "NeoForge %s".formatted(NeoForgeVersion.getVersion())));
+            sender.disconnect(Component.translatable("multiplayer.disconnect.incompatible", "NeoForge %s".formatted(ShearAPIVersion.getVersion())));
         }
 
         final NetworkPayloadSetup setup = NetworkPayloadSetup.from(
@@ -508,7 +509,7 @@ public class NetworkRegistry {
                         .map(entry -> new NetworkChannel(entry.id(), entry.version()))
                         .collect(Collectors.toSet()));
 
-        sender.getConnection().channel().attr(ATTRIBUTE_PAYLOAD_SETUP).set(setup);
+        sender.getConnection().channel.attr(ATTRIBUTE_PAYLOAD_SETUP).set(setup);
 
         NetworkFilters.injectIfNecessary(sender.getConnection(), sender.getConnectionType());
 
@@ -537,13 +538,13 @@ public class NetworkRegistry {
                 List.of());
 
         //Because we are in vanilla land, no matter what we are not able to support any custom channels.
-        sender.getConnection().channel().attr(ATTRIBUTE_PAYLOAD_SETUP).set(NetworkPayloadSetup.empty());
-        sender.getConnection().channel().attr(ATTRIBUTE_CONNECTION_TYPE).set(sender.getConnectionType());
-        sender.getConnection().channel().attr(ATTRIBUTE_FLOW).set(PacketFlow.SERVERBOUND);
+        sender.getConnection().channel.attr(ATTRIBUTE_PAYLOAD_SETUP).set(NetworkPayloadSetup.empty());
+        sender.getConnection().channel.attr(ATTRIBUTE_CONNECTION_TYPE).set(sender.getConnectionType());
+        sender.getConnection().channel.attr(ATTRIBUTE_FLOW).set(PacketFlow.SERVERBOUND);
 
         //Negotiation failed. Disconnect the client.
         if (!configurationNegotiationResult.success()) {
-            sender.disconnect(Component.translatableWithFallback("neoforge.network.negotiation.failure.vanilla.client.not_supported", "You are trying to connect to a server that is running NeoForge, but you are not. Please install NeoForge Version: %s to connect to this server.", NeoForgeVersion.getVersion()));
+            sender.disconnect(Component.translatableWithFallback("neoforge.network.negotiation.failure.vanilla.client.not_supported", "You are trying to connect to a server that is running NeoForge, but you are not. Please install NeoForge Version: %s to connect to this server.", ShearAPIVersion.getVersion()));
             return false;
         }
 
@@ -555,7 +556,7 @@ public class NetworkRegistry {
 
         //Negotiation failed. Disconnect the client.
         if (!playNegotiationResult.success()) {
-            sender.disconnect(Component.translatableWithFallback("neoforge.network.negotiation.failure.vanilla.client.not_supported", "You are trying to connect to a server that is running NeoForge, but you are not. Please install NeoForge Version: %s to connect to this server.", NeoForgeVersion.getVersion()));
+            sender.disconnect(Component.translatableWithFallback("neoforge.network.negotiation.failure.vanilla.client.not_supported", "You are trying to connect to a server that is running NeoForge, but you are not. Please install NeoForge Version: %s to connect to this server.", ShearAPIVersion.getVersion()));
             return false;
         }
 
@@ -644,6 +645,7 @@ public class NetworkRegistry {
      * @param listener The listener that wants to send the packet.
      * @return True if the packet can be sent, false otherwise.
      */
+    // TODO: (ShearAPI) move to client
     public boolean canSendPacket(Packet<?> packet, ClientCommonPacketListener listener) {
         if (!(packet instanceof ServerboundCustomPayloadPacket customPayloadPacket)) {
             return true;
@@ -678,11 +680,11 @@ public class NetworkRegistry {
      * Returns a mutable map of the currently known ad-hoc channels.
      */
     private Set<ResourceLocation> getKnownAdHocChannelsOfOtherEnd(Connection connection) {
-        var map = connection.channel().attr(ATTRIBUTE_ADHOC_CHANNELS).get();
+        var map = connection.channel.attr(ATTRIBUTE_ADHOC_CHANNELS).get();
 
         if (map == null) {
             map = new HashSet<>();
-            connection.channel().attr(ATTRIBUTE_ADHOC_CHANNELS).set(map);
+            connection.channel.attr(ATTRIBUTE_ADHOC_CHANNELS).set(map);
         }
 
         return map;
@@ -733,6 +735,7 @@ public class NetworkRegistry {
      *
      * @param listener The listener which received the query.
      */
+    // TODO: (ShearAPI) move to client
     public void onNetworkQuery(ClientConfigurationPacketListener listener) {
         final ModdedNetworkQueryPayload payload = new ModdedNetworkQueryPayload(
                 knownConfigurationRegistrations.entrySet().stream()
@@ -755,6 +758,7 @@ public class NetworkRegistry {
      * @param configuration The configuration channels that were negotiated.
      * @param play          The play channels that were negotiated.
      */
+    // TODO: (ShearAPI) move to client
     public void onModdedNetworkConnectionEstablished(ClientConfigurationPacketListener listener, Set<ModdedNetworkComponent> configuration, Set<ModdedNetworkComponent> play) {
         final NetworkPayloadSetup setup = NetworkPayloadSetup.from(
                 configuration.stream()
@@ -766,9 +770,9 @@ public class NetworkRegistry {
 
         NetworkFilters.injectIfNecessary(listener.getConnection(), listener.getConnectionType());
 
-        listener.getConnection().channel().attr(ATTRIBUTE_PAYLOAD_SETUP).set(setup);
-        listener.getConnection().channel().attr(ATTRIBUTE_CONNECTION_TYPE).set(listener.getConnectionType());
-        listener.getConnection().channel().attr(ATTRIBUTE_FLOW).set(PacketFlow.CLIENTBOUND);
+        listener.getConnection().channel.attr(ATTRIBUTE_PAYLOAD_SETUP).set(setup);
+        listener.getConnection().channel.attr(ATTRIBUTE_CONNECTION_TYPE).set(listener.getConnectionType());
+        listener.getConnection().channel.attr(ATTRIBUTE_FLOW).set(PacketFlow.CLIENTBOUND);
 
         final ImmutableSet.Builder<ResourceLocation> nowListeningOn = ImmutableSet.builder();
         nowListeningOn.addAll(getInitialClientListeningChannels());
@@ -788,6 +792,7 @@ public class NetworkRegistry {
      * @param sender The listener which received the brand payload.
      * @return True if the vanilla connection should be handled by the client, false otherwise.
      */
+    // TODO: (ShearAPI) move to client
     public boolean onVanillaNetworkConnectionEstablished(ClientConfigurationPacketListener sender) {
         NetworkFilters.cleanIfNecessary(sender.getConnection());
 
@@ -798,9 +803,9 @@ public class NetworkRegistry {
                         .toList());
 
         //Because we are in vanilla land, no matter what we are not able to support any custom channels.
-        sender.getConnection().channel().attr(ATTRIBUTE_PAYLOAD_SETUP).set(NetworkPayloadSetup.empty());
-        sender.getConnection().channel().attr(ATTRIBUTE_CONNECTION_TYPE).set(sender.getConnectionType());
-        sender.getConnection().channel().attr(ATTRIBUTE_FLOW).set(PacketFlow.CLIENTBOUND);
+        sender.getConnection().channel.attr(ATTRIBUTE_PAYLOAD_SETUP).set(NetworkPayloadSetup.empty());
+        sender.getConnection().channel.attr(ATTRIBUTE_CONNECTION_TYPE).set(sender.getConnectionType());
+        sender.getConnection().channel.attr(ATTRIBUTE_FLOW).set(PacketFlow.CLIENTBOUND);
 
         //Negotiation failed. Disconnect the client.
         if (!configurationNegotiationResult.success()) {
@@ -854,6 +859,7 @@ public class NetworkRegistry {
      * @param payloadId The payload id to check.
      * @return True if the listener has a connection setup that can transmit the given payload id, false otherwise.
      */
+    // TODO: (ShearAPI) move to client
     public boolean isConnected(ClientCommonPacketListener listener, ResourceLocation payloadId) {
         return isConnected(listener.getConnection(), ConnectionPhase.fromPacketListener(listener), payloadId);
     }
@@ -867,7 +873,7 @@ public class NetworkRegistry {
      * @return True if the connection has a connection setup that can transmit the given payload id, false otherwise.
      */
     public boolean isConnected(final Connection connection, ConnectionPhase connectionPhase, ResourceLocation payloadId) {
-        final NetworkPayloadSetup payloadSetup = connection.channel().attr(ATTRIBUTE_PAYLOAD_SETUP).get();
+        final NetworkPayloadSetup payloadSetup = connection.channel.attr(ATTRIBUTE_PAYLOAD_SETUP).get();
         if (payloadSetup == null) {
             return getKnownAdHocChannelsOfOtherEnd(connection).contains(payloadId);
         }
@@ -933,9 +939,9 @@ public class NetworkRegistry {
      * @param connection The connection to configure.
      */
     public void configureMockConnection(final Connection connection) {
-        connection.channel().attr(ATTRIBUTE_CONNECTION_TYPE).set(ConnectionType.NEOFORGE);
-        connection.channel().attr(ATTRIBUTE_FLOW).set(PacketFlow.SERVERBOUND);
-        connection.channel().attr(ATTRIBUTE_PAYLOAD_SETUP).set(NetworkPayloadSetup.empty());
+        connection.channel.attr(ATTRIBUTE_CONNECTION_TYPE).set(ConnectionType.NEOFORGE);
+        connection.channel.attr(ATTRIBUTE_FLOW).set(PacketFlow.SERVERBOUND);
+        connection.channel.attr(ATTRIBUTE_PAYLOAD_SETUP).set(NetworkPayloadSetup.empty());
 
         final NetworkPayloadSetup setup = NetworkPayloadSetup.from(
                 this.knownConfigurationRegistrations.entrySet().stream()
@@ -945,7 +951,7 @@ public class NetworkRegistry {
                         .map(entry -> new NetworkChannel(entry.getKey(), entry.getValue().version()))
                         .collect(Collectors.toSet()));
 
-        connection.channel().attr(ATTRIBUTE_PAYLOAD_SETUP).set(setup);
+        connection.channel.attr(ATTRIBUTE_PAYLOAD_SETUP).set(setup);
 
         NetworkFilters.injectIfNecessary(connection, ConnectionType.NEOFORGE);
     }
@@ -956,6 +962,7 @@ public class NetworkRegistry {
      * @param listener          The listener which received the payload.
      * @param resourceLocations The resource locations that were registered.
      */
+    // TODO: (ShearAPI) move to client
     public void onMinecraftRegister(ClientCommonPacketListener listener, Set<ResourceLocation> resourceLocations) {
         onMinecraftRegister(resourceLocations, listener.getConnection());
     }
@@ -986,6 +993,7 @@ public class NetworkRegistry {
      * @param listener          The listener which received the payload.
      * @param resourceLocations The resource locations that were unregistered.
      */
+    // TODO: (ShearAPI) move to client
     public void onMinecraftUnregister(ClientCommonPacketListener listener, Set<ResourceLocation> resourceLocations) {
         onMinecraftUnregister(resourceLocations, listener.getConnection());
     }
@@ -1031,6 +1039,7 @@ public class NetworkRegistry {
         return nowForgottenChannels.build();
     }
 
+    // TODO: (ShearAPI) move to client
     private static Set<ResourceLocation> getInitialClientListeningChannels() {
         return Set.of(
                 MinecraftRegisterPayload.ID,
@@ -1041,7 +1050,7 @@ public class NetworkRegistry {
     }
 
     public void onConfigurationFinished(ServerConfigurationPacketListener serverConfigurationPacketListener) {
-        final NetworkPayloadSetup setup = serverConfigurationPacketListener.getConnection().channel().attr(ATTRIBUTE_PAYLOAD_SETUP).get();
+        final NetworkPayloadSetup setup = serverConfigurationPacketListener.getConnection().channel.attr(ATTRIBUTE_PAYLOAD_SETUP).get();
         if (setup == null) {
             LOGGER.error("Somebody tried to finish the configuration phase of a connection that has not negotiated with the client. Not finishing configuration.");
             return;
@@ -1066,8 +1075,9 @@ public class NetworkRegistry {
         serverConfigurationPacketListener.send(new MinecraftRegisterPayload(nowListeningOn.build()));
     }
 
+    // TODO: (ShearAPI) move to client
     public void onConfigurationFinished(ClientConfigurationPacketListener listener) {
-        final NetworkPayloadSetup setup = listener.getConnection().channel().attr(ATTRIBUTE_PAYLOAD_SETUP).get();
+        final NetworkPayloadSetup setup = listener.getConnection().channel.attr(ATTRIBUTE_PAYLOAD_SETUP).get();
         if (setup == null) {
             LOGGER.error("Somebody tried to finish the configuration phase of a connection that has not negotiated with the server. Not finishing configuration.");
             return;
@@ -1157,6 +1167,7 @@ public class NetworkRegistry {
         }
     }
 
+    // TODO: (ShearAPI) move to client
     @SuppressWarnings("unchecked")
     private record ClientPacketHandler(ClientCommonPacketListener listener) implements IPacketHandler {
         @Override
@@ -1195,6 +1206,7 @@ public class NetworkRegistry {
         }
     }
 
+    // TODO: (ShearAPI) move to client
     private record ClientReplyHandler(ClientCommonPacketListener listener) implements IReplyHandler {
         @Override
         public void send(CustomPacketPayload payload) {

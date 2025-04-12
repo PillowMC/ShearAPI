@@ -1,0 +1,5 @@
+accessWidener	v1	named
+accessible field net/minecraft/network/Connection channel Lio/netty/channel/Channel;
+accessible method net/minecraft/server/network/ServerConfigurationPacketListenerImpl finishCurrentTask (Lnet/minecraft/server/network/ConfigurationTask$Type;)V
+accessible field net/minecraft/network/protocol/common/ServerboundCustomPayloadPacket KNOWN_TYPES Ljava/util/Map;
+accessible field net/minecraft/network/protocol/common/ClientboundCustomPayloadPacket KNOWN_TYPES Ljava/util/Map;
