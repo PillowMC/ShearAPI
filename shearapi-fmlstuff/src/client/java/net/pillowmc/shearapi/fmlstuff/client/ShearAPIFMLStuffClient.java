@@ -1,4 +1,4 @@
-package net.pillowmc.shearapi.withpillow.client;
+package net.pillowmc.shearapi.fmlstuff.client;
 
 import net.minecraft.client.Minecraft;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -13,21 +13,21 @@ import net.pillowmc.shearapi.withpillow.ShearAPIWithPillow;
 
 import java.util.Optional;
 
-public class ShearAPIWithPillowClient {
-    public static Class<ShearAPIWithPillowClient> clazz = ShearAPIWithPillowClient.class;
+public class ShearAPIFMLStuffClient {
+    public static Class<ShearAPIFMLStuffClient> clazz = ShearAPIFMLStuffClient.class;
     @SubscribeEvent
     public static void onRegisterPayloadHandlerEvent(RegisterPayloadHandlerEvent event) {
         if (!(ShearAPIRuntime.getRuntime() instanceof ShearAPIWithPillow)) {
             return;
         }
         final IPayloadRegistrar registrar = event.registrar(ShearAPIRuntime.MOD_ID)
-            .versioned(ShearAPIVersion.getSpec())
-            .optional();
+                .versioned(ShearAPIVersion.getSpec())
+                .optional();
         registrar
-            .configuration(
-                ConfigFilePayload.ID,
-                ConfigFilePayload::new,
-                handlers -> handlers.client(ShearAPIWithPillowClient::handleConfigFile));
+                .configuration(
+                        ConfigFilePayload.ID,
+                        ConfigFilePayload::new,
+                        handlers -> handlers.client(ShearAPIFMLStuffClient::handleConfigFile));
     }
 
     private static void handleConfigFile(ConfigFilePayload payload, IPayloadContext context) {
