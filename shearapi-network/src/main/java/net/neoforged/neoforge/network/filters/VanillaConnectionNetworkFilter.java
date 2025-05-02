@@ -9,9 +9,12 @@ import com.google.common.collect.ImmutableMap;
 import com.mojang.brigadier.tree.RootCommandNode;
 import com.mojang.logging.LogUtils;
 import io.netty.channel.ChannelHandler;
+
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 import net.minecraft.commands.CommandBuildContext;
@@ -33,7 +36,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagNetworkSerialization;
 import net.neoforged.neoforge.network.connection.ConnectionType;
-import net.neoforged.neoforge.registries.RegistryManager;
+import net.pillowmc.shearapi.runtime.ShearAPIRuntime;
 import org.slf4j.Logger;
 
 /**
@@ -51,7 +54,7 @@ public class VanillaConnectionNetworkFilter extends VanillaPacketFilter {
                 ImmutableMap.<Class<? extends Packet<?>>, BiConsumer<Packet<?>, List<? super Packet<?>>>>builder()
                         .put(handler(ClientboundUpdateAttributesPacket.class, VanillaConnectionNetworkFilter::filterEntityProperties))
                         .put(handler(ClientboundCommandsPacket.class, VanillaConnectionNetworkFilter::filterCommandList))
-                        .put(handler(ClientboundUpdateTagsPacket.class, VanillaConnectionNetworkFilter::filterCustomTagTypes))
+                        .putAll(getFilterCustomTagTypes().stream().toList())
                         .build());
 
         this.connectionType = connectionType;
@@ -95,6 +98,11 @@ public class VanillaConnectionNetworkFilter extends VanillaPacketFilter {
         return new ClientboundCommandsPacket(newRoot);
     }
 
+    private static Optional<Map.Entry<Class<? extends Packet<?>>, BiConsumer<Packet<?>, List<? super Packet<?>>>>> getFilterCustomTagTypes() {
+        if (!ShearAPIRuntime.getRuntime().isModLoaded("shearapi-registries")) return Optional.empty();
+        return Optional.of(handler(ClientboundUpdateTagsPacket.class, VanillaConnectionNetworkFilter::filterCustomTagTypes));
+    }
+
     /**
      * Filters out custom tag types that the vanilla client won't recognize.
      * It prevents a rare error from logging and reduces the packet size
@@ -107,8 +115,12 @@ public class VanillaConnectionNetworkFilter extends VanillaPacketFilter {
     }
 
     private static boolean isVanillaRegistry(ResourceLocation location) {
-        // Checks if the registry name is contained within the static view of both BuiltInRegistries and VanillaRegistries
-        return RegistryManager.getVanillaRegistryKeys().contains(location)
-                || VanillaRegistries.DATAPACK_REGISTRY_KEYS.stream().anyMatch(k -> k.location().equals(location));
+        try {
+            return (Boolean)Class.forName("net.pillowmc.shearapi.registries.ShearAPIRegistries")
+                    .getMethod("isVanillaRegistry", ResourceLocation.class)
+                    .invoke(null, location);
+        } catch (NoSuchMethodException | ClassNotFoundException | IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

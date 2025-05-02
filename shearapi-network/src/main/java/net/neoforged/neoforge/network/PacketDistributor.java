@@ -12,7 +12,6 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
@@ -27,7 +26,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.pillowmc.shearapi.utils.IClientLike;
 import net.pillowmc.shearapi.utils.ServerUtils;
+import net.pillowmc.shearapi.utils.Utils;
 
 /**
  * Means to distribute packets in various ways
@@ -111,7 +112,7 @@ public class PacketDistributor<T> {
 
         /**
          * A target point without excluded entity
-         * 
+         *
          * @param x   X
          * @param y   Y
          * @param z   Z
@@ -129,7 +130,7 @@ public class PacketDistributor<T> {
 
         /**
          * Helper to build a TargetPoint without excluded Entity
-         * 
+         *
          * @param x   X
          * @param y   Y
          * @param z   Z
@@ -167,7 +168,7 @@ public class PacketDistributor<T> {
                     for (CustomPacketPayload payload : payloads) {
                         packets.add(new ClientboundCustomPayloadPacket(payload));
                     }
-                    this.send(new ClientboundBundlePacket(packets));
+                    this.send(new ClientboundBundlePacket((Iterable<Packet<ClientGamePacketListener>>)(Object) packets));
                 } else if (payloads.length == 1) {
                     this.send(new ClientboundCustomPayloadPacket(payloads[0]));
                 }
@@ -197,7 +198,7 @@ public class PacketDistributor<T> {
 
     /**
      * Apply the supplied value to the specific distributor to generate an instance for sending packets to.
-     * 
+     *
      * @param input The input to apply
      * @return A curried instance
      */
@@ -229,7 +230,7 @@ public class PacketDistributor<T> {
     }
 
     private Consumer<Packet<?>> clientToServer() {
-        return p -> Objects.requireNonNull(Minecraft.getInstance().getConnection()).send(p);
+        return p -> Utils.getClient().ifPresent(c -> c.shearAPI$sendPacket(p));
     }
 
     private Consumer<Packet<?>> playerListPointConsumer(final TargetPoint targetPoint) {

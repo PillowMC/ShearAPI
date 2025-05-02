@@ -1,11 +1,14 @@
 package net.pillowmc.shearapi.withpillow;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.neoforged.bus.api.Event;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.ModLoader;
 import net.neoforged.fml.loading.FMLLoader;
 import net.pillowmc.shearapi.runtime.IModBusEvent;
 import net.pillowmc.shearapi.withoutpillow.ShearAPIWithoutPillow;
+
+import java.util.Optional;
 
 public class ShearAPIWithPillow extends ShearAPIWithoutPillow {
 
@@ -38,5 +41,12 @@ public class ShearAPIWithPillow extends ShearAPIWithoutPillow {
     @Override
     public boolean isModLoaded(String modid) {
         return ModList.get().isLoaded(modid);
+    }
+
+
+    @Override
+    public Optional<String> getModDisplayName(String modid) {
+        return super.getModDisplayName(modid)
+                .or(() -> ModList.get().getModContainerById(modid).map(m -> m.getModInfo().getDisplayName()));
     }
 }

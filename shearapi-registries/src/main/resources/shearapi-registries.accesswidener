@@ -13,3 +13,6 @@ mutable field net/minecraft/world/level/levelgen/DebugLevelSource GRID_HEIGHT I
 #accessible class net/minecraft/core/RegistrySynchronization$NetworkedRegistryData
 accessible method net/minecraft/core/RegistrySynchronization$NetworkedRegistryData <init> (Lnet/minecraft/resources/ResourceKey;Lcom/mojang/serialization/Codec;)V
 accessible method net/minecraft/core/Holder$Reference bindValue (Ljava/lang/Object;)V
+accessible field net/minecraft/core/RegistrySetBuilder entries Ljava/util/List;
+accessible class net/minecraft/core/RegistrySetBuilder$RegistryStub
+accessible field net/minecraft/data/registries/VanillaRegistries BUILDER Lnet/minecraft/core/RegistrySetBuilder;

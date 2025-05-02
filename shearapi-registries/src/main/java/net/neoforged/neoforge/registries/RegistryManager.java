@@ -232,9 +232,9 @@ public class RegistryManager {
 //        return list;
 //    }
 //
-//    public static Set<ResourceLocation> getVanillaRegistryKeys() {
-//        return vanillaRegistryKeys;
-//    }
+    public static Set<ResourceLocation> getVanillaRegistryKeys() {
+        return vanillaRegistryKeys;
+    }
 
     public enum SnapshotType {
         /**

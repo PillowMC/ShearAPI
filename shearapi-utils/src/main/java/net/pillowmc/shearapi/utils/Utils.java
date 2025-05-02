@@ -10,4 +10,8 @@ public enum Utils {;
     public static Optional<Holder<Item>> getItemHolder(Item item) {
         return BuiltInRegistries.ITEM.getResourceKey(item).flatMap(BuiltInRegistries.ITEM::getHolder);
     }
+
+    public static Optional<IClientLike> getClient() {
+        return Optional.empty();
+    }
 }

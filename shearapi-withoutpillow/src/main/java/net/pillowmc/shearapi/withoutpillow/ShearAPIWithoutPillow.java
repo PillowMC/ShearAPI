@@ -7,6 +7,8 @@ import net.neoforged.bus.api.Event;
 import net.pillowmc.shearapi.runtime.IModBusEvent;
 import net.pillowmc.shearapi.runtime.IRuntime;
 
+import java.util.Optional;
+
 public class ShearAPIWithoutPillow implements IRuntime {
     private final IEventBus MODBUS = BusBuilder.builder().markerType(IModBusEvent.class).build();
 
@@ -38,5 +40,10 @@ public class ShearAPIWithoutPillow implements IRuntime {
     @Override
     public boolean isModLoaded(String modid) {
         return FabricLoader.getInstance().isModLoaded(modid);
+    }
+
+    @Override
+    public Optional<String> getModDisplayName(String modid) {
+        return FabricLoader.getInstance().getModContainer(modid).map(m -> m.getMetadata().getName());
     }
 }

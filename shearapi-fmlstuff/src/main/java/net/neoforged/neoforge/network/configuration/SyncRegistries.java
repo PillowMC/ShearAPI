@@ -24,7 +24,7 @@ import org.jetbrains.annotations.ApiStatus;
 @ApiStatus.Internal
 public record SyncRegistries() implements ICustomConfigurationTask {
     private static final ResourceLocation ID = new ResourceLocation(ShearAPIRuntime.MOD_ID, "sync_registries");
-    public static final Type TYPE = new Type(ID);
+    public static final Type TYPE = new Type(ID.toString());
 
     @Override
     public void run(Consumer<CustomPacketPayload> sender) {

@@ -27,7 +27,6 @@ import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
 import net.minecraft.network.protocol.common.ServerboundCustomPayloadPacket;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
 import net.pillowmc.shearapi.runtime.ShearAPIRuntime;
 import net.neoforged.neoforge.network.connection.ConnectionPhase;
 import net.neoforged.neoforge.network.connection.ConnectionType;
@@ -43,9 +42,9 @@ import org.jetbrains.annotations.ApiStatus;
 /**
  * A generic packet splitter that can be used to split packets that are too large to be sent in one go.
  */
-@Mod.EventBusSubscriber(modid = ShearAPIRuntime.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ApiStatus.Internal
 public class GenericPacketSplitter extends MessageToMessageEncoder<Packet<?>> implements DynamicChannelHandler {
+    public static Class<GenericPacketSplitter> clazz = GenericPacketSplitter.class;
     private static final Logger LOGGER = LogManager.getLogger();
 
     private static final int MAX_PACKET_SIZE = CompressionDecoder.MAXIMUM_UNCOMPRESSED_LENGTH;

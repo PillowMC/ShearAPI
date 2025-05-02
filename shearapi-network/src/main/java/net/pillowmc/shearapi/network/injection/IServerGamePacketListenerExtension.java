@@ -45,6 +45,6 @@ public interface IServerGamePacketListenerExtension extends IServerCommonPacketL
             packets.add(new ClientboundCustomPayloadPacket(payload));
         }
 
-        self().send(new ClientboundBundlePacket(packets));
+        self().send(new ClientboundBundlePacket((List<Packet<ClientGamePacketListener>>)(Object) packets));
     }
 }

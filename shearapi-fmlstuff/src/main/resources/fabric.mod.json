@@ -24,6 +24,7 @@
     "shearapi-withpillow": "~${version}"
   },
   "entrypoints": {
+    "client": ["net.pillowmc.shearapi.fmlstuff.client.ShearAPIFMLStuffClient"],
     "shearapi-runtime:client_mod_bus_subscriber": ["net.pillowmc.shearapi.fmlstuff.client.ShearAPIFMLStuffClient::clazz"],
     "shearapi-runtime:mod_bus_subscriber": ["net.pillowmc.shearapi.fmlstuff.ShearAPIFMLStuff::clazz"]
   },
